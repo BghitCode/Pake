@@ -42,10 +42,6 @@
         </td>
     </tr>
     <tr>
-        <td><img src=https://raw.githubusercontent.com/BghitCode/bghitapp/main/src-tauri/icons/icon.png width=600/></td>
-        <td><img src=https://raw.githubusercontent.com/BghitCode/bghitapp/main/src-tauri/icons/icon.png width=600/></td>
-    </tr>
-    <tr>
         <td>Grok
             <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/Grok.dmg">Mac</a>
             <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/Grok_x64.msi">Windows</a>
@@ -56,10 +52,6 @@
             <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/DeepSeek_x64.msi">Windows</a>
             <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/DeepSeek_x86_64.deb">Linux</a>
         </td>
-    </tr>
-    <tr>
-        <td><img src=https://raw.githubusercontent.com/BghitCode/bghitapp/main/src-tauri/icons/icon.png width=600/></td>
-        <td><img src=https://raw.githubusercontent.com/BghitCode/bghitapp/main/src-tauri/icons/icon.png width=600/></td>
     </tr>
     <tr>
         <td>ChatGPT
@@ -74,10 +66,6 @@
         </td>
     </tr>
     <tr>
-        <td><img src=https://raw.githubusercontent.com/BghitCode/bghitapp/main/src-tauri/icons/icon.png width=600/></td>
-        <td><img src=https://raw.githubusercontent.com/BghitCode/bghitapp/main/src-tauri/icons/icon.png width=600/></td>
-    </tr>
-    <tr>
       <td>YouTube Music
             <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/YouTubeMusic.dmg">Mac</a>
             <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/YouTubeMusic_x64.msi">Windows</a>
@@ -88,10 +76,6 @@
             <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/YouTube_x64.msi">Windows</a>
             <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/YouTube_x86_64.deb">Linux</a>
       </td>
-    </tr>
-    <tr>
-        <td><img src=https://raw.githubusercontent.com/BghitCode/bghitapp/main/src-tauri/icons/icon.png width=600 /></td>
-        <td><img src=https://raw.githubusercontent.com/BghitCode/bghitapp/main/src-tauri/icons/icon.png width=600 /></td>
     </tr>
     <tr>
         <td>LiZhi
@@ -106,10 +90,6 @@
         </td>
     </tr>
     <tr>
-        <td><img src=https://raw.githubusercontent.com/BghitCode/bghitapp/main/src-tauri/icons/icon.png width=600/></td>
-        <td><img src=https://raw.githubusercontent.com/BghitCode/bghitapp/main/src-tauri/icons/icon.png width=600/></td>
-    </tr>
-    <tr>
         <td>Excalidraw
             <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/Excalidraw.dmg">Mac</a>
             <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/Excalidraw_x64.msi">Windows</a>
@@ -120,10 +100,6 @@
             <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/XiaoHongShu_x64.msi">Windows</a>
             <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/XiaoHongShu_x86_64.deb">Linux</a>
         </td>
-    </tr>
-    <tr>
-        <td><img src=https://raw.githubusercontent.com/BghitCode/bghitapp/main/src-tauri/icons/icon.png width=600/></td>
-        <td><img src=https://raw.githubusercontent.com/BghitCode/bghitapp/main/src-tauri/icons/icon.png width=600/></td>
     </tr>
 </table>
 
