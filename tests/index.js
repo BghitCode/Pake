@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Unified Test Runner for Pake CLI
+ * Unified Test Runner for BghitApp CLI
  *
  * This is a simplified, unified test runner that replaces the scattered
  * test files with a single, easy-to-use interface.
@@ -13,7 +13,7 @@ import path from "path";
 import ora from "ora";
 import config, { TIMEOUTS, TEST_URLS } from "./config.js";
 
-class PakeTestRunner {
+class BghitappTestRunner {
   constructor() {
     this.results = [];
     this.tempFiles = [];
@@ -25,13 +25,13 @@ class PakeTestRunner {
       unit = true,
       integration = true,
       builder = true,
-      pakeCliTests = false,
+      bghitappCliTests = false,
       e2e = false,
       quick = false,
       realBuild = false, // Add option for real build test
     } = options;
 
-    console.log("Pake CLI Test Suite");
+    console.log("BghitApp CLI Test Suite");
     console.log("======================\n");
 
     this.validateEnvironment();
@@ -77,9 +77,9 @@ class PakeTestRunner {
       testCount++;
     }
 
-    if (pakeCliTests) {
-      console.log("\n[Package] Running Pake-CLI GitHub Actions Tests...");
-      await this.runPakeCliTests();
+    if (bghitappCliTests) {
+      console.log("\n[Package] Running BghitApp-CLI Tests...");
+      await this.runBghitappCliTests();
       testCount++;
     }
 
@@ -353,20 +353,20 @@ class PakeTestRunner {
     });
   }
 
-  async runPakeCliTests() {
+  async runBghitappCliTests() {
     // Package installation test
     await this.runTest(
-      "pake-cli Package Installation",
+      "@bghitcode/bghitapp Package Installation",
       async () => {
         try {
-          execSync("pnpm install pake-cli@latest", {
+          execSync("pnpm install @bghitcode/bghitapp@latest", {
             encoding: "utf8",
             timeout: 60000,
             cwd: "/tmp",
           });
 
-          const pakeCliPath = "/tmp/node_modules/.bin/pake";
-          return fs.existsSync(pakeCliPath);
+          const bghitappCliPath = "/tmp/node_modules/.bin/bghitapp";
+          return fs.existsSync(bghitappCliPath);
         } catch (error) {
           console.error("Package installation failed:", error.message);
           return false;
@@ -376,9 +376,9 @@ class PakeTestRunner {
     );
 
     // Version command test
-    await this.runTest("pake-cli Version Command", async () => {
+    await this.runTest(      "@bghitcode/bghitapp Version Command", async () => {
       try {
-        const version = execSync("npx pake --version", {
+        const version = execSync("npx bghitapp --version", {
           encoding: "utf8",
           timeout: 10000,
         });
@@ -442,8 +442,8 @@ class PakeTestRunner {
             stdio: ["pipe", "pipe", "pipe"],
             env: {
               ...process.env,
-              PAKE_E2E_TEST: "1",
-              PAKE_CREATE_APP: "1",
+              BGHITAPP_E2E_TEST: "1",
+              BGHITAPP_CREATE_APP: "1",
             },
           });
 
@@ -535,7 +535,7 @@ class PakeTestRunner {
     await this.runTest(
       "Configuration File Verification",
       async () => {
-        const pakeDir = path.join(config.PROJECT_ROOT, "src-tauri", ".pake");
+        const bghitappDir = path.join(config.PROJECT_ROOT, "src-tauri", ".bghitapp");
 
         return new Promise((resolve, reject) => {
           const testName = "GitHubConfigTest";
@@ -547,31 +547,31 @@ class PakeTestRunner {
             stdio: ["pipe", "pipe", "pipe"],
             env: {
               ...process.env,
-              PAKE_E2E_TEST: "1",
-              PAKE_CREATE_APP: "1",
+              BGHITAPP_E2E_TEST: "1",
+              BGHITAPP_CREATE_APP: "1",
             },
           });
 
           const checkConfigFiles = () => {
-            if (fs.existsSync(pakeDir)) {
-              const configFile = path.join(pakeDir, "tauri.conf.json");
-              const pakeConfigFile = path.join(pakeDir, "pake.json");
+            if (fs.existsSync(bghitappDir)) {
+              const configFile = path.join(bghitappDir, "tauri.conf.json");
+              const bghitappConfigFile = path.join(bghitappDir, "bghitapp.json");
 
-              if (fs.existsSync(configFile) && fs.existsSync(pakeConfigFile)) {
+              if (fs.existsSync(configFile) && fs.existsSync(bghitappConfigFile)) {
                 try {
                   const config = JSON.parse(
                     fs.readFileSync(configFile, "utf8"),
                   );
-                  const pakeConfig = JSON.parse(
-                    fs.readFileSync(pakeConfigFile, "utf8"),
+                  const bghitappConfig = JSON.parse(
+                    fs.readFileSync(bghitappConfigFile, "utf8"),
                   );
 
                   if (
                     config.productName === testName &&
-                    pakeConfig.windows[0].url === "https://github.com/"
+                    bghitappConfig.windows[0].url === "https://github.com/"
                   ) {
                     child.kill("SIGTERM");
-                    this.trackTempDir(pakeDir);
+                    this.trackTempDir(bghitappDir);
                     console.log(
                       "✓ GitHub.com configuration files verified correctly",
                     );
@@ -610,7 +610,7 @@ class PakeTestRunner {
           // Timeout after 20 seconds
           setTimeout(() => {
             child.kill("SIGTERM");
-            this.trackTempDir(pakeDir);
+            this.trackTempDir(bghitappDir);
             reject(new Error("GitHub.com configuration verification timeout"));
           }, 40000);
 
@@ -652,7 +652,7 @@ class PakeTestRunner {
       const testFile = path.join(config.PROJECT_ROOT, "test-local.html");
       fs.writeFileSync(
         testFile,
-        "<html><body><h1>Hello Pake</h1></body></html>",
+        "<html><body><h1>Hello BghitApp</h1></body></html>",
       );
       this.trackTempFile(testFile);
 
@@ -691,7 +691,7 @@ class PakeTestRunner {
             linux: {
               app: path.join(
                 config.PROJECT_ROOT,
-                `src-tauri/target/release/pake`,
+                `src-tauri/target/release/bghitapp`,
               ),
               installer: path.join(
                 config.PROJECT_ROOT,
@@ -761,7 +761,7 @@ class PakeTestRunner {
             stdio: ["pipe", "pipe", "pipe"],
             env: {
               ...process.env,
-              PAKE_CREATE_APP: "1",
+              BGHITAPP_CREATE_APP: "1",
             },
           });
 
@@ -941,7 +941,7 @@ class PakeTestRunner {
             stdio: ["pipe", "pipe", "pipe"],
             env: {
               ...process.env,
-              PAKE_CREATE_APP: "1",
+              BGHITAPP_CREATE_APP: "1",
               HDIUTIL_QUIET: "1",
               HDIUTIL_NO_AUTOOPEN: "1",
             },
@@ -1052,7 +1052,7 @@ class PakeTestRunner {
                 try {
                   const binaryPath = path.join(
                     appFile.path,
-                    "Contents/MacOS/pake",
+                    "Contents/MacOS/bghitapp",
                   );
                   const fileOutput = execSync(`file "${binaryPath}"`, {
                     encoding: "utf8",
@@ -1205,7 +1205,7 @@ class PakeTestRunner {
             patterns.some((pattern) => lowerItem.endsWith(pattern)) ||
             lowerItem.includes(testName.toLowerCase()) ||
             (lowerItem.includes("github") && !item.startsWith(".")) || // Avoid .github directory
-            (platform === "linux" && item === "pake")
+            (platform === "linux" && item === "bghitapp")
           ); // Linux binary
         });
 
@@ -1221,7 +1221,7 @@ class PakeTestRunner {
           else if (file.endsWith(".dmg")) fileType = "DMG Image";
           else if (file.endsWith(".app"))
             fileType = stats.isDirectory() ? "macOS App Bundle" : "macOS App";
-          else if (file === "pake") fileType = "Linux Binary";
+          else if (file === "bghitapp") fileType = "Linux Binary";
 
           foundFiles.push({
             path: fullPath,
@@ -1465,10 +1465,10 @@ class PakeTestRunner {
         }
       });
 
-      // Also clean src-tauri/.pake directory if it exists
-      const pakeDir = path.join(config.PROJECT_ROOT, "src-tauri", ".pake");
-      if (fs.existsSync(pakeDir)) {
-        fs.rmSync(pakeDir, { recursive: true, force: true });
+      // Also clean src-tauri/.bghitapp directory if it exists
+      const bghitappDir = path.join(config.PROJECT_ROOT, "src-tauri", ".bghitapp");
+      if (fs.existsSync(bghitappDir)) {
+        fs.rmSync(bghitappDir, { recursive: true, force: true });
       }
 
       const localTestFile = path.join(config.PROJECT_ROOT, "test-local.html");
@@ -1519,7 +1519,7 @@ const options = {
   unit: !args.includes("--no-unit"),
   integration: !args.includes("--no-integration"),
   builder: !args.includes("--no-builder"),
-  pakeCliTests: args.includes("--pake-cli"),
+  bghitappCliTests: args.includes("--bghitapp-cli"),
   e2e: args.includes("--e2e"),
   realBuild: !args.includes("--no-build"), // Always include real build test
   quick: false,
@@ -1528,7 +1528,7 @@ const options = {
 // Help message
 if (args.includes("--help") || args.includes("-h")) {
   console.log(`
-[Run] Pake CLI Test Suite
+[Run] BghitApp CLI Test Suite
 
 Usage: npm test [-- options]
 
@@ -1543,7 +1543,7 @@ Test Components:
 
 Optional Components:
   --e2e          Add end-to-end configuration tests
-  --pake-cli     Add pake-cli GitHub Actions tests
+  --bghitapp-cli     Add @bghitcode/bghitapp tests
   --release      Run release workflow tests (Twitter/WeRead) - Slow!
 
 Skip Components (if needed):
@@ -1560,13 +1560,13 @@ Examples:
 Environment:
   CI=1              # Enable CI mode
   DEBUG=1           # Enable debug output
-  PAKE_CREATE_APP=1 # Allow app creation in tests
+  BGHITAPP_CREATE_APP=1 # Allow app creation in tests
 `);
   process.exit(0);
 }
 
 // Run tests
-const runner = new PakeTestRunner();
+const runner = new BghitappTestRunner();
 runner
   .runAll(options)
   .then(async (success) => {

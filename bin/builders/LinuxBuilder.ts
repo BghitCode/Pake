@@ -1,6 +1,6 @@
 import path from 'path';
 import BaseBuilder from './BaseBuilder';
-import { PakeAppOptions } from '@/types';
+import { BghitappAppOptions } from '@/types';
 import tauriConfig from '@/helpers/tauriConfig';
 
 export default class LinuxBuilder extends BaseBuilder {
@@ -8,7 +8,7 @@ export default class LinuxBuilder extends BaseBuilder {
   private buildArch: string;
   private currentBuildType: string = '';
 
-  constructor(options: PakeAppOptions) {
+  constructor(options: BghitappAppOptions) {
     super(options);
 
     const target = options.targets || 'deb';
@@ -24,7 +24,7 @@ export default class LinuxBuilder extends BaseBuilder {
   }
 
   getFileName() {
-    const { name = 'pake-app', targets } = this.options;
+    const { name = 'bghitapp-app', targets } = this.options;
     const version = tauriConfig.version;
     const buildType =
       this.currentBuildType || targets.split(',').map((t) => t.trim())[0];
@@ -75,7 +75,7 @@ export default class LinuxBuilder extends BaseBuilder {
   }
 
   protected getBuildCommand(packageManager: string = 'pnpm'): string {
-    const configPath = path.join('src-tauri', '.pake', 'tauri.conf.json');
+    const configPath = path.join('src-tauri', '.bghitapp', 'tauri.conf.json');
 
     const buildTarget =
       this.buildArch === 'arm64'
@@ -92,14 +92,14 @@ export default class LinuxBuilder extends BaseBuilder {
       fullCommand += ` --bundles ${this.currentBuildType}`;
     }
 
-    // Enable verbose output for AppImage builds when debugging or PAKE_VERBOSE is set.
+    // Enable verbose output for AppImage builds when debugging or BGHITAPP_VERBOSE is set.
     // AppImage builds often fail with minimal error messages from linuxdeploy,
     // so verbose mode helps diagnose issues like strip failures and missing dependencies.
     if (
       this.currentBuildType === 'appimage' &&
       (this.options.targets.includes('appimage') ||
         this.options.debug ||
-        process.env.PAKE_VERBOSE)
+        process.env.BGHITAPP_VERBOSE)
     ) {
       fullCommand += ' --verbose';
     }

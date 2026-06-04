@@ -10,11 +10,11 @@ import {
   resolveIdentifier,
 } from '@/utils/info';
 import { generateLinuxPackageName } from '@/utils/name';
-import { PakeError } from '@/utils/error';
-import { PakeAppOptions, PakeCliOptions } from '@/types';
+import { BghitappError } from '@/utils/error';
+import { BghitappAppOptions, BghitappCliOptions } from '@/types';
 
 function resolveAppName(name: string, platform: NodeJS.Platform): string {
-  const domain = getDomain(name) || 'pake';
+  const domain = getDomain(name) || 'bghitapp';
   return platform !== 'linux' ? capitalizeFirstLetter(domain) : domain;
 }
 
@@ -22,16 +22,16 @@ function resolveLocalAppName(
   filePath: string,
   platform: NodeJS.Platform,
 ): string {
-  const baseName = path.parse(filePath).name || 'pake-app';
+  const baseName = path.parse(filePath).name || 'bghitapp-app';
   if (platform === 'linux') {
-    return generateLinuxPackageName(baseName) || 'pake-app';
+    return generateLinuxPackageName(baseName) || 'bghitapp-app';
   }
   const normalized = baseName
     .replace(/[^a-zA-Z0-9\u4e00-\u9fff -]/g, '')
     .replace(/^[ -]+/, '')
     .replace(/\s+/g, ' ')
     .trim();
-  return normalized || 'pake-app';
+  return normalized || 'bghitapp-app';
 }
 
 function isValidName(name: string, platform: NodeJS.Platform): boolean {
@@ -43,9 +43,9 @@ function isValidName(name: string, platform: NodeJS.Platform): boolean {
 }
 
 export default async function handleOptions(
-  options: PakeCliOptions,
+  options: BghitappCliOptions,
   url: string,
-): Promise<PakeAppOptions> {
+): Promise<BghitappAppOptions> {
   const { platform } = process;
   const isActions = process.env.GITHUB_ACTIONS;
   let name = options.name;
@@ -74,13 +74,13 @@ export default async function handleOptions(
       name = resolveAppName(url, platform);
       logger.warn(`✼ Inside github actions, use the default name: ${name}`);
     } else {
-      throw new PakeError(errorMsg);
+      throw new BghitappError(errorMsg);
     }
   }
 
-  const resolvedName = name || 'pake-app';
+  const resolvedName = name || 'bghitapp-app';
 
-  const appOptions: PakeAppOptions = {
+  const appOptions: BghitappAppOptions = {
     ...options,
     name: resolvedName,
     identifier: resolveIdentifier(url, options.name, options.identifier),

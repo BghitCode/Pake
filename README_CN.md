@@ -2,19 +2,15 @@
 <p align="center">
     <img src=https://gw.alipayobjects.com/zos/k/fa/logo-modified.png width=138/>
 </p>
-<h1 align="center">Pake</h1>
+<h1 align="center">BghitApp</h1>
 <p align="center"><strong>一键打包网页生成轻量桌面应用，支持 macOS、Windows 和 Linux</strong></p>
 <div align="center">
-    <a href="https://twitter.com/HiTw93" target="_blank">
-    <img alt="twitter" src="https://img.shields.io/badge/follow-Tw93-red?style=flat-square&logo=Twitter"></a>
-    <a href="https://t.me/+GclQS9ZnxyI2ODQ1" target="_blank">
-    <img alt="telegram" src="https://img.shields.io/badge/chat-telegram-blueviolet?style=flat-square&logo=Telegram"></a>
-    <a href="https://github.com/tw93/Pake/releases" target="_blank">
-    <img alt="GitHub downloads" src="https://img.shields.io/github/downloads/tw93/Pake/total.svg?style=flat-square"></a>
-    <a href="https://github.com/tw93/Pake/commits" target="_blank">
-    <img alt="GitHub commit" src="https://img.shields.io/github/commit-activity/m/tw93/Pake?style=flat-square"></a>
-    <a href="https://github.com/tw93/Pake/issues?q=is%3Aissue+is%3Aclosed" target="_blank">
-    <img alt="GitHub closed issues" src="https://img.shields.io/github/issues-closed/tw93/Pake.svg?style=flat-square"></a>
+    <a href="https://github.com/BghitCode/bghitapp/releases" target="_blank">
+    <img alt="GitHub downloads" src="https://img.shields.io/github/downloads/BghitCode/Pake/total.svg?style=flat-square"></a>
+    <a href="https://github.com/BghitCode/bghitapp/commits" target="_blank">
+    <img alt="GitHub commit" src="https://img.shields.io/github/commit-activity/m/BghitCode/Pake?style=flat-square"></a>
+    <a href="https://github.com/BghitCode/bghitapp/issues?q=is%3Aissue+is%3Aclosed" target="_blank">
+    <img alt="GitHub closed issues" src="https://img.shields.io/github/issues-closed/BghitCode/Pake.svg?style=flat-square"></a>
 </div>
 
 ## 特征
@@ -36,14 +32,14 @@
 <table>
     <tr>
         <td>WeRead
-            <a href="https://github.com/tw93/Pake/releases/latest/download/WeRead.dmg">Mac</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/WeRead_x64.msi">Windows</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/WeRead_x86_64.deb">Linux</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/WeRead.dmg">Mac</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/WeRead_x64.msi">Windows</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/WeRead_x86_64.deb">Linux</a>
         </td>
         <td>Twitter
-            <a href="https://github.com/tw93/Pake/releases/latest/download/Twitter.dmg">Mac</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/Twitter_x64.msi">Windows</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/Twitter_x86_64.deb">Linux</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/Twitter.dmg">Mac</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/Twitter_x64.msi">Windows</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/Twitter_x86_64.deb">Linux</a>
         </td>
     </tr>
     <tr>
@@ -52,14 +48,14 @@
     </tr>
     <tr>
         <td>Grok
-            <a href="https://github.com/tw93/Pake/releases/latest/download/Grok.dmg">Mac</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/Grok_x64.msi">Windows</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/Grok_x86_64.deb">Linux</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/Grok.dmg">Mac</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/Grok_x64.msi">Windows</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/Grok_x86_64.deb">Linux</a>
         </td>
         <td>DeepSeek
-            <a href="https://github.com/tw93/Pake/releases/latest/download/DeepSeek.dmg">Mac</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/DeepSeek_x64.msi">Windows</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/DeepSeek_x86_64.deb">Linux</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/DeepSeek.dmg">Mac</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/DeepSeek_x64.msi">Windows</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/DeepSeek_x86_64.deb">Linux</a>
         </td>
     </tr>
     <tr>
@@ -68,14 +64,14 @@
     </tr>
     <tr>
         <td>ChatGPT
-            <a href="https://github.com/tw93/Pake/releases/latest/download/ChatGPT.dmg">Mac</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/ChatGPT_x64.msi">Windows</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/ChatGPT_x86_64.deb">Linux</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/ChatGPT.dmg">Mac</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/ChatGPT_x64.msi">Windows</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/ChatGPT_x86_64.deb">Linux</a>
         </td>
         <td>Gemini
-            <a href="https://github.com/tw93/Pake/releases/latest/download/Gemini.dmg">Mac</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/Gemini_x64.msi">Windows</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/Gemini_x86_64.deb">Linux</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/Gemini.dmg">Mac</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/Gemini_x64.msi">Windows</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/Gemini_x86_64.deb">Linux</a>
         </td>
     </tr>
     <tr>
@@ -84,14 +80,14 @@
     </tr>
     <tr>
       <td>YouTube Music
-            <a href="https://github.com/tw93/Pake/releases/latest/download/YouTubeMusic.dmg">Mac</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/YouTubeMusic_x64.msi">Windows</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/YouTubeMusic_x86_64.deb">Linux</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/YouTubeMusic.dmg">Mac</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/YouTubeMusic_x64.msi">Windows</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/YouTubeMusic_x86_64.deb">Linux</a>
       </td>
       <td>YouTube
-            <a href="https://github.com/tw93/Pake/releases/latest/download/YouTube.dmg">Mac</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/YouTube_x64.msi">Windows</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/YouTube_x86_64.deb">Linux</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/YouTube.dmg">Mac</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/YouTube_x64.msi">Windows</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/YouTube_x86_64.deb">Linux</a>
       </td>
     </tr>
     <tr>
@@ -100,14 +96,14 @@
     </tr>
     <tr>
         <td>LiZhi
-            <a href="https://github.com/tw93/Pake/releases/latest/download/LiZhi.dmg">Mac</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/LiZhi_x64.msi">Windows</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/LiZhi_x86_64.deb">Linux</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/LiZhi.dmg">Mac</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/LiZhi_x64.msi">Windows</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/LiZhi_x86_64.deb">Linux</a>
         </td>
         <td>ProgramMusic
-            <a href="https://github.com/tw93/Pake/releases/latest/download/ProgramMusic.dmg">Mac</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/ProgramMusic_x64.msi">Windows</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/ProgramMusic_x86_64.deb">Linux</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/ProgramMusic.dmg">Mac</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/ProgramMusic_x64.msi">Windows</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/ProgramMusic_x86_64.deb">Linux</a>
         </td>
     </tr>
     <tr>
@@ -116,14 +112,14 @@
     </tr>
     <tr>
         <td>Excalidraw
-            <a href="https://github.com/tw93/Pake/releases/latest/download/Excalidraw.dmg">Mac</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/Excalidraw_x64.msi">Windows</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/Excalidraw_x86_64.deb">Linux</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/Excalidraw.dmg">Mac</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/Excalidraw_x64.msi">Windows</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/Excalidraw_x86_64.deb">Linux</a>
         </td>
         <td>XiaoHongShu
-            <a href="https://github.com/tw93/Pake/releases/latest/download/XiaoHongShu.dmg">Mac</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/XiaoHongShu_x64.msi">Windows</a>
-            <a href="https://github.com/tw93/Pake/releases/latest/download/XiaoHongShu_x86_64.deb">Linux</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/XiaoHongShu.dmg">Mac</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/XiaoHongShu_x64.msi">Windows</a>
+            <a href="https://github.com/BghitCode/bghitapp/releases/latest/download/XiaoHongShu_x86_64.deb">Linux</a>
         </td>
     </tr>
     <tr>
@@ -134,7 +130,7 @@
 
 <details>
 
-<summary>🏂 更多应用可去 <a href="https://github.com/tw93/Pake/releases">Release</a>下载，<b>此外点击可展开快捷键说明</b></summary>
+<summary>🏂 更多应用可去 <a href="https://github.com/BghitCode/bghitapp/releases">Release</a>下载，<b>此外点击可展开快捷键说明</b></summary>
 
 <br/>
 
@@ -161,17 +157,17 @@
 
 ## 命令行一键打包
 
-![Pake](https://raw.githubusercontent.com/tw93/static/main/pake/pake1.gif)
+![BghitApp](https://raw.githubusercontent.com/tw93/static/main/bghitapp/bghitapp1.gif)
 
 ```bash
-# 安装 Pake CLI
-pnpm install -g pake-cli
+# 安装 BghitApp CLI
+pnpm install -g @bghitcode/bghitapp
 
 # 基础用法 - 自动获取网站图标
-pake https://github.com --name GitHub
+bghitapp https://github.com --name GitHub
 
 # 高级用法：自定义选项
-pake https://weekly.tw93.fun --name Weekly --icon https://cdn.tw93.fun/pake/weekly.icns --width 1200 --height 800 --hide-title-bar
+bghitapp https://example.com --name MyApp --width 1200 --height 800 --hide-title-bar
 ```
 
 首次打包需要安装环境会比较慢，后续很快。完整参数说明查看 [CLI 使用指南](docs/cli-usage_CN.md)，不想用命令行可以试试 [GitHub Actions 在线构建](docs/github-actions-usage_CN.md)。
@@ -195,17 +191,13 @@ pnpm run build
 
 ## 开发者
 
-Pake 的发展离不开这些优秀的贡献者 ❤️
+BghitApp 的发展离不开这些优秀的贡献者 ❤️
 
-<a href="https://github.com/tw93/Pake/graphs/contributors">
-  <img src="https://raw.githubusercontent.com/tw93/Pake/main/CONTRIBUTORS.svg?sanitize=true" alt="Contributors" width="1000" />
+<a href="https://github.com/BghitCode/bghitapp/graphs/contributors">
+  <img src="./CONTRIBUTORS.svg?v=2" alt="Contributors" width="1000" />
 </a>
 
 ## 支持
 
-<a href="https://cats.tw93.fun?name=Pake"><img src="https://cdn.jsdelivr.net/gh/tw93/sponsors@main/assets/sponsors.svg" width="1000px" /></a>
-
-1. 我有两只猫，一只叫汤圆，一只可乐，假如 Pake 让你生活更美好，可以给她们 <a href="https://cats.tw93.fun?name=Pake" target="_blank">喂罐头 🥩</a>。
-2. 如果你喜欢 Pake，可以在 Github Star，更欢迎 [推荐](https://twitter.com/intent/tweet?url=https://github.com/tw93/Pake&text=Pake%20-%20一键打包网页生成轻量桌面应用，比%20Electron%20小%2020%20倍，支持%20macOS%20Windows%20Linux) 给志同道合的朋友使用。
-3. 可以关注我的 [Twitter](https://twitter.com/HiTw93) 获取最新的 Pake 更新消息，也欢迎加入 [Telegram](https://t.me/+GclQS9ZnxyI2ODQ1) 聊天群。
-4. 希望大伙玩的过程中有一种学习新技术的喜悦感，发现适合做成桌面 App 的网页也欢迎告诉我。
+- 如果你喜欢 BghitApp，可以在 Github Star，或分享给朋友使用。
+- 由 <a href="https://bghitcode.com" target="_blank">BghitCode</a> 构建，联系：contact@bghitcode.com

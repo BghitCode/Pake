@@ -1,7 +1,7 @@
 // Lightweight in-page toast used by Rust `show_toast` (download status, etc).
-// Kept tiny and always loaded so the Rust side can rely on `window.pakeToast`.
+// Kept tiny and always loaded so the Rust side can rely on `window.bghitappToast`.
 document.addEventListener("DOMContentLoaded", () => {
-  function pakeToast(msg) {
+  function bghitappToast(msg) {
     const m = document.createElement("div");
     m.innerHTML = msg;
     m.style.cssText =
@@ -18,5 +18,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 3000);
   }
 
-  window.pakeToast = pakeToast;
+  window.bghitappToast = bghitappToast;
 });

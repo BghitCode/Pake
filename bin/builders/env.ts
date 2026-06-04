@@ -93,7 +93,7 @@ export async function detectPackageManager(): Promise<'pnpm' | 'npm'> {
       (await detectNpm(execa))
     ) {
       logger.warn(
-        `✼ Detected pnpm v${stdout.trim()}, but Pake is pinned to ${packageJson.packageManager}; using npm for package installation instead.`,
+        `✼ Detected pnpm v${stdout.trim()}, but BghitApp is pinned to ${packageJson.packageManager}; using npm for package installation instead.`,
       );
       packageManagerCache = 'npm';
       return 'npm';
@@ -155,7 +155,7 @@ function isGeneratedCnMirrorConfig(
 
 /**
  * Toggles `.cargo/config.toml` to point at rsproxy.cn when the user opts in
- * via `PAKE_USE_CN_MIRROR=1`, and removes the auto-generated mirror config
+ * via `BGHITAPP_USE_CN_MIRROR=1`, and removes the auto-generated mirror config
  * (or warns about a manual one) when they opt out.
  */
 export async function configureCargoRegistry(

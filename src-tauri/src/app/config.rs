@@ -81,7 +81,7 @@ pub type UserAgent = PlatformSpecific<String>;
 pub type FunctionON = PlatformSpecific<bool>;
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct PakeConfig {
+pub struct BghitappConfig {
     pub windows: Vec<WindowConfig>,
     pub user_agent: UserAgent,
     pub system_tray: FunctionON,
@@ -93,7 +93,7 @@ pub struct PakeConfig {
     pub multi_window: bool,
 }
 
-impl PakeConfig {
+impl BghitappConfig {
     pub fn show_system_tray(&self) -> bool {
         self.system_tray.copied()
     }

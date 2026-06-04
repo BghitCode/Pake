@@ -8,21 +8,21 @@ body:
       value: |
         Thank you very much for your feedback!
 
-        For suggestions or help, please consider using [Github Discussion](https://github.com/tw93/Pake/discussions) instead.
+        For suggestions or help, please consider using [Github Discussion](https://github.com/BghitCode/Pake/discussions) instead.
   - type: checkboxes
     attributes:
       label: Search before asking
       description: >
-        🙊 Check out [Issues](https://github.com/tw93/Pake/issues?q=) before reporting. Please provide your system version, screencasts, screenshots, way to reproduce, and the expected result – helpful for me to understand and fix up this issue! Besides, for suggestions or something else, head to [Pake's Discussions Platform](https://github.com/tw93/Pake/discussions).
+        🙊 Check out [Issues](https://github.com/BghitCode/Pake/issues?q=) before reporting. Please provide your system version, screencasts, screenshots, way to reproduce, and the expected result – helpful for me to understand and fix up this issue! Besides, for suggestions or something else, head to [BghitApp's Discussions Platform](https://github.com/BghitCode/Pake/discussions).
       options:
         - label: >
-            I searched in the [issues](https://github.com/tw93/Pake/issues?q=) and found nothing similar.
+            I searched in the [issues](https://github.com/BghitCode/Pake/issues?q=) and found nothing similar.
           required: true
   - type: textarea
     attributes:
-      label: Pake version
+      label: BghitApp version
       description: >
-        Please provide the version of Pake you are using (e.g., `pake --version`). If you are using the main/dev branch, please provide the commit id.
+        Please provide the version of BghitApp you are using (e.g., \`bghitapp --version\`). If you are using the main/dev branch, please provide the commit id.
     validations:
       required: true
   - type: textarea
@@ -62,7 +62,7 @@ body:
     attributes:
       label: Build Command
       description: >
-        Please provide the exact command you used to build the app (e.g., `pake https://github.com --name GitHub`).
+        Please provide the exact command you used to build the app (e.g., \`bghitapp https://github.com --name GitHub\`).
     validations:
       required: true
   - type: textarea
@@ -88,7 +88,7 @@ body:
     attributes:
       label: Are you willing to submit a PR?
       description: >
-        We look forward to the community of developers or users helping solve Pake problems together. If you are willing to submit a PR to fix this problem, please check the box.
+        We look forward to the community of developers or users helping solve BghitApp problems together. If you are willing to submit a PR to fix this problem, please check the box.
       options:
         - label: I'm willing to submit a PR!
   - type: markdown

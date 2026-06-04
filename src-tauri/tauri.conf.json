@@ -1,13 +1,13 @@
 {
-  "productName": "Weekly",
-  "identifier": "com.pake.weekly",
-  "version": "3.11.7",
+  "productName": "BghitApp",
+  "identifier": "com.bghitcode.bghitapp",
+  "version": "1.0.0",
   "app": {
     "withGlobalTauri": true,
     "trayIcon": {
       "iconPath": "png/weekly_512.png",
       "iconAsTemplate": false,
-      "id": "pake-tray"
+      "id": "bghitapp-tray"
     },
     "security": {
       "headers": {},

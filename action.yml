@@ -1,6 +1,6 @@
-name: "Pake Web App Builder"
-description: "Transform any webpage into a lightweight desktop app using Rust and Tauri"
-author: "tw93"
+name: "BghitApp Web App Builder"
+description: "Turn any webpage into a lightweight desktop app using Rust and Tauri — by BghitCode"
+author: "BghitCode"
 branding:
   icon: "package"
   color: "blue"
@@ -51,7 +51,7 @@ runs:
         # Install Node.js dependencies
         npm install
 
-        # Build Pake CLI if not exists
+        # Build BghitApp CLI if not exists
         if [ ! -f "dist/cli.js" ]; then
           npm run cli:build
         fi
@@ -66,7 +66,7 @@ runs:
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
         fi
 
-    - name: Build Pake App
+    - name: Build BghitApp
       shell: bash
       run: |
         # Build arguments
@@ -87,9 +87,9 @@ runs:
 
         # Create output directory
         mkdir -p "${{ inputs.output-dir }}"
-        export PAKE_CREATE_APP=1
+        export BGHITAPP_CREATE_APP=1
 
-        # Run Pake CLI
+        # Run BghitApp CLI
         echo "🔧 Running: node dist/cli.js ${ARGS[*]}"
         node dist/cli.js "${ARGS[@]}"
 

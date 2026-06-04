@@ -1,7 +1,7 @@
 export type SupportedPlatform = 'win32' | 'darwin' | 'linux';
 export type TauriPlatform = 'windows' | 'macos' | 'linux';
 
-export interface PakeCliOptions {
+export interface BghitappCliOptions {
   // Application name
   name?: string;
 
@@ -148,7 +148,7 @@ export interface PakeCliOptions {
   offline: boolean;
 }
 
-export interface PakeAppOptions extends PakeCliOptions {
+export interface BghitappAppOptions extends BghitappCliOptions {
   identifier: string;
 }
 
@@ -190,7 +190,7 @@ export interface WindowConfig {
   offline: boolean;
 }
 
-export interface PakeConfig {
+export interface BghitappConfig {
   windows: WindowConfig[];
   user_agent: PlatformSpecific<string>;
   system_tray: PlatformSpecific<boolean>;
@@ -201,12 +201,12 @@ export interface PakeConfig {
   inject?: string[];
 }
 
-export interface PakeTauriConfig {
+export interface BghitappTauriConfig {
   productName?: string;
   identifier?: string;
   version?: string;
   mainBinaryName?: string;
-  pake: PakeConfig;
+  bghitapp: BghitappConfig;
   bundle: {
     icon?: string[];
     resources?: string[];

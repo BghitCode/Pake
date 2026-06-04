@@ -1,4 +1,4 @@
-use crate::app::config::PakeConfig;
+use crate::app::config::BghitappConfig;
 use crate::util::{
     check_file_or_append, get_data_dir, get_download_message_with_lang, show_toast, MessageType,
 };
@@ -32,15 +32,15 @@ fn build_proxy_browser_arg(url: &Url) -> Option<String> {
 }
 
 pub struct MultiWindowState {
-    pub pake_config: PakeConfig,
+    pub bghitapp_config: BghitappConfig,
     pub tauri_config: Config,
     next_window_index: AtomicU32,
 }
 
 impl MultiWindowState {
-    pub fn new(pake_config: PakeConfig, tauri_config: Config) -> Self {
+    pub fn new(bghitapp_config: BghitappConfig, tauri_config: Config) -> Self {
         Self {
-            pake_config,
+            bghitapp_config,
             tauri_config,
             next_window_index: AtomicU32::new(0),
         }
@@ -48,16 +48,17 @@ impl MultiWindowState {
 
     fn next_window_label(&self) -> String {
         let index = self.next_window_index.fetch_add(1, Ordering::Relaxed) + 1;
-        format!("pake-{index}")
+        format!("bghitapp-{index}")
     }
 }
 
 pub fn set_window(
     app: &AppHandle,
-    config: &PakeConfig,
+    config: &BghitappConfig,
+
     tauri_config: &Config,
 ) -> tauri::Result<WebviewWindow> {
-    build_window_with_label(app, config, tauri_config, "pake")
+    build_window_with_label(app, config, tauri_config, "bghitapp")
 }
 
 pub fn build_splash_window(
@@ -104,7 +105,7 @@ pub fn build_splash_window(
 pub fn open_additional_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
     let state = app.state::<MultiWindowState>();
     let label = state.next_window_label();
-    build_window_with_label(app, &state.pake_config, &state.tauri_config, &label)
+    build_window_with_label(app, &state.bghitapp_config, &state.tauri_config, &label)
 }
 
 struct WindowBuildOptions<'a> {
@@ -116,7 +117,7 @@ struct WindowBuildOptions<'a> {
 
 fn open_requested_window(
     app: &AppHandle,
-    config: &PakeConfig,
+    config: &BghitappConfig,
     tauri_config: &Config,
     target_url: Url,
     features: NewWindowFeatures,
@@ -165,14 +166,14 @@ pub fn open_additional_window_safe(app: &AppHandle) {
 
 fn build_window_with_label(
     app: &AppHandle,
-    config: &PakeConfig,
+    config: &BghitappConfig,
     tauri_config: &Config,
     label: &str,
 ) -> tauri::Result<WebviewWindow> {
     let window_config = config.windows.first().ok_or_else(|| {
         tauri::Error::Io(std::io::Error::new(
             std::io::ErrorKind::InvalidData,
-            "pake.json must define at least one window configuration",
+            "bghitapp.json must define at least one window configuration",
         ))
     })?;
     let url = match window_config.url_type.as_str() {
@@ -181,7 +182,7 @@ fn build_window_with_label(
                 tauri::Error::Io(std::io::Error::new(
                     std::io::ErrorKind::InvalidInput,
                     format!(
-                        "Invalid 'web' url '{}' in pake.json: {err}",
+                        "Invalid 'web' url '{}' in bghitapp.json: {err}",
                         window_config.url
                     ),
                 ))
@@ -212,7 +213,7 @@ fn build_window_with_label(
 
 fn build_window(
     app: &AppHandle,
-    config: &PakeConfig,
+    config: &BghitappConfig,
     tauri_config: &Config,
     opts: WindowBuildOptions,
 ) -> tauri::Result<WebviewWindow> {
@@ -225,20 +226,20 @@ fn build_window(
     let package_name = tauri_config
         .product_name
         .clone()
-        .unwrap_or_else(|| "pake".to_string());
+        .unwrap_or_else(|| "bghitapp".to_string());
     let _data_dir = get_data_dir(app, package_name).map_err(tauri::Error::Io)?;
 
     let window_config = config.windows.first().ok_or_else(|| {
         tauri::Error::Io(std::io::Error::new(
             std::io::ErrorKind::InvalidData,
-            "pake.json must define at least one window configuration",
+            "bghitapp.json must define at least one window configuration",
         ))
     })?;
 
     let user_agent = config.user_agent.get();
 
     let config_script = format!(
-        "window.pakeConfig = {}",
+        "window.bghitappConfig = {}",
         serde_json::to_string(&window_config).unwrap_or_else(|_| "{}".to_string())
     );
 
@@ -317,16 +318,16 @@ fn build_window(
             ) {
                 Ok(window) => NewWindowResponse::Create { window },
                 Err(error) => {
-                    eprintln!("[Pake] Failed to open requested window: {error}");
+                    eprintln!("[BghitApp] Failed to open requested window: {error}");
                     NewWindowResponse::Deny
                 }
             }
         });
     }
 
-    // Add initialization scripts. Order matters: pakeConfig must land before
+    // Add initialization scripts. Order matters: bghitappConfig must land before
     // any script that reads it (e.g. fullscreen polyfill checks for an opt-out
-    // flag), and toast must register `window.pakeToast` before Rust code
+    // flag), and toast must register `window.bghitappToast` before Rust code
     // calls show_toast().
     window_builder = window_builder
         .initialization_script(&config_script)
@@ -512,7 +513,7 @@ fn build_window(
                         }
                     }
                     Err(error) => {
-                        eprintln!("[Pake] Failed to resolve download dir: {error}");
+                        eprintln!("[BghitApp] Failed to resolve download dir: {error}");
                     }
                 }
                 true
@@ -522,7 +523,7 @@ fn build_window(
                 path: _,
                 success,
             } => {
-                if let Some(window) = download_handle.get_webview_window("pake") {
+                if let Some(window) = download_handle.get_webview_window("bghitapp") {
                     let message_type = if success {
                         MessageType::Success
                     } else {

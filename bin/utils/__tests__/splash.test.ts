@@ -58,7 +58,7 @@ describe('generateOfflineHtml', () => {
   it('has localStorage for URL persistence', () => {
     const html = generateOfflineHtml();
     expect(html).toContain('localStorage');
-    expect(html).toContain('pake_original_url');
+    expect(html).toContain('bghitapp_original_url');
   });
 });
 

@@ -11,7 +11,7 @@ vi.mock('execa', () => ({
 
 vi.mock('@/utils/dir', () => ({
   npmDirectory: process.cwd(),
-  tauriConfigDirectory: path.join(process.cwd(), 'src-tauri', '.pake'),
+  tauriConfigDirectory: path.join(process.cwd(), 'src-tauri', '.bghitapp'),
 }));
 
 import BaseBuilder from '@/builders/BaseBuilder';
@@ -48,7 +48,7 @@ git-fetch-with-cli = true
 
 async function createCargoFixture(projectConfig?: string) {
   const tempDir = await fsExtra.mkdtemp(
-    path.join(os.tmpdir(), 'pake-base-builder-'),
+    path.join(os.tmpdir(), 'bghitapp-base-builder-'),
   );
   tempDirs.push(tempDir);
 
@@ -121,7 +121,7 @@ describe('BaseBuilder guards', () => {
     // CN-mirror file and the project config end up identical we should not
     // crash with "source and destination must not be the same".
     const tempDir = await fsExtra.mkdtemp(
-      path.join(os.tmpdir(), 'pake-base-builder-same-'),
+      path.join(os.tmpdir(), 'bghitapp-base-builder-same-'),
     );
     tempDirs.push(tempDir);
     const tauriSrcPath = path.join(tempDir, 'src-tauri');
@@ -263,7 +263,7 @@ describe('BaseBuilder guards', () => {
     expect(builder.getFileName()).toBe('test-app');
   });
 
-  it('builds with generated .pake config and cli-build feature', () => {
+  it('builds with generated .bghitapp config and cli-build feature', () => {
     const builder = new TestBuilder({
       debug: false,
       targets: 'deb',
@@ -272,19 +272,19 @@ describe('BaseBuilder guards', () => {
     const command = (builder as any).getBuildCommand('pnpm');
     const normalizedCommand = command.replace(/\\/g, '/');
 
-    expect(normalizedCommand).toContain('src-tauri/.pake/tauri.conf.json');
+    expect(normalizedCommand).toContain('src-tauri/.bghitapp/tauri.conf.json');
     expect(command).toContain('--features cli-build');
   });
 
-  it('tracks generated Pake config files in the Cargo build script', async () => {
+  it('tracks generated BghitApp config files in the Cargo build script', async () => {
     const buildScript = await fsExtra.readFile(
       path.join(process.cwd(), 'src-tauri', 'build.rs'),
       'utf8',
     );
 
-    expect(buildScript).toContain('cargo:rerun-if-changed=.pake/pake.json');
+    expect(buildScript).toContain('cargo:rerun-if-changed=.bghitapp/bghitapp.json');
     expect(buildScript).toContain(
-      'cargo:rerun-if-changed=.pake/tauri.conf.json',
+      'cargo:rerun-if-changed=.bghitapp/tauri.conf.json',
     );
   });
 });

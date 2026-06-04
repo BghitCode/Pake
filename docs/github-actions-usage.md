@@ -2,18 +2,18 @@
 
 <h4 align="right"><strong>English</strong> | <a href="github-actions-usage_CN.md">简体中文</a></h4>
 
-Build Pake apps online without installing development tools locally.
+Build BghitApp apps online without installing development tools locally.
 
 ## Quick Steps
 
 ### 1. Fork Repository
 
-[Fork this project](https://github.com/tw93/Pake/fork)
+[Fork this project](https://github.com/BghitCode/bghitapp/fork)
 
 ### 2. Run Workflow
 
 1. Go to Actions tab in your forked repository
-2. Select `Build App With Pake CLI`
+2. Select `Build App With BghitApp CLI`
 3. Fill in the form (same parameters as [CLI options](cli-usage.md))
 4. Click `Run Workflow`
 

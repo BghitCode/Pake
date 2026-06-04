@@ -1,13 +1,13 @@
 import path from 'path';
 import BaseBuilder from './BaseBuilder';
-import { PakeAppOptions } from '@/types';
+import { BghitappAppOptions } from '@/types';
 import tauriConfig from '@/helpers/tauriConfig';
 
 export default class WinBuilder extends BaseBuilder {
   private buildFormat: string = 'msi';
   private buildArch: string;
 
-  constructor(options: PakeAppOptions) {
+  constructor(options: BghitappAppOptions) {
     super(options);
     const validArchs = ['x64', 'arm64', 'auto'];
     this.buildArch = validArchs.includes(options.targets || '')
@@ -24,7 +24,7 @@ export default class WinBuilder extends BaseBuilder {
   }
 
   protected getBuildCommand(packageManager: string = 'pnpm'): string {
-    const configPath = path.join('src-tauri', '.pake', 'tauri.conf.json');
+    const configPath = path.join('src-tauri', '.bghitapp', 'tauri.conf.json');
     const buildTarget = this.getTauriTarget(this.buildArch, 'win32');
 
     if (!buildTarget) {

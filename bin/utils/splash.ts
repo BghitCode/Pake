@@ -160,7 +160,7 @@ export function generateOfflineHtml(): string {
       btn.classList.add('loading');
       btn.disabled = true;
       setTimeout(() => {
-        const original = localStorage.getItem('pake_original_url');
+        const original = localStorage.getItem('bghitapp_original_url');
         if (original) window.location.href = original;
         else window.location.reload();
       }, 3000);
@@ -173,7 +173,7 @@ export function generateOfflineHtml(): string {
 export async function fetchOgImage(url: string): Promise<string | null> {
   try {
     const response = await fetch(url, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Pake/1.0)' },
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; BghitApp/1.0)' },
       signal: AbortSignal.timeout(10000),
     });
     if (!response.ok) return null;

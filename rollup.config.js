@@ -18,7 +18,7 @@ if (process.platform === "darwin") {
 }
 
 const isProduction = process.env.NODE_ENV === "production";
-const devPlugins = !isProduction ? [pakeCliDevPlugin()] : [];
+const devPlugins = !isProduction ? [bghitAppDevPlugin()] : [];
 
 export default {
   input: isProduction ? "bin/cli.ts" : "bin/dev.ts",
@@ -71,7 +71,7 @@ export default {
   ],
 };
 
-function pakeCliDevPlugin() {
+function bghitAppDevPlugin() {
   let devChildProcess;
   let cliChildProcess;
 
@@ -84,7 +84,7 @@ function pakeCliDevPlugin() {
   };
 
   return {
-    name: "pake-cli-dev-plugin",
+    name: "bghitapp-dev-plugin",
     buildEnd() {
       const command = "node";
       // Pass through arguments, ignoring the first 2 (node rollup) and filtering out rollup-specifics
@@ -112,7 +112,7 @@ function pakeCliDevPlugin() {
         devHasStarted = true;
 
         const packageManager = detectPackageManager();
-        const command = `${packageManager} run tauri dev --config ./src-tauri/.pake/tauri.conf.json -- --features cli-build`;
+        const command = `${packageManager} run tauri dev --config ./src-tauri/.bghitapp/tauri.conf.json -- --features cli-build`;
 
         devChildProcess = exec(command);
 

@@ -2,7 +2,7 @@
 
 <h4 align="right"><strong>English</strong> | <a href="advanced-usage_CN.md">简体中文</a></h4>
 
-Customize Pake apps with style modifications, JavaScript injection, and container communication.
+Customize BghitApp apps with style modifications, JavaScript injection, and container communication.
 
 ## Style Customization
 
@@ -42,7 +42,7 @@ document.addEventListener("keydown", (e) => {
 
 ### Download Error Notifications
 
-Pake automatically provides user-friendly download error notifications:
+BghitApp automatically provides user-friendly download error notifications:
 
 **Features:**
 
@@ -78,7 +78,7 @@ The download system automatically handles:
 
 ## Container Communication
 
-Send messages between web content and Pake container.
+Send messages between web content and BghitApp container.
 
 **Web Side (JavaScript):**
 
@@ -100,7 +100,7 @@ fn handle_scroll(scroll_y: f64, scroll_x: f64) {
 
 ## Window Configuration
 
-Configure window properties in `pake.json`:
+Configure window properties in `bghitapp.json`:
 
 ```json
 {
@@ -119,18 +119,18 @@ Configure window properties in `pake.json`:
 Package local HTML/CSS/JS files:
 
 ```bash
-pake ./my-app/index.html --name my-static-app --use-local-file
+bghitapp ./my-app/index.html --name my-static-app --use-local-file
 ```
 
-Requirements: Pake CLI >= 3.0.0
+Requirements: BghitApp CLI >= 3.0.0
 
 ## macOS Media Permissions
 
-By default, apps built with Pake do not request camera or microphone access. For sites that require these (for example, video conferencing or voice input), pass the relevant flags at build time:
+By default, apps built with BghitApp do not request camera or microphone access. For sites that require these (for example, video conferencing or voice input), pass the relevant flags at build time:
 
 ```bash
-pake https://chatgpt.com --name ChatGPT --microphone
-pake https://meet.google.com --name GoogleMeet --camera --microphone
+bghitapp https://chatgpt.com --name ChatGPT --microphone
+bghitapp https://meet.google.com --name GoogleMeet --camera --microphone
 ```
 
 - `--microphone` — grants microphone access (`com.apple.security.device.audio-input`)
@@ -143,23 +143,23 @@ macOS will prompt the user for permission on first use. Only add these flags for
 If you need separate apps for the same site, for example two Gmail accounts with different login state, build them with different app names:
 
 ```bash
-pake https://gmail.com --name "Gmail Work"
-pake https://gmail.com --name "Gmail Personal"
+bghitapp https://gmail.com --name "Gmail Work"
+bghitapp https://gmail.com --name "Gmail Personal"
 ```
 
-Pake now generates a different app identifier for each `URL + name` pair, so these apps can be installed as separate desktop apps instead of resolving to the same app.
+BghitApp now generates a different app identifier for each `URL + name` pair, so these apps can be installed as separate desktop apps instead of resolving to the same app.
 
-For advanced cases, Pake also supports a hidden `--identifier` option if you need to pin the bundle identifier explicitly:
+For advanced cases, BghitApp also supports a hidden `--identifier` option if you need to pin the bundle identifier explicitly:
 
 ```bash
-pake https://gmail.com --name "Gmail Work" --identifier com.example.gmail.work
+bghitapp https://gmail.com --name "Gmail Work" --identifier com.example.gmail.work
 ```
 
 `--multi-instance` is different. It only allows multiple processes for the same packaged app, it does not create separate app identities.
 
 ## Project Structure
 
-Understanding Pake's codebase structure will help you navigate and contribute effectively:
+Understanding BghitApp's codebase structure will help you navigate and contribute effectively:
 
 ```tree
 ├── bin/                    # CLI source code (TypeScript)
@@ -174,7 +174,7 @@ Understanding Pake's codebase structure will help you navigate and contribute ef
 │   │   └── lib.rs         # Application entry point
 │   ├── icons/             # macOS icons (.icns)
 │   ├── png/               # Windows/Linux icons (.ico, .png)
-│   ├── pake.json          # App configuration
+│   ├── bghitapp.json          # App configuration
 │   └── tauri.*.conf.json  # Platform-specific configs
 ├── scripts/               # Build and utility scripts
 └── tests/                 # Test suites
@@ -239,7 +239,7 @@ sudo apt install libdbus-1-dev \
 
 ```bash
 # Clone the repository
-git clone https://github.com/tw93/Pake.git
+git clone https://github.com/BghitCode/bghitapp.git
 cd Pake
 
 # Install dependencies
@@ -270,7 +270,7 @@ For CLI development with hot reloading, modify the `DEFAULT_DEV_PAKE_OPTIONS` co
 ```typescript
 export const DEFAULT_DEV_PAKE_OPTIONS: PakeCliOptions & { url: string } = {
   ...DEFAULT_PAKE_OPTIONS,
-  url: "https://weekly.tw93.fun/en",
+  url: "https://example.com",
   name: "Weekly",
 };
 ```
@@ -281,7 +281,7 @@ Then run:
 pnpm run cli:dev
 ```
 
-This script reads the configuration and packages the specified app in watch mode, with hot updates for `pake-cli` code changes.
+This script reads the configuration and packages the specified app in watch mode, with hot updates for `@bghitcode/bghitapp` code changes.
 
 ### Testing Guide
 
@@ -327,7 +327,7 @@ Useful optional flags:
 - `--no-builder`: skip builder tests
 - `--no-build`: skip the real build smoke test and the follow-up release workflow smoke test
 - `--e2e`: add end-to-end configuration tests
-- `--pake-cli`: add GitHub Actions related checks
+- `--@bghitcode/bghitapp`: add GitHub Actions related checks
 
 If you only want the release workflow smoke test, run `node ./tests/release.js` directly.
 
@@ -347,4 +347,4 @@ If you only want the release workflow smoke test, run `node ./tests/release.js` 
 ## Links
 
 - [CLI Documentation](cli-usage.md)
-- [GitHub Discussions](https://github.com/tw93/Pake/discussions)
+- [GitHub Discussions](https://github.com/BghitCode/bghitapp/discussions)

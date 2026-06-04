@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { buildWindowConfigOverrides } from '../../bin/helpers/merge';
-import { DEFAULT_PAKE_OPTIONS } from '../../bin/defaults';
-import type { PakeAppOptions } from '../../bin/types';
+import { DEFAULT_BGHITAPP_OPTIONS } from '../../bin/defaults';
+import type { BghitappAppOptions } from '../../bin/types';
 
-function makeOptions(overrides: Partial<PakeAppOptions> = {}): PakeAppOptions {
+function makeOptions(overrides: Partial<BghitappAppOptions> = {}): BghitappAppOptions {
   return {
-    ...DEFAULT_PAKE_OPTIONS,
-    identifier: 'com.pake.test',
+    ...DEFAULT_BGHITAPP_OPTIONS,
+    identifier: 'com.bghitapp.test',
     ...overrides,
   };
 }

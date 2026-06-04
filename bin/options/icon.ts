@@ -16,7 +16,7 @@ import {
   type IconSource,
 } from '@/utils/icon-source';
 import { generateLinuxPackageName, getSafeAppName } from '@/utils/name';
-import { PakeAppOptions } from '@/types';
+import { BghitappAppOptions } from '@/types';
 import {
   ensureMultiResolutionIco,
   writeIcoWithPreferredSize,
@@ -80,7 +80,7 @@ function getIconBaseName(appName: string): string {
   const baseName = IS_LINUX
     ? generateLinuxPackageName(appName)
     : getSafeAppName(appName);
-  return baseName || 'pake-app';
+  return baseName || 'bghitapp-app';
 }
 
 async function copyWindowsIconIfNeeded(
@@ -350,7 +350,7 @@ async function getDefaultIcon(): Promise<string> {
       return defaultPngPath;
     }
 
-    logger.warn('✼ No default icon found, will use pake default.');
+    logger.warn('✼ No default icon found, will use bghitapp default.');
     return '';
   }
 
@@ -365,7 +365,7 @@ async function getDefaultIcon(): Promise<string> {
  * Main icon handling function with simplified logic flow
  */
 export async function handleIcon(
-  options: PakeAppOptions,
+  options: BghitappAppOptions,
   url?: string,
 ): Promise<string> {
   // Handle custom icon (local file or remote URL)

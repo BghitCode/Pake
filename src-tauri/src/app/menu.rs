@@ -11,8 +11,8 @@ pub fn set_app_menu(
     allow_multi_window: bool,
     enable_find: bool,
 ) -> tauri::Result<()> {
-    let pake_version = env!("CARGO_PKG_VERSION");
-    let pake_menu_item_title = format!("Built with Pake V{}", pake_version);
+    let bghitapp_version = env!("CARGO_PKG_VERSION");
+    let bghitapp_menu_item_title = format!("Built with BghitApp V{}", bghitapp_version);
 
     let window_submenu = window_menu(app)?;
 
@@ -25,7 +25,7 @@ pub fn set_app_menu(
             &view_menu(app)?,
             &navigation_menu(app)?,
             &window_submenu,
-            &help_menu(app, &pake_menu_item_title)?,
+            &help_menu(app, &bghitapp_menu_item_title)?,
         ],
     )?;
 
@@ -39,11 +39,11 @@ pub fn set_app_menu(
 }
 
 fn app_menu(app: &AppHandle<Wry>) -> tauri::Result<Submenu<Wry>> {
-    let app_menu = Submenu::new(app, "Pake", true)?;
+    let app_menu = Submenu::new(app, "BghitApp", true)?;
     let about_metadata = AboutMetadata::default();
     app_menu.append(&PredefinedMenuItem::about(
         app,
-        Some("Pake"),
+        Some("BghitApp"),
         Some(about_metadata),
     )?)?;
     app_menu.append(&PredefinedMenuItem::separator(app)?)?;
@@ -221,7 +221,7 @@ fn window_menu(app: &AppHandle<Wry>) -> tauri::Result<Submenu<Wry>> {
 
 fn help_menu(app: &AppHandle<Wry>, title: &str) -> tauri::Result<Submenu<Wry>> {
     let help_menu = Submenu::new(app, "Help", true)?;
-    let github_item = MenuItem::with_id(app, "pake_github_link", title, true, None::<&str>)?;
+    let github_item = MenuItem::with_id(app, "bghitapp_github_link", title, true, None::<&str>)?;
     help_menu.append(&github_item)?;
     Ok(help_menu)
 }
@@ -231,19 +231,19 @@ pub fn handle_menu_click(app_handle: &AppHandle, id: &str) {
         "new_window" => {
             open_additional_window_safe(app_handle);
         }
-        "pake_github_link" => {
+        "bghitapp_github_link" => {
             let _ = app_handle
                 .opener()
-                .open_url("https://github.com/tw93/Pake", None::<&str>);
+                .open_url("https://github.com/BghitCode/bghitapp", None::<&str>);
         }
         "reload" => {
-            if let Some(window) = app_handle.get_webview_window("pake") {
+            if let Some(window) = app_handle.get_webview_window("bghitapp") {
                 let _ = window.eval("window.location.reload()");
             }
         }
         "toggle_devtools" => {
             #[cfg(debug_assertions)] // Only allow in debug builds
-            if let Some(window) = app_handle.get_webview_window("pake") {
+            if let Some(window) = app_handle.get_webview_window("bghitapp") {
                 if window.is_devtools_open() {
                     window.close_devtools();
                 } else {
@@ -252,69 +252,69 @@ pub fn handle_menu_click(app_handle: &AppHandle, id: &str) {
             }
         }
         "zoom_in" => {
-            if let Some(window) = app_handle.get_webview_window("pake") {
+            if let Some(window) = app_handle.get_webview_window("bghitapp") {
                 let _ = window.eval("zoomIn()");
             }
         }
         "zoom_out" => {
-            if let Some(window) = app_handle.get_webview_window("pake") {
+            if let Some(window) = app_handle.get_webview_window("bghitapp") {
                 let _ = window.eval("zoomOut()");
             }
         }
         "zoom_reset" => {
-            if let Some(window) = app_handle.get_webview_window("pake") {
+            if let Some(window) = app_handle.get_webview_window("bghitapp") {
                 let _ = window.eval("setZoom('100%')");
             }
         }
         "go_back" => {
-            if let Some(window) = app_handle.get_webview_window("pake") {
+            if let Some(window) = app_handle.get_webview_window("bghitapp") {
                 let _ = window.eval("window.history.back()");
             }
         }
         "go_forward" => {
-            if let Some(window) = app_handle.get_webview_window("pake") {
+            if let Some(window) = app_handle.get_webview_window("bghitapp") {
                 let _ = window.eval("window.history.forward()");
             }
         }
         "go_home" => {
-            if let Some(window) = app_handle.get_webview_window("pake") {
-                let _ = window.eval("window.location.href = window.pakeConfig.url");
+            if let Some(window) = app_handle.get_webview_window("bghitapp") {
+                let _ = window.eval("window.location.href = window.bghitappConfig.url");
             }
         }
         "copy_url" => {
-            if let Some(window) = app_handle.get_webview_window("pake") {
+            if let Some(window) = app_handle.get_webview_window("bghitapp") {
                 let _ = window.eval("navigator.clipboard.writeText(window.location.href)");
             }
         }
         "paste_and_match_style" => {
-            if let Some(window) = app_handle.get_webview_window("pake") {
+            if let Some(window) = app_handle.get_webview_window("bghitapp") {
                 let _ = window.eval("triggerPasteAsPlainText()");
             }
         }
         "find" => {
-            if let Some(window) = app_handle.get_webview_window("pake") {
-                let _ = window.eval("window.pakeFind?.open()");
+            if let Some(window) = app_handle.get_webview_window("bghitapp") {
+                let _ = window.eval("window.bghitappFind?.open()");
             }
         }
         "find_next" => {
-            if let Some(window) = app_handle.get_webview_window("pake") {
-                let _ = window.eval("window.pakeFind?.next()");
+            if let Some(window) = app_handle.get_webview_window("bghitapp") {
+                let _ = window.eval("window.bghitappFind?.next()");
             }
         }
         "find_previous" => {
-            if let Some(window) = app_handle.get_webview_window("pake") {
-                let _ = window.eval("window.pakeFind?.previous()");
+            if let Some(window) = app_handle.get_webview_window("bghitapp") {
+                let _ = window.eval("window.bghitappFind?.previous()");
             }
         }
         "clear_cache_restart" => {
-            if let Some(window) = app_handle.get_webview_window("pake") {
+            if let Some(window) = app_handle.get_webview_window("bghitapp") {
                 if let Ok(_) = window.clear_all_browsing_data() {
                     app_handle.restart();
                 }
             }
         }
         "always_on_top" => {
-            if let Some(window) = app_handle.get_webview_window("pake") {
+            if let Some(window) = app_handle.get_webview_window("bghitapp") {
                 let is_on_top = window.is_always_on_top().unwrap_or(false);
                 let _ = window.set_always_on_top(!is_on_top);
             }

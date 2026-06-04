@@ -2,7 +2,7 @@
 
 <h4 align="right"><a href="faq.md">English</a> | <strong>简体中文</strong></h4>
 
-使用 Pake 时的常见问题和解决方案。
+使用 BghitApp 时的常见问题和解决方案。
 
 ## 目录
 
@@ -29,7 +29,7 @@
 ### Rust 版本错误:"feature 'edition2024' is required"
 
 **问题描述：**
-在构建 Pake 或使用 CLI 时，遇到如下错误：
+在构建 BghitApp 或使用 CLI 时，遇到如下错误：
 
 ```txt
 error: failed to parse manifest
@@ -41,7 +41,7 @@ Caused by:
 
 **原因分析：**
 
-Pake 的依赖项需要 Rust edition2024 支持，该特性仅在 Rust 1.85.0 或更高版本中可用。具体来说：
+BghitApp 的依赖项需要 Rust edition2024 支持，该特性仅在 Rust 1.85.0 或更高版本中可用。具体来说：
 
 - 依赖链包括：`tauri` → `image` → `moxcms` → `pxfm v0.1.25`（需要 edition2024）
 - Rust edition2024 在 Rust 1.85.0（2025 年 2 月发布）中成为稳定版
@@ -112,10 +112,10 @@ Error: strip: Unable to recognise the format of the input file
 
 **解决方案 1：自动 NO_STRIP 重试（推荐）**
 
-Pake CLI 已在 linuxdeploy 剥离失败时自动使用 `NO_STRIP=1` 进行二次构建。如果你希望一开始就跳过剥离步骤（或在脚本中使用），可以手动设置该变量：
+BghitApp CLI 已在 linuxdeploy 剥离失败时自动使用 `NO_STRIP=1` 进行二次构建。如果你希望一开始就跳过剥离步骤（或在脚本中使用），可以手动设置该变量：
 
 ```bash
-NO_STRIP=1 pake https://example.com --name MyApp --targets appimage
+NO_STRIP=1 bghitapp https://example.com --name MyApp --targets appimage
 ```
 
 这会绕过经常在某些 Linux 发行版上出现问题的库文件剥离过程。
@@ -151,7 +151,7 @@ sudo apt install -y \
 DEB 包在基于 Debian 的系统上更稳定：
 
 ```bash
-pake https://example.com --name MyApp --targets deb
+bghitapp https://example.com --name MyApp --targets deb
 ```
 
 **解决方案 4：使用 Docker（需开放 FUSE）**
@@ -163,7 +163,7 @@ docker run --rm --privileged \
   --device /dev/fuse \
   --security-opt apparmor=unconfined \
   -v $(pwd)/output:/output \
-  ghcr.io/tw93/pake:latest \
+  ghcr.io/bghitcode/bghitapp:latest \
   https://example.com --name MyApp --targets appimage
 ```
 
@@ -184,11 +184,11 @@ docker run --rm --privileged \
 ### Linux:"cargo: command not found" 即使已安装 Rust
 
 **问题描述：**
-已安装 Rust 但 Pake 仍然提示 "cargo: command not found"。
+已安装 Rust 但 BghitApp 仍然提示 "cargo: command not found"。
 
 **解决方案：**
 
-Pake CLI 会自动重新加载 Rust 环境，但如果问题仍然存在：
+BghitApp CLI 会自动重新加载 Rust 环境，但如果问题仍然存在：
 
 ```bash
 # 在当前终端重新加载环境
@@ -221,16 +221,16 @@ Windows 首次安装可能较慢，原因包括：
 
 **解决方案 1：显式启用国内镜像**
 
-Pake CLI 默认使用官方 npm 和 Rust 源。如果在国内下载较慢，可以显式启用国内镜像：
+BghitApp CLI 默认使用官方 npm 和 Rust 源。如果在国内下载较慢，可以显式启用国内镜像：
 
 ```bash
 # macOS/Linux
-PAKE_USE_CN_MIRROR=1 pake https://github.com --name GitHub
+BGHITAPP_USE_CN_MIRROR=1 bghitapp https://github.com --name GitHub
 ```
 
 ```powershell
 # Windows PowerShell
-$env:PAKE_USE_CN_MIRROR="1"; pake https://github.com --name GitHub
+$env:BGHITAPP_USE_CN_MIRROR="1"; bghitapp https://github.com --name GitHub
 ```
 
 **解决方案 2：手动安装依赖**
@@ -238,14 +238,14 @@ $env:PAKE_USE_CN_MIRROR="1"; pake https://github.com --name GitHub
 如果依赖安装仍然失败，可手动安装依赖：
 
 ```bash
-# 进入 pake-cli 安装目录
-cd %LOCALAPPDATA%\pnpm\global\5\.pnpm\pake-cli@版本号\node_modules\pake-cli
+# 进入 @bghitcode/bghitapp 安装目录
+cd %LOCALAPPDATA%\pnpm\global\5\.pnpm\@bghitcode/bghitapp@版本号\node_modules\@bghitcode/bghitapp
 
 # 使用国内镜像安装
 pnpm install --registry=https://registry.npmmirror.com
 
 # 然后重新构建
-pake https://github.com --name GitHub
+bghitapp https://github.com --name GitHub
 ```
 
 **解决方案 3：改善网络环境**
@@ -306,7 +306,7 @@ EOF
 构建时指定自定义尺寸：
 
 ```bash
-pake https://example.com --width 1200 --height 800
+bghitapp https://example.com --width 1200 --height 800
 ```
 
 查看 [CLI 使用指南](cli-usage_CN.md#窗口选项) 了解所有窗口选项。
@@ -328,23 +328,23 @@ pake https://example.com --width 1200 --height 800
 
 ```bash
 # macOS
-pake https://example.com --icon ./icon.icns
+bghitapp https://example.com --icon ./icon.icns
 
 # Windows
-pake https://example.com --icon ./icon.ico
+bghitapp https://example.com --icon ./icon.ico
 
 # Linux
-pake https://example.com --icon ./icon.png
+bghitapp https://example.com --icon ./icon.png
 ```
 
-Pake 可以自动转换图标，但提供正确的格式更可靠。
+BghitApp 可以自动转换图标，但提供正确的格式更可靠。
 
 ---
 
 ### 网站功能不工作（登录、上传等）
 
 **问题描述：**
-某些网站功能在 Pake 应用中无法工作。
+某些网站功能在 BghitApp 应用中无法工作。
 
 **解决方案：**
 
@@ -353,16 +353,16 @@ Pake 可以自动转换图标，但提供正确的格式更可靠。
 1. **设置自定义 User Agent：**
 
    ```bash
-   pake https://example.com --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+   bghitapp https://example.com --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
    ```
 
 2. **注入自定义 JavaScript：**
 
    ```bash
-   pake https://example.com --inject ./fix.js
+   bghitapp https://example.com --inject ./fix.js
    ```
 
-   对于需要定时刷新的页面，建议把这类行为放在一个小的注入脚本里，而不是增加专门的 Pake 参数：
+   对于需要定时刷新的页面，建议把这类行为放在一个小的注入脚本里，而不是增加专门的 BghitApp 参数：
 
    ```javascript
    function isEditing(element) {
@@ -386,21 +386,21 @@ Pake 可以自动转换图标，但提供正确的格式更可靠。
    将其保存为 `refresh.js`，然后这样打包：
 
    ```bash
-   pake https://news.ycombinator.com --name HackerNews --inject ./refresh.js
+   bghitapp https://news.ycombinator.com --name HackerNews --inject ./refresh.js
    ```
 
 3. **检查网站是否需要 WebView 中可能不可用的特定权限**
 
 4. **注意嵌入式 WebView 的登录限制**
 
-   某些认证提供方，尤其是 Google，可能会阻止在嵌入式 WebView 中完成登录。由于 Pake 是把网站包装进桌面 WebView，Google 自家站点或依赖 Google OAuth 的网站，即使启用了 `--new-window` 或 `--multi-window`，也仍然可能无法在应用内完成登录。这属于提供方策略限制，不是打包逻辑错误。遇到这种情况时，建议改用普通浏览器、浏览器安装版站点应用，或官方原生桌面客户端。
+   某些认证提供方，尤其是 Google，可能会阻止在嵌入式 WebView 中完成登录。由于 BghitApp 是把网站包装进桌面 WebView，Google 自家站点或依赖 Google OAuth 的网站，即使启用了 `--new-window` 或 `--multi-window`，也仍然可能无法在应用内完成登录。这属于提供方策略限制，不是打包逻辑错误。遇到这种情况时，建议改用普通浏览器、浏览器安装版站点应用，或官方原生桌面客户端。
 
 5. **微信 Web 版登录环境异常**
 
    微信检测到 WebView 后会写入标记 Cookie，导致后续持续被拦截。打包时加 `--incognito` 可解决，代价是每次启动都需要重新扫码登录：
 
    ```bash
-   pake https://wx.qq.com --name WeChat --incognito
+   bghitapp https://wx.qq.com --name WeChat --incognito
    ```
 
 ---
@@ -410,7 +410,7 @@ Pake 可以自动转换图标，但提供正确的格式更可靠。
 ### 全局安装时权限被拒绝
 
 **问题描述：**
-`npm install -g pake-cli` 失败，提示权限错误。
+`npm install -g @bghitcode/bghitapp` 失败，提示权限错误。
 
 **解决方案：**
 
@@ -418,16 +418,16 @@ Pake 可以自动转换图标，但提供正确的格式更可靠。
 
 ```bash
 # 方案 1：使用 npx（无需安装）
-npx pake-cli https://example.com
+npx @bghitcode/bghitapp https://example.com
 
 # 方案 2：修复 npm 权限
 npm config set prefix ~/.npm-global
 echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
 source ~/.bashrc
-npm install -g pake-cli
+npm install -g @bghitcode/bghitapp
 
 # 方案 3：使用 pnpm（推荐）
-pnpm install -g pake-cli
+pnpm install -g @bghitcode/bghitapp
 ```
 
 ---
@@ -438,8 +438,8 @@ pnpm install -g pake-cli
 
 1. 查看 [CLI 使用指南](cli-usage_CN.md) 了解详细参数文档
 2. 参阅 [高级用法](advanced-usage_CN.md) 了解前置条件和系统设置
-3. 搜索 [现有的 GitHub issues](https://github.com/tw93/Pake/issues)
-4. [提交新 issue](https://github.com/tw93/Pake/issues/new) 时请包含：
+3. 搜索 [现有的 GitHub issues](https://github.com/BghitCode/bghitapp/issues)
+4. [提交新 issue](https://github.com/BghitCode/bghitapp/issues/new) 时请包含：
    - 您的操作系统和版本
    - Node.js 和 Rust 版本（`node --version`、`rustc --version`）
    - 完整的错误信息
@@ -455,7 +455,7 @@ Can't detect any appindicator library
 ```
 
 **原因分析：**
-这个错误表示您的 Linux 系统缺少创建“系统托盘图标”所需的核心库 `libappindicator`。Pake 打包的应用支持系统托盘功能，因此该库是必需的。
+这个错误表示您的 Linux 系统缺少创建“系统托盘图标”所需的核心库 `libappindicator`。BghitApp 打包的应用支持系统托盘功能，因此该库是必需的。
 
 **解决方案：**
 您需要在您的 Linux 系统上安装这个缺失的开发库。

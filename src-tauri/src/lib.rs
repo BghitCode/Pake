@@ -20,7 +20,7 @@ use app::{
     setup::{set_global_shortcut, set_system_tray},
     window::{build_splash_window, open_additional_window_safe, set_window, MultiWindowState},
 };
-use util::get_pake_config;
+use util::get_bghitapp_config;
 
 pub fn run_app() {
     #[cfg(target_os = "linux")]
@@ -33,19 +33,19 @@ pub fn run_app() {
         }
     }
 
-    let (pake_config, tauri_config) = get_pake_config();
+    let (bghitapp_config, tauri_config) = get_bghitapp_config();
     let tauri_app = tauri::Builder::default();
 
-    let show_system_tray = pake_config.show_system_tray();
-    let hide_on_close = pake_config.windows[0].hide_on_close;
-    let activation_shortcut = pake_config.windows[0].activation_shortcut.clone();
-    let init_fullscreen = pake_config.windows[0].fullscreen;
-    let start_to_tray = pake_config.windows[0].start_to_tray && show_system_tray; // Only valid when tray is enabled
-    let multi_instance = pake_config.multi_instance;
-    let multi_window = pake_config.multi_window;
-    let _enable_find = pake_config.windows[0].enable_find;
-    let has_splash = !pake_config.windows[0].splash.is_empty();
-    let splash_asset = pake_config.windows[0].splash.clone();
+    let show_system_tray = bghitapp_config.show_system_tray();
+    let hide_on_close = bghitapp_config.windows[0].hide_on_close;
+    let activation_shortcut = bghitapp_config.windows[0].activation_shortcut.clone();
+    let init_fullscreen = bghitapp_config.windows[0].fullscreen;
+    let start_to_tray = bghitapp_config.windows[0].start_to_tray && show_system_tray; // Only valid when tray is enabled
+    let multi_instance = bghitapp_config.multi_instance;
+    let multi_window = bghitapp_config.multi_window;
+    let _enable_find = bghitapp_config.windows[0].enable_find;
+    let has_splash = !bghitapp_config.windows[0].splash.is_empty();
+    let splash_asset = bghitapp_config.windows[0].splash.clone();
 
     let window_state_plugin = WindowStatePlugin::default()
         .with_state_flags(if init_fullscreen {
@@ -71,7 +71,7 @@ pub fn run_app() {
             move |app, _args, _cwd| {
                 if multi_window {
                     open_additional_window_safe(app);
-                } else if let Some(window) = app.get_webview_window("pake") {
+                } else if let Some(window) = app.get_webview_window("bghitapp") {
                     let _ = window.unminimize();
                     let _ = window.show();
                     let _ = window.set_focus();
@@ -94,7 +94,7 @@ pub fn run_app() {
         ])
         .setup(move |app| {
             app.manage(MultiWindowState::new(
-                pake_config.clone(),
+                bghitapp_config.clone(),
                 tauri_config.clone(),
             ));
 
@@ -122,18 +122,18 @@ pub fn run_app() {
                     if let Some(splash) = app_handle.get_webview_window("splash") {
                         let _ = splash.destroy();
                     }
-                    if let Some(main) = app_handle.get_webview_window("pake") {
+                    if let Some(main) = app_handle.get_webview_window("bghitapp") {
                         let _ = main.show();
                         let _ = main.set_focus();
                     }
                 });
             }
 
-            let window = set_window(app.app_handle(), &pake_config, &tauri_config)?;
+            let window = set_window(app.app_handle(), &bghitapp_config, &tauri_config)?;
             set_system_tray(
                 app.app_handle(),
                 show_system_tray,
-                &pake_config.system_tray_path,
+                &bghitapp_config.system_tray_path,
                 init_fullscreen,
                 multi_window,
             )?;
@@ -169,7 +169,7 @@ pub fn run_app() {
         })
         .on_window_event(move |_window, _event| {
             if let tauri::WindowEvent::CloseRequested { api, .. } = _event {
-                if hide_on_close && _window.label() == "pake" {
+                if hide_on_close && _window.label() == "bghitapp" {
                     // Hide window when hide_on_close is enabled (regardless of tray status)
                     let window = _window.clone();
                     tauri::async_runtime::spawn(async move {
@@ -201,7 +201,7 @@ pub fn run_app() {
         })
         .build(tauri::generate_context!())
         .unwrap_or_else(|error| {
-            eprintln!("[Pake] Fatal error while building Tauri application: {error}");
+            eprintln!("[BghitApp] Fatal error while building Tauri application: {error}");
             std::process::exit(1);
         })
         .run(|_app, _event| {
@@ -213,7 +213,7 @@ pub fn run_app() {
             } = _event
             {
                 if !has_visible_windows {
-                    if let Some(window) = _app.get_webview_window("pake") {
+                    if let Some(window) = _app.get_webview_window("bghitapp") {
                         let _ = window.show();
                         let _ = window.set_focus();
                     }

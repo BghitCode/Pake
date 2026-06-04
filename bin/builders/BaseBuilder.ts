@@ -3,7 +3,7 @@ import fsExtra from 'fs-extra';
 import chalk from 'chalk';
 import prompts from 'prompts';
 
-import { PakeAppOptions } from '@/types';
+import { BghitappAppOptions } from '@/types';
 import { checkRustInstalled, ensureRustEnv, installRust } from '@/helpers/rust';
 import { mergeConfig } from '@/helpers/merge';
 import tauriConfig from '@/helpers/tauriConfig';
@@ -28,9 +28,9 @@ import {
 } from './env';
 
 export default abstract class BaseBuilder {
-  protected options: PakeAppOptions;
+  protected options: BghitappAppOptions;
 
-  protected constructor(options: PakeAppOptions) {
+  protected constructor(options: BghitappAppOptions) {
     this.options = options;
   }
 
@@ -112,14 +112,14 @@ export default abstract class BaseBuilder {
   }
 
   async start(url: string) {
-    logger.info('Pake dev server starting...');
+    logger.info('BghitApp dev server starting...');
     await mergeConfig(url, this.options, tauriConfig);
 
     const packageManager = await detectPackageManager();
     const configPath = path.join(
       npmDirectory,
       'src-tauri',
-      '.pake',
+      '.bghitapp',
       'tauri.conf.json',
     );
 
@@ -134,7 +134,7 @@ export default abstract class BaseBuilder {
   }
 
   async buildAndCopy(url: string, target: string) {
-    const { name = 'pake-app' } = this.options;
+    const { name = 'bghitapp-app' } = this.options;
     await mergeConfig(url, this.options, tauriConfig);
 
     const packageManager = await detectPackageManager();
@@ -165,7 +165,7 @@ export default abstract class BaseBuilder {
           '⚠ Building AppImage on Linux may fail due to strip incompatibility with glibc 2.38+',
         );
         logger.warn(
-          '⚠ If build fails, retry with: NO_STRIP=1 pake <url> --targets appimage',
+          '⚠ If build fails, retry with: NO_STRIP=1 bghitapp <url> --targets appimage',
         );
       }
     }
@@ -352,7 +352,7 @@ export default abstract class BaseBuilder {
     const configPath = path.join(
       npmDirectory,
       'src-tauri',
-      '.pake',
+      '.bghitapp',
       'tauri.conf.json',
     );
 
@@ -462,7 +462,7 @@ export default abstract class BaseBuilder {
       process.platform === 'linux'
         ? generateLinuxPackageName(appName)
         : generateIdentifierSafeName(appName);
-    return `pake-${nameToUse}${extension}`;
+    return `bghitapp-${nameToUse}${extension}`;
   }
 
   /**

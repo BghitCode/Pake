@@ -14,7 +14,7 @@ export function getIdentifier(url: string, name?: string) {
     .update(hashInput)
     .digest('hex')
     .substring(0, 6);
-  return `com.pake.a${postFixHash}`;
+  return `com.bghitapp.a${postFixHash}`;
 }
 
 export function resolveIdentifier(

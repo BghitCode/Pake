@@ -35,7 +35,7 @@ function matchesAuthUrl(url, baseUrl = window.location.href) {
     );
 
     if (isMatch) {
-      console.log("[Pake] OAuth URL detected:", url);
+      console.log("[BghitApp] OAuth URL detected:", url);
     }
 
     return isMatch;

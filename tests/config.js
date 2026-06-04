@@ -1,5 +1,5 @@
 /**
- * Test Configuration for Pake CLI
+ * Test Configuration for BghitApp CLI
  *
  * This file contains test configuration and utilities
  * shared across different test files.

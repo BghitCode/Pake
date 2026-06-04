@@ -1,26 +1,26 @@
-use crate::app::config::PakeConfig;
+use crate::app::config::BghitappConfig;
 use std::env;
 use std::path::{Path, PathBuf};
 use tauri::{AppHandle, Config, Manager, WebviewWindow};
 
-pub fn get_pake_config() -> (PakeConfig, Config) {
+pub fn get_bghitapp_config() -> (BghitappConfig, Config) {
     #[cfg(feature = "cli-build")]
-    let pake_config: PakeConfig = serde_json::from_str(include_str!("../.pake/pake.json"))
-        .expect("Failed to parse pake config");
+    let bghitapp_config: BghitappConfig = serde_json::from_str(include_str!("../.bghitapp/bghitapp.json"))
+        .expect("Failed to parse bghitapp config");
 
     #[cfg(not(feature = "cli-build"))]
-    let pake_config: PakeConfig =
-        serde_json::from_str(include_str!("../pake.json")).expect("Failed to parse pake config");
+    let bghitapp_config: BghitappConfig =
+        serde_json::from_str(include_str!("../bghitapp.json")).expect("Failed to parse bghitapp config");
 
     #[cfg(feature = "cli-build")]
-    let tauri_config: Config = serde_json::from_str(include_str!("../.pake/tauri.conf.json"))
+    let tauri_config: Config = serde_json::from_str(include_str!("../.bghitapp/tauri.conf.json"))
         .expect("Failed to parse tauri config");
 
     #[cfg(not(feature = "cli-build"))]
     let tauri_config: Config = serde_json::from_str(include_str!("../tauri.conf.json"))
         .expect("Failed to parse tauri config");
 
-    (pake_config, tauri_config)
+    (bghitapp_config, tauri_config)
 }
 
 pub fn get_data_dir(app: &AppHandle, package_name: String) -> std::io::Result<PathBuf> {
@@ -48,9 +48,9 @@ pub fn get_data_dir(app: &AppHandle, package_name: String) -> std::io::Result<Pa
 }
 
 pub fn show_toast(window: &WebviewWindow, message: &str) {
-    let script = format!(r#"pakeToast("{message}");"#);
+    let script = format!(r#"bghitappToast("{message}");"#);
     if let Err(error) = window.eval(&script) {
-        eprintln!("[Pake] Failed to show toast: {error}");
+        eprintln!("[BghitApp] Failed to show toast: {error}");
     }
 }
 
@@ -171,7 +171,7 @@ mod tests {
     fn temp_path(name: &str) -> PathBuf {
         let mut dir = env::temp_dir();
         dir.push(format!(
-            "pake-util-test-{}-{}",
+            "bghitapp-util-test-{}-{}",
             std::process::id(),
             std::time::SystemTime::now()
                 .duration_since(std::time::UNIX_EPOCH)

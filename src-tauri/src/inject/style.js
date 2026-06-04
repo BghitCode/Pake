@@ -468,12 +468,12 @@ window.addEventListener("DOMContentLoaded", (_event) => {
       padding-top:30px;
     }
 
-    #pake-top-dom:active {
+    #bghitapp-top-dom:active {
       cursor: grabbing;
       cursor: -webkit-grabbing;
     }
 
-    #pake-top-dom{
+    #bghitapp-top-dom{
       position:fixed;
       background:transparent;
       top:0;
@@ -497,7 +497,7 @@ window.addEventListener("DOMContentLoaded", (_event) => {
     }
   `;
   const isMac = /Mac/i.test(navigator.userAgent);
-  if (window["pakeConfig"]?.hide_title_bar && isMac) {
+  if (window["bghitappConfig"]?.hide_title_bar && isMac) {
     const topPaddingStyleElement = document.createElement("style");
     topPaddingStyleElement.textContent = topPaddingCSS;
     document.head.appendChild(topPaddingStyleElement);

@@ -2,7 +2,7 @@
 
 <h4 align="right"><strong>English</strong> | <a href="cli-usage_CN.md">简体中文</a></h4>
 
-Complete command-line reference and basic usage for Pake CLI.
+Complete command-line reference and basic usage for BghitApp CLI.
 
 ## Installation
 
@@ -11,20 +11,20 @@ Ensure that your Node.js version is 22.0 or higher (e.g., 22.11.0). _Note: Older
 **Recommended (pnpm):**
 
 ```bash
-pnpm install -g pake-cli
+pnpm install -g @bghitcode/bghitapp
 ```
 
 **Alternative (npm):**
 
 ```bash
-npm install -g pake-cli
+npm install -g @bghitcode/bghitapp
 ```
 
 **If you encounter permission issues:**
 
 ```bash
 # Use npx to run without global installation
-npx pake-cli [url] [options]
+npx @bghitcode/bghitapp [url] [options]
 
 # Or fix npm permissions permanently
 npm config set prefix ~/.npm-global
@@ -42,25 +42,25 @@ source ~/.bashrc
 
 ```bash
 # Basic usage - automatically fetches website icon
-pake https://github.com --name "GitHub"
+bghitapp https://github.com --name "GitHub"
 
 # Advanced usage with custom options
-pake https://weekly.tw93.fun --name "Weekly" --icon https://cdn.tw93.fun/pake/weekly.icns --width 1200 --height 800 --hide-title-bar
+bghitapp https://example.com --name "MyApp" --width 1200 --height 800 --hide-title-bar
 
 # Complete example with multiple options
-pake https://github.com --name "GitHub Desktop" --width 1400 --height 900 --show-system-tray --debug
+bghitapp https://github.com --name "GitHub Desktop" --width 1400 --height 900 --show-system-tray --debug
 
 ```
 
 ## CLI Usage
 
 ```bash
-pake [url] [options]
+bghitapp [url] [options]
 ```
 
 The packaged application will be located in the current working directory by default. The first packaging might take some time due to environment configuration. Please be patient.
 
-> **macOS Output**: On macOS, Pake creates DMG installers by default. To create `.app` bundles for testing (to avoid user interaction), set the environment variable `PAKE_CREATE_APP=1`. If you want Pake to install the app directly into `/Applications`, use `--install`, which builds an `.app`, copies it into `/Applications`, and removes the local bundle after a successful install.
+> **macOS Output**: On macOS, BghitApp creates DMG installers by default. To create `.app` bundles for testing (to avoid user interaction), set the environment variable `BGHITAPP_CREATE_APP=1`. If you want BghitApp to install the app directly into `/Applications`, use `--install`, which builds an `.app`, copies it into `/Applications`, and removes the local bundle after a successful install.
 >
 > **Note**: Packaging requires the Rust environment. If Rust is not installed, you will be prompted for installation confirmation. In case of installation failure or timeout, you can [install it manually](https://www.rust-lang.org/tools/install).
 
@@ -75,7 +75,7 @@ Various options are available for customization. Here are the most commonly used
 | Option             | Description                                     | Example                                        |
 | ------------------ | ----------------------------------------------- | ---------------------------------------------- |
 | `--name`           | Application name                                | `--name "Weekly"`                              |
-| `--icon`           | Custom icon (optional, auto-fetch website icon) | `--icon https://cdn.tw93.fun/pake/weekly.icns` |
+| `--icon`           | Custom icon (optional, auto-fetch website icon) | `--icon https://example.com/icon.icns` |
 | `--width`          | Window width (default: 1200px)                  | `--width 1400`                                 |
 | `--height`         | Window height (default: 780px)                  | `--height 900`                                 |
 | `--hide-title-bar` | Immersive header (macOS only)                   | `--hide-title-bar`                             |
@@ -102,7 +102,7 @@ Specify the application name. If not provided, you will be prompted to enter it.
 
 #### [icon]
 
-**Optional parameter**: If not provided, Pake will automatically fetch the website's icon and convert to the appropriate format. For custom icons, visit [icon-icons](https://icon-icons.com) or [macOSicons](https://macosicons.com/#/).
+**Optional parameter**: If not provided, BghitApp will automatically fetch the website's icon and convert to the appropriate format. For custom icons, visit [icon-icons](https://icon-icons.com) or [macOSicons](https://macosicons.com/#/).
 
 Supports both local and remote files, automatically converts to platform-specific formats:
 
@@ -115,11 +115,11 @@ Supports both local and remote files, automatically converts to platform-specifi
 
 # Examples:
 # Without --icon parameter, auto-fetch website icon
-pake https://github.com --name GitHub
+bghitapp https://github.com --name GitHub
 
 # With custom icons
 --icon ./my-icon.png
---icon https://cdn.tw93.fun/pake/weekly.icns  # Remote icon (.icns for macOS)
+--icon https://example.com/icon.icns  # Remote icon (.icns for macOS)
 ```
 
 #### [height]
@@ -224,7 +224,7 @@ Force Mac to package applications using dark mode, default is `false`.
 
 #### [disabled-web-shortcuts]
 
-Sets whether to disable web shortcuts in the original Pake container, defaults to `false`.
+Sets whether to disable web shortcuts in the original BghitApp container, defaults to `false`.
 
 ```shell
 --disabled-web-shortcuts
@@ -232,7 +232,7 @@ Sets whether to disable web shortcuts in the original Pake container, defaults t
 
 #### [enable-find]
 
-Enable Pake's in-page Find UI. Default is `false`. When enabled, users can press `Cmd/Ctrl+F` to open Find, `Cmd/Ctrl+G` to jump to the next match, and `Cmd/Ctrl+Shift+G` to jump to the previous match.
+Enable BghitApp's in-page Find UI. Default is `false`. When enabled, users can press `Cmd/Ctrl+F` to open Find, `Cmd/Ctrl+G` to jump to the next match, and `Cmd/Ctrl+Shift+G` to jump to the previous match.
 
 ```shell
 --enable-find
@@ -240,7 +240,7 @@ Enable Pake's in-page Find UI. Default is `false`. When enabled, users can press
 
 #### [force-internal-navigation]
 
-Keeps every clicked link (even pointing to other domains) inside the Pake window instead of letting the OS open an external browser or helper. Default is `false`.
+Keeps every clicked link (even pointing to other domains) inside the BghitApp window instead of letting the OS open an external browser or helper. Default is `false`.
 
 ```shell
 --force-internal-navigation
@@ -313,7 +313,7 @@ Specify the build target architecture or format:
 **Note for Linux ARM64**:
 
 - Cross-compilation requires additional setup. Install `gcc-aarch64-linux-gnu` and configure environment variables for cross-compilation.
-- ARM64 support enables Pake apps to run on ARM-based Linux devices, including Linux phones (postmarketOS, Ubuntu Touch), Raspberry Pi, and other ARM64 Linux systems.
+- ARM64 support enables BghitApp apps to run on ARM-based Linux devices, including Linux phones (postmarketOS, Ubuntu Touch), Raspberry Pi, and other ARM64 Linux systems.
 - Use `--target appimage-arm64` for portable ARM64 applications that work across different ARM64 Linux distributions.
 
 #### [user-agent]
@@ -361,7 +361,7 @@ Start the application minimized to system tray instead of showing the window. Mu
 --start-to-tray
 
 # Example: Start hidden to tray (must use with --show-system-tray)
-pake https://github.com --name GitHub --show-system-tray --start-to-tray
+bghitapp https://github.com --name GitHub --show-system-tray --start-to-tray
 ```
 
 **Note**: Double-click the tray icon to show/hide the window. If used without `--show-system-tray`, this option is ignored.
@@ -396,7 +396,7 @@ This option adds necessary HTTP headers (`Cross-Origin-Opener-Policy: same-origi
 --wasm
 
 # Example: Package a Flutter Web app with WASM support
-pake https://flutter.dev --name FlutterApp --wasm
+bghitapp https://flutter.dev --name FlutterApp --wasm
 ```
 
 #### [enable-drag-drop]
@@ -407,7 +407,7 @@ Enable native drag and drop functionality within the application. Default is `fa
 --enable-drag-drop
 
 # Example: Package an app that requires drag-drop functionality
-pake https://planka.example.com --name PlankApp --enable-drag-drop
+bghitapp https://planka.example.com --name PlankApp --enable-drag-drop
 ```
 
 #### [keep-binary]
@@ -418,7 +418,7 @@ Keep the raw binary file alongside the installer. Default is `false`. When enabl
 --keep-binary
 
 # Example: Package app with both installer and standalone binary
-pake https://github.com --name GitHub --keep-binary
+bghitapp https://github.com --name GitHub --keep-binary
 ```
 
 **Output**: Creates both installer and standalone executable (`AppName-binary` on Unix, `AppName.exe` on Windows).
@@ -435,13 +435,13 @@ Turn on rapid build mode (app only, no dmg/deb/msi), good for debugging. Default
 
 Install the built macOS app directly into `/Applications`. Default is `false`.
 
-This option is macOS-only and is intended for local development or quick testing. When enabled, Pake builds an `.app` bundle, copies it into `/Applications`, replaces any existing app with the same name, and removes the local bundle after a successful install. If the install fails, the local `.app` is kept in the current working directory.
+This option is macOS-only and is intended for local development or quick testing. When enabled, BghitApp builds an `.app` bundle, copies it into `/Applications`, replaces any existing app with the same name, and removes the local bundle after a successful install. If the install fails, the local `.app` is kept in the current working directory.
 
 ```shell
 --install
 
 # Example: Build and install directly to /Applications
-pake https://github.com --name GitHub --install
+bghitapp https://github.com --name GitHub --install
 ```
 
 #### [multi-instance]
@@ -452,7 +452,7 @@ Allow the packaged app to run more than one instance at the same time. Default i
 --multi-instance
 
 # Example: Allow multiple chat windows
-pake https://chat.example.com --name ChatApp --multi-instance
+bghitapp https://chat.example.com --name ChatApp --multi-instance
 ```
 
 #### [multi-window]
@@ -472,7 +472,7 @@ This can improve popup-based authentication flows, but it cannot bypass provider
 --multi-window
 
 # Example: Keep one process but open multiple windows
-pake https://chat.example.com --name ChatApp --multi-window
+bghitapp https://chat.example.com --name ChatApp --multi-window
 ```
 
 #### [installer-language]
@@ -485,13 +485,13 @@ Set the Windows Installer language. Options include `zh-CN`, `ja-JP`, More at [T
 
 #### [use-local-file]
 
-Enable recursive copying. When the URL is a local file path, enabling this option will copy the folder containing the file specified in the URL, as well as all sub-files, to the Pake static folder. This is disabled by default.
+Enable recursive copying. When the URL is a local file path, enabling this option will copy the folder containing the file specified in the URL, as well as all sub-files, to the BghitApp static folder. This is disabled by default.
 
 ```shell
 --use-local-file
 
 # Basic static file packaging
-pake ./my-app/index.html --name "my-app" --use-local-file
+bghitapp ./my-app/index.html --name "my-app" --use-local-file
 ```
 
 #### [inject]
@@ -553,12 +553,12 @@ After completing the above steps, your application should be successfully packag
 ## Docker
 
 ```shell
-# Run the Pake CLI via Docker (AppImage builds need FUSE access)
+# Run the BghitApp CLI via Docker (AppImage builds need FUSE access)
 docker run --rm --privileged \
     --device /dev/fuse \
     --security-opt apparmor=unconfined \
     -v YOUR_DIR:/output \
-    ghcr.io/tw93/pake \
+    ghcr.io/bghitcode/bghitapp \
     <arguments>
 
 # For example:
@@ -566,6 +566,6 @@ docker run --rm --privileged \
     --device /dev/fuse \
     --security-opt apparmor=unconfined \
     -v ./packages:/output \
-    ghcr.io/tw93/pake \
+    ghcr.io/bghitcode/bghitapp \
     https://example.com --name myapp --icon ./icon.png --targets appimage
 ```

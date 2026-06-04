@@ -11,20 +11,20 @@
 **推荐方式 (pnpm)：**
 
 ```bash
-pnpm install -g pake-cli
+pnpm install -g @bghitcode/bghitapp
 ```
 
 **备选方式 (npm)：**
 
 ```bash
-npm install -g pake-cli
+npm install -g @bghitcode/bghitapp
 ```
 
 **如果遇到权限问题：**
 
 ```bash
 # 使用 npx 运行，无需全局安装
-npx pake-cli [url] [选项]
+npx @bghitcode/bghitapp [url] [选项]
 
 # 或者永久修复 npm 权限
 npm config set prefix ~/.npm-global
@@ -42,25 +42,25 @@ source ~/.bashrc
 
 ```bash
 # 基础用法 - 自动获取网站图标
-pake https://github.com --name "GitHub"
+bghitapp https://github.com --name "GitHub"
 
 # 高级用法：自定义选项
-pake https://weekly.tw93.fun --name "Weekly" --icon https://cdn.tw93.fun/pake/weekly.icns --width 1200 --height 800 --hide-title-bar
+bghitapp https://example.com --name "MyApp" --width 1200 --height 800 --hide-title-bar
 
 # 完整示例：多个选项组合使用
-pake https://github.com --name "GitHub Desktop" --width 1400 --height 900 --show-system-tray --debug
+bghitapp https://github.com --name "GitHub Desktop" --width 1400 --height 900 --show-system-tray --debug
 
 ```
 
 ## 命令行使用
 
 ```bash
-pake [url] [options]
+bghitapp [url] [options]
 ```
 
 应用程序的打包结果将默认保存在当前工作目录。由于首次打包需要配置环境，这可能需要一些时间，请耐心等待。
 
-> **macOS 输出**：在 macOS 上，Pake 默认创建 DMG 安装程序。如需创建 `.app` 包进行测试（避免用户交互），请设置环境变量 `PAKE_CREATE_APP=1`。如果希望 Pake 直接将应用安装到 `/Applications`，可以使用 `--install`；该选项会构建 `.app`、复制到 `/Applications`，并在安装成功后删除当前目录中的本地 `.app`。
+> **macOS 输出**：在 macOS 上，BghitApp 默认创建 DMG 安装程序。如需创建 `.app` 包进行测试（避免用户交互），请设置环境变量 `BGHITAPP_CREATE_APP=1`。如果希望 BghitApp 直接将应用安装到 `/Applications`，可以使用 `--install`；该选项会构建 `.app`、复制到 `/Applications`，并在安装成功后删除当前目录中的本地 `.app`。
 >
 > **注意**：打包过程需要使用 `Rust` 环境。如果您没有安装 `Rust`，系统会提示您是否要安装。如果遇到安装失败或超时的问题，您可以 [手动安装](https://www.rust-lang.org/tools/install)。
 
@@ -75,7 +75,7 @@ pake [url] [options]
 | 选项               | 描述                                 | 示例                                           |
 | ------------------ | ------------------------------------ | ---------------------------------------------- |
 | `--name`           | 应用程序名称                         | `--name "Weekly"`                              |
-| `--icon`           | 自定义图标（可选，自动获取网站图标） | `--icon https://cdn.tw93.fun/pake/weekly.icns` |
+| `--icon`           | 自定义图标（可选，自动获取网站图标） | `--icon https://example.com/icon.icns` |
 | `--width`          | 窗口宽度（默认：1200px）             | `--width 1400`                                 |
 | `--height`         | 窗口高度（默认：780px）              | `--height 900`                                 |
 | `--hide-title-bar` | 沉浸式标题栏（仅macOS）              | `--hide-title-bar`                             |
@@ -102,7 +102,7 @@ pake [url] [options]
 
 #### [icon]
 
-**可选参数**：不传此参数时，Pake 会自动获取网站图标并转换为对应格式。如需自定义图标，可访问 [icon-icons](https://icon-icons.com) 或 [macOSicons](https://macosicons.com/#/) 下载。
+**可选参数**：不传此参数时，BghitApp 会自动获取网站图标并转换为对应格式。如需自定义图标，可访问 [icon-icons](https://icon-icons.com) 或 [macOSicons](https://macosicons.com/#/) 下载。
 
 支持本地或远程文件，自动转换为平台所需格式：
 
@@ -115,11 +115,11 @@ pake [url] [options]
 
 # 示例：
 # 不传 --icon 参数，自动获取网站图标
-pake https://github.com --name GitHub
+bghitapp https://github.com --name GitHub
 
 # 使用自定义图标
 --icon ./my-icon.png
---icon https://cdn.tw93.fun/pake/weekly.icns  # 远程图标（.icns适用于macOS）
+--icon https://example.com/icon.icns  # 远程图标（.icns适用于macOS）
 ```
 
 #### [height]
@@ -222,7 +222,7 @@ pake https://github.com --name GitHub
 
 #### [disabled-web-shortcuts]
 
-设置是否禁用原有 Pake 容器里面的网页操作快捷键，默认为 `false`。
+设置是否禁用原有 BghitApp 容器里面的网页操作快捷键，默认为 `false`。
 
 ```shell
 --disabled-web-shortcuts
@@ -230,7 +230,7 @@ pake https://github.com --name GitHub
 
 #### [enable-find]
 
-启用 Pake 内置的页面查找浮层，默认 `false`。开启后用户可以使用 `Cmd/Ctrl+F` 打开查找，`Cmd/Ctrl+G` 跳到下一个匹配项，`Cmd/Ctrl+Shift+G` 跳到上一个匹配项。
+启用 BghitApp 内置的页面查找浮层，默认 `false`。开启后用户可以使用 `Cmd/Ctrl+F` 打开查找，`Cmd/Ctrl+G` 跳到下一个匹配项，`Cmd/Ctrl+Shift+G` 跳到上一个匹配项。
 
 ```shell
 --enable-find
@@ -238,7 +238,7 @@ pake https://github.com --name GitHub
 
 #### [force-internal-navigation]
 
-启用后所有点击的链接（即使是跨域）都会在 Pake 窗口内打开，不会再调用外部浏览器或辅助程序。默认 `false`。
+启用后所有点击的链接（即使是跨域）都会在 BghitApp 窗口内打开，不会再调用外部浏览器或辅助程序。默认 `false`。
 
 ```shell
 --force-internal-navigation
@@ -311,7 +311,7 @@ pake https://github.com --name GitHub
 **Linux ARM64 注意事项**：
 
 - 交叉编译需要额外设置。需要安装 `gcc-aarch64-linux-gnu` 并配置交叉编译环境变量。
-- ARM64 支持让 Pake 应用可以在基于 ARM 的 Linux 设备上运行，包括 Linux 手机（postmarketOS、Ubuntu Touch）、树莓派和其他 ARM64 Linux 系统。
+- ARM64 支持让 BghitApp 应用可以在基于 ARM 的 Linux 设备上运行，包括 Linux 手机（postmarketOS、Ubuntu Touch）、树莓派和其他 ARM64 Linux 系统。
 - 使用 `--target appimage-arm64` 可以创建便携式 ARM64 应用，在不同的 ARM64 Linux 发行版上运行。
 
 #### [user-agent]
@@ -359,7 +359,7 @@ pake https://github.com --name GitHub
 --start-to-tray
 
 # 示例：启动时隐藏到托盘（必须与 --show-system-tray 一起使用）
-pake https://github.com --name GitHub --show-system-tray --start-to-tray
+bghitapp https://github.com --name GitHub --show-system-tray --start-to-tray
 ```
 
 **注意**：双击托盘图标可以显示/隐藏窗口。如果不与 `--show-system-tray` 一起使用，此选项将被忽略。
@@ -394,7 +394,7 @@ pake https://github.com --name GitHub --show-system-tray --start-to-tray
 --wasm
 
 # 示例：打包支持 WASM 的 Flutter Web 应用
-pake https://flutter.dev --name FlutterApp --wasm
+bghitapp https://flutter.dev --name FlutterApp --wasm
 ```
 
 #### [enable-drag-drop]
@@ -405,7 +405,7 @@ pake https://flutter.dev --name FlutterApp --wasm
 --enable-drag-drop
 
 # 示例：打包需要拖拽功能的应用
-pake https://planka.example.com --name PlankApp --enable-drag-drop
+bghitapp https://planka.example.com --name PlankApp --enable-drag-drop
 ```
 
 #### [keep-binary]
@@ -416,7 +416,7 @@ pake https://planka.example.com --name PlankApp --enable-drag-drop
 --keep-binary
 
 # 示例：同时生成安装包和独立可执行文件
-pake https://github.com --name GitHub --keep-binary
+bghitapp https://github.com --name GitHub --keep-binary
 ```
 
 **输出结果**：同时创建安装包和独立可执行文件（Unix 系统为 `AppName-binary`，Windows 为 `AppName.exe`）。
@@ -433,13 +433,13 @@ pake https://github.com --name GitHub --keep-binary
 
 将构建出的 macOS 应用直接安装到 `/Applications`。默认为 `false`。
 
-该选项仅适用于 macOS，适合本地开发和快速验证。启用后，Pake 会构建 `.app` 包，将其复制到 `/Applications`，如果已存在同名应用则先替换，并在安装成功后删除当前工作目录中的本地 `.app`。如果安装失败，当前目录中的 `.app` 会被保留。
+该选项仅适用于 macOS，适合本地开发和快速验证。启用后，BghitApp 会构建 `.app` 包，将其复制到 `/Applications`，如果已存在同名应用则先替换，并在安装成功后删除当前工作目录中的本地 `.app`。如果安装失败，当前目录中的 `.app` 会被保留。
 
 ```shell
 --install
 
 # 示例：构建后直接安装到 /Applications
-pake https://github.com --name GitHub --install
+bghitapp https://github.com --name GitHub --install
 ```
 
 #### [multi-instance]
@@ -450,7 +450,7 @@ pake https://github.com --name GitHub --install
 --multi-instance
 
 # 示例：允许聊天应用同时开多个窗口
-pake https://chat.example.com --name ChatApp --multi-instance
+bghitapp https://chat.example.com --name ChatApp --multi-instance
 ```
 
 #### [multi-window]
@@ -470,7 +470,7 @@ pake https://chat.example.com --name ChatApp --multi-instance
 --multi-window
 
 # 示例：单进程多窗口
-pake https://chat.example.com --name ChatApp --multi-window
+bghitapp https://chat.example.com --name ChatApp --multi-window
 ```
 
 #### [installer-language]
@@ -483,13 +483,13 @@ pake https://chat.example.com --name ChatApp --multi-window
 
 #### [use-local-file]
 
-当 `url` 为本地文件路径时，如果启用此选项，则会递归地将 `url` 路径文件所在的文件夹及其所有子文件复制到 Pake 的静态文件夹。默认不启用。
+当 `url` 为本地文件路径时，如果启用此选项，则会递归地将 `url` 路径文件所在的文件夹及其所有子文件复制到 BghitApp 的静态文件夹。默认不启用。
 
 ```shell
 --use-local-file
 
 # 基础静态文件打包
-pake ./my-app/index.html --name "my-app" --use-local-file
+bghitapp ./my-app/index.html --name "my-app" --use-local-file
 ```
 
 #### [inject]
@@ -551,12 +551,12 @@ pake ./my-app/index.html --name "my-app" --use-local-file
 ## Docker 使用
 
 ```shell
-# 在 Linux 上通过 Docker 运行 Pake CLI（AppImage 构建需要 FUSE 权限）
+# 在 Linux 上通过 Docker 运行 BghitApp CLI（AppImage 构建需要 FUSE 权限）
 docker run --rm --privileged \
     --device /dev/fuse \
     --security-opt apparmor=unconfined \
     -v YOUR_DIR:/output \
-    ghcr.io/tw93/pake \
+    ghcr.io/bghitcode/bghitapp \
     <arguments>
 
 # 例如：
@@ -564,6 +564,6 @@ docker run --rm --privileged \
     --device /dev/fuse \
     --security-opt apparmor=unconfined \
     -v ./packages:/output \
-    ghcr.io/tw93/pake \
+    ghcr.io/bghitcode/bghitapp \
     https://example.com --name MyApp --icon ./icon.png --targets appimage
 ```

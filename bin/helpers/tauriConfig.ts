@@ -4,7 +4,7 @@ import { npmDirectory } from '@/utils/dir';
 
 // Load configs from npm package directory, not from project source
 const tauriSrcDir = path.join(npmDirectory, 'src-tauri');
-const pakeConf = fsExtra.readJSONSync(path.join(tauriSrcDir, 'pake.json'));
+const bghitappConf = fsExtra.readJSONSync(path.join(tauriSrcDir, 'bghitapp.json'));
 const CommonConf = fsExtra.readJSONSync(
   path.join(tauriSrcDir, 'tauri.conf.json'),
 );
@@ -38,7 +38,7 @@ let tauriConfig = {
     },
   },
   build: CommonConf.build,
-  pake: pakeConf,
+  bghitapp: bghitappConf,
 };
 
 export default tauriConfig;

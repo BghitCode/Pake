@@ -6,18 +6,18 @@
  * (invalid names, missing files, etc.) so users see a clean message instead
  * of a Node.js stack dump.
  */
-export class PakeError extends Error {
+export class BghitappError extends Error {
   readonly isUserError = true;
 
   constructor(message: string) {
     super(message);
-    this.name = 'PakeError';
+    this.name = 'BghitappError';
   }
 }
 
-export function isPakeError(error: unknown): error is PakeError {
+export function isBghitappError(error: unknown): error is BghitappError {
   return (
-    error instanceof PakeError ||
+    error instanceof BghitappError ||
     (typeof error === 'object' &&
       error !== null &&
       (error as { isUserError?: boolean }).isUserError === true)

@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { program, Option } from 'commander';
 import packageJson from '../../package.json';
-import { DEFAULT_PAKE_OPTIONS as DEFAULT } from '../defaults';
+import { DEFAULT_BGHITAPP_OPTIONS as DEFAULT } from '../defaults';
 import { validateNumberInput, validateUrlInput } from '../utils/validate';
 
 export function getCliProgram() {
@@ -9,7 +9,7 @@ export function getCliProgram() {
   const logo = `${chalk.green(' ____       _')}
 ${green('|  _ \\ __ _| | _____')}
 ${green('| |_) / _` | |/ / _ \\')}
-${green('|  __/ (_| |   <  __/')}  ${yellow('https://github.com/tw93/pake')}
+${green('|  __/ (_| |   <  __/')}  ${yellow('https://github.com/BghitCode/bghitapp')}
 ${green('|_|   \\__,_|_|\\_\\___|  can turn any webpage into a desktop app with Rust.')}
 `;
 
@@ -182,7 +182,7 @@ ${green('|_|   \\__,_|_|\\_\\___|  can turn any webpage into a desktop app with 
     .addOption(
       new Option(
         '--force-internal-navigation',
-        'Keep every link inside the Pake window instead of opening external handlers',
+        'Keep every link inside the BghitApp window instead of opening external handlers',
       )
         .default(DEFAULT.forceInternalNavigation)
         .hideHelp(),

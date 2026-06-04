@@ -24,8 +24,8 @@ ENV PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig:/usr/lib/x86_64-linu
 # Verify Rust version
 RUN rustc --version && echo "Rust version verified"
 
-COPY . /pake
-WORKDIR /pake/src-tauri
+COPY . /bghitapp
+WORKDIR /bghitapp/src-tauri
 # Build cargo packages and store cache
 RUN --mount=type=cache,target=/usr/local/cargo/registry \
     cargo fetch && \
@@ -68,19 +68,19 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy project files
-COPY . /pake
-WORKDIR /pake
+COPY . /bghitapp
+WORKDIR /bghitapp
 
 # Copy Rust build artifacts
-COPY --from=cargo-builder /pake/src-tauri /pake/src-tauri
+COPY --from=cargo-builder /bghitapp/src-tauri /bghitapp/src-tauri
 COPY --from=cargo-builder /cargo-cache/git /usr/local/cargo/git
 COPY --from=cargo-builder /cargo-cache/registry /usr/local/cargo/registry
 
-# Install dependencies and build pake-cli
+# Install dependencies and build bghitapp-cli
 RUN --mount=type=cache,target=/root/.local/share/pnpm \
     pnpm install --frozen-lockfile && \
     pnpm run cli:build
 
 # Set up the entrypoint
 WORKDIR /output
-ENTRYPOINT ["node", "/pake/dist/cli.js"]
+ENTRYPOINT ["node", "/bghitapp/dist/cli.js"]

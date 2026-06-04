@@ -10,5 +10,5 @@ export const npmDirectory = path.join(path.dirname(currentModulePath), '..');
 export const tauriConfigDirectory = path.join(
   npmDirectory,
   'src-tauri',
-  '.pake',
+  '.bghitapp',
 );

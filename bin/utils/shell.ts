@@ -46,11 +46,11 @@ export async function shellExec(
         'Cause: Strip tool incompatibility with glibc 2.38+\n' +
         '       (affects Debian Trixie, Arch Linux, and other modern distros)\n\n' +
         'Quick fix:\n' +
-        '  NO_STRIP=1 pake <url> --targets appimage --debug\n\n' +
+        '  NO_STRIP=1 bghitapp <url> --targets appimage --debug\n\n' +
         'Alternatives:\n' +
-        '  • Use DEB format: pake <url> --targets deb\n' +
+        '  • Use DEB format: bghitapp <url> --targets deb\n' +
         '  • Update binutils: sudo apt install binutils (or pacman -S binutils)\n' +
-        '  • Detailed guide: https://github.com/tw93/Pake/blob/main/docs/faq.md\n' +
+        '  • Detailed guide: https://github.com/BghitCode/bghitapp/blob/main/docs/faq.md\n' +
         '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━';
 
       if (

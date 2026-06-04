@@ -1,6 +1,6 @@
 (function() {
     function onReady() {
-        if (window.__TAURI__ && window.pakeConfig?.splash) {
+        if (window.__TAURI__ && window.bghitappConfig?.splash) {
             window.__TAURI__.core.invoke('close_splashscreen');
         }
     }

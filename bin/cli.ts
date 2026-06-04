@@ -5,8 +5,8 @@ import packageJson from '../package.json';
 import BuilderProvider from './builders/BuilderProvider';
 import handleInputOptions from './options/index';
 import { getCliProgram } from './helpers/cli-program';
-import { isPakeError } from './utils/error';
-import { PakeCliOptions } from './types';
+import { isBghitappError } from './utils/error';
+import { BghitappCliOptions } from './types';
 
 const program = getCliProgram();
 
@@ -16,7 +16,7 @@ async function checkUpdateTips() {
   });
 }
 
-program.action(async (url: string, options: PakeCliOptions) => {
+program.action(async (url: string, options: BghitappCliOptions) => {
   try {
     await checkUpdateTips();
 
@@ -39,7 +39,7 @@ program.action(async (url: string, options: PakeCliOptions) => {
     await builder.prepare();
     await builder.build(url);
   } catch (error) {
-    if (isPakeError(error)) {
+    if (isBghitappError(error)) {
       console.error(chalk.red(error.message));
     } else if (error instanceof Error) {
       console.error(chalk.red(`✕ ${error.message}`));

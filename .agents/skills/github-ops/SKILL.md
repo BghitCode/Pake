@@ -50,7 +50,7 @@ gh pr checks 456
 gh pr diff 456
 
 # Read inline review comments on a PR
-gh api repos/tw93/Pake/pulls/456/comments
+gh api repos/BghitCode/Pake/pulls/456/comments
 
 # Merge a PR (only with explicit user request)
 gh pr merge 456 --squash
@@ -79,8 +79,8 @@ gh run watch
 gh run view <run-id> --log
 
 # Verify npm registry state after publish
-npm view pake-cli version
-npm view pake-cli@<version> dist.tarball
+npm view @bghitcode/bghitapp version
+npm view @bghitcode/bghitapp@<version> dist.tarball
 ```
 
 ## CI / Workflow Operations
@@ -103,5 +103,5 @@ gh run rerun <run-id> --failed-only
 2. **NEVER** merge, close, or modify without explicit user request.
 3. **ALWAYS** query current state before taking action — never assume.
 4. Before replying to an issue or PR, read the body to confirm the author's language; match their language in the reply. This applies to the author, not to arbitrary thread commenters.
-5. Before replying that a fix is released, verify the public artifact first: `npm view pake-cli version` for CLI releases or `gh release view <tag>` for app releases.
+5. Before replying that a fix is released, verify the public artifact first: `npm view @bghitcode/bghitapp version` for CLI releases or `gh release view <tag>` for app releases.
 6. Before closing an issue after release, confirm the target with `gh issue view <id> --json number,title,state,author,url` and include the concrete version or upgrade command in the comment.

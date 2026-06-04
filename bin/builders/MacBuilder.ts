@@ -1,13 +1,13 @@
 import path from 'path';
 import tauriConfig from '@/helpers/tauriConfig';
-import { PakeAppOptions } from '@/types';
+import { BghitappAppOptions } from '@/types';
 import BaseBuilder from './BaseBuilder';
 
 export default class MacBuilder extends BaseBuilder {
   private buildFormat: string;
   private buildArch: string;
 
-  constructor(options: PakeAppOptions) {
+  constructor(options: BghitappAppOptions) {
     super(options);
 
     const validArchs = ['intel', 'apple', 'universal', 'auto', 'x64', 'arm64'];
@@ -18,7 +18,7 @@ export default class MacBuilder extends BaseBuilder {
     if (
       options.iterativeBuild ||
       options.install ||
-      process.env.PAKE_CREATE_APP === '1'
+      process.env.BGHITAPP_CREATE_APP === '1'
     ) {
       this.buildFormat = 'app';
     } else {
@@ -29,7 +29,7 @@ export default class MacBuilder extends BaseBuilder {
   }
 
   getFileName(): string {
-    const { name = 'pake-app' } = this.options;
+    const { name = 'bghitapp-app' } = this.options;
 
     if (this.buildFormat === 'app') {
       return name;
@@ -60,7 +60,7 @@ export default class MacBuilder extends BaseBuilder {
   }
 
   protected getBuildCommand(packageManager: string = 'pnpm'): string {
-    const configPath = path.join('src-tauri', '.pake', 'tauri.conf.json');
+    const configPath = path.join('src-tauri', '.bghitapp', 'tauri.conf.json');
     const actualArch = this.getActualArch();
 
     const buildTarget = this.getTauriTarget(actualArch, 'darwin');

@@ -1,16 +1,16 @@
 import log from 'loglevel';
-import { PakeCliOptions } from './types';
+import { BghitappCliOptions } from './types';
 import handleInputOptions from './options/index';
 import BuilderProvider from './builders/BuilderProvider';
 import { getCliProgram } from './helpers/cli-program';
 
 const program = getCliProgram();
 
-program.action(async (url: string, options: PakeCliOptions) => {
+program.action(async (url: string, options: BghitappCliOptions) => {
   log.setDefaultLevel('debug');
 
   const appOptions = await handleInputOptions(options, url);
-  log.debug('PakeAppOptions', appOptions);
+  log.debug('BghitappAppOptions', appOptions);
 
   const builder = BuilderProvider.create(appOptions);
   await builder.prepare();

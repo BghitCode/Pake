@@ -1,5 +1,5 @@
 (function() {
-    var TARGET_URL = window.pakeConfig?.url || window.location.href;
+    var TARGET_URL = window.bghitappConfig?.url || window.location.href;
 
     var OFFLINE_HTML = '<!DOCTYPE html>'
       + '<html><head><meta charset="utf-8"><style>'
@@ -31,7 +31,7 @@
       + '<button class="retry-btn" onclick="retry()">'
       + '<span class="btn-text">Retry</span><span class="spinner"></span></button>'
       + '</div>'
-      + '<script>var cooldown=false;function retry(){if(cooldown)return;cooldown=true;var b=document.querySelector(".retry-btn");b.classList.add("loading");b.disabled=true;setTimeout(function(){var o=localStorage.getItem("pake_original_url");if(o)window.location.href=o;else window.location.reload()},3000)}</'
+      + '<script>var cooldown=false;function retry(){if(cooldown)return;cooldown=true;var b=document.querySelector(".retry-btn");b.classList.add("loading");b.disabled=true;setTimeout(function(){var o=localStorage.getItem("bghitapp_original_url");if(o)window.location.href=o;else window.location.reload()},3000)}</'
       + 'script></body></html>';
 
     function isOffline() {
@@ -41,7 +41,7 @@
     function goToOffline() {
         var href = window.location.href;
         if (!href.includes('offline.html') && !href.includes('data:text/html')) {
-            localStorage.setItem('pake_original_url', TARGET_URL);
+            localStorage.setItem('bghitapp_original_url', TARGET_URL);
             document.open();
             document.write(OFFLINE_HTML);
             document.close();
@@ -50,7 +50,7 @@
 
     function goOnline() {
         if (window.location.href.includes('data:text/html') || document.querySelector('.retry-btn')) {
-            var original = localStorage.getItem('pake_original_url') || TARGET_URL;
+            var original = localStorage.getItem('bghitapp_original_url') || TARGET_URL;
             window.location.replace(original);
         }
     }

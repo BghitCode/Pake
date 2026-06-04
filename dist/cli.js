@@ -19,27 +19,27 @@ import * as psl from 'psl';
 import { InvalidArgumentError, program as program$1, Option } from 'commander';
 import fs$1 from 'fs';
 
-var name = "pake-cli";
-var version = "3.11.7";
-var description = "🤱🏻 Turn any webpage into a desktop app with one command. 🤱🏻 一键打包网页生成轻量桌面应用。";
+var name = "@bghitcode/bghitapp";
+var version = "1.0.0";
+var description = "🤱🏻 Turn any webpage into a desktop app with one command — by BghitCode.";
 var engines = {
 	node: ">=18.0.0"
 };
 var packageManager = "pnpm@10.26.2";
 var bin = {
-	pake: "dist/cli.js"
+	bghitapp: "dist/cli.js"
 };
 var repository = {
 	type: "git",
-	url: "git+https://github.com/tw93/Pake.git"
+	url: "git+https://github.com/BghitCode/Pake.git"
 };
 var author = {
-	name: "Tw93",
-	email: "tw93@qq.com"
+	name: "BghitCode",
+	email: "contact@bghitcode.com"
 };
 var keywords = [
-	"pake",
-	"pake-cli",
+	"bghitapp",
+	"bghitcode",
 	"rust",
 	"tauri",
 	"no-electron",
@@ -59,7 +59,7 @@ var scripts = {
 	tauri: "tauri",
 	cli: "cross-env NODE_ENV=development rollup -c -w",
 	"cli:build": "cross-env NODE_ENV=production rollup -c",
-	test: "pnpm run cli:build && cross-env PAKE_CREATE_APP=1 node tests/index.js",
+	test: "pnpm run cli:build && cross-env BGHITAPP_CREATE_APP=1 node tests/index.js",
 	format: "prettier --write . --ignore-unknown && find tests -name '*.js' -exec sed -i '' 's/[[:space:]]*$//' {} \\; && cd src-tauri && cargo fmt --verbose",
 	"format:check": "prettier --check . --ignore-unknown",
 	"release:check": "node scripts/check-release-version.mjs && pnpm run format:check && npx vitest run && pnpm run cli:build && npm pack --dry-run --ignore-scripts",
@@ -140,11 +140,11 @@ var packageJson = {
 const currentModulePath = fileURLToPath(import.meta.url);
 // Resolve the parent directory of the current module
 const npmDirectory = path.join(path.dirname(currentModulePath), '..');
-const tauriConfigDirectory = path.join(npmDirectory, 'src-tauri', '.pake');
+const tauriConfigDirectory = path.join(npmDirectory, 'src-tauri', '.bghitapp');
 
 // Load configs from npm package directory, not from project source
 const tauriSrcDir = path.join(npmDirectory, 'src-tauri');
-const pakeConf = fsExtra.readJSONSync(path.join(tauriSrcDir, 'pake.json'));
+const bghitappConf = fsExtra.readJSONSync(path.join(tauriSrcDir, 'bghitapp.json'));
 const CommonConf = fsExtra.readJSONSync(path.join(tauriSrcDir, 'tauri.conf.json'));
 const WinConf = fsExtra.readJSONSync(path.join(tauriSrcDir, 'tauri.windows.conf.json'));
 const MacConf = fsExtra.readJSONSync(path.join(tauriSrcDir, 'tauri.macos.conf.json'));
@@ -167,7 +167,7 @@ let tauriConfig = {
         },
     },
     build: CommonConf.build,
-    pake: pakeConf,
+    bghitapp: bghitappConf,
 };
 
 // Generates a stable identifier based on the app URL (and optionally name).
@@ -181,7 +181,7 @@ function getIdentifier(url, name) {
         .update(hashInput)
         .digest('hex')
         .substring(0, 6);
-    return `com.pake.a${postFixHash}`;
+    return `com.bghitapp.a${postFixHash}`;
 }
 function resolveIdentifier(url, explicitName, customIdentifier) {
     const trimmedIdentifier = customIdentifier?.trim();
@@ -219,7 +219,7 @@ function getSpinner(text) {
 }
 
 const TRUE_VALUES = new Set(['1', 'true', 'yes', 'on']);
-const CN_MIRROR_ENV = 'PAKE_USE_CN_MIRROR';
+const CN_MIRROR_ENV = 'BGHITAPP_USE_CN_MIRROR';
 function isCnMirrorEnabled(value = process.env[CN_MIRROR_ENV]) {
     return TRUE_VALUES.has((value ?? '').trim().toLowerCase());
 }
@@ -263,11 +263,11 @@ async function shellExec(command, timeout = 300000, env) {
                     'Cause: Strip tool incompatibility with glibc 2.38+\n' +
                     '       (affects Debian Trixie, Arch Linux, and other modern distros)\n\n' +
                     'Quick fix:\n' +
-                    '  NO_STRIP=1 pake <url> --targets appimage --debug\n\n' +
+                    '  NO_STRIP=1 bghitapp <url> --targets appimage --debug\n\n' +
                     'Alternatives:\n' +
-                    '  • Use DEB format: pake <url> --targets deb\n' +
+                    '  • Use DEB format: bghitapp <url> --targets deb\n' +
                     '  • Update binutils: sudo apt install binutils (or pacman -S binutils)\n' +
-                    '  • Detailed guide: https://github.com/tw93/Pake/blob/main/docs/faq.md\n' +
+                    '  • Detailed guide: https://github.com/BghitCode/Pake/blob/main/docs/faq.md\n' +
                     '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━';
             if (lowerError.includes('fuse') ||
                 lowerError.includes('operation not permitted') ||
@@ -554,7 +554,7 @@ function generateOfflineHtml() {
       btn.classList.add('loading');
       btn.disabled = true;
       setTimeout(() => {
-        const original = localStorage.getItem('pake_original_url');
+        const original = localStorage.getItem('bghitapp_original_url');
         if (original) window.location.href = original;
         else window.location.reload();
       }, 3000);
@@ -566,7 +566,7 @@ function generateOfflineHtml() {
 async function fetchOgImage(url) {
     try {
         const response = await fetch(url, {
-            headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Pake/1.0)' },
+            headers: { 'User-Agent': 'Mozilla/5.0 (compatible; BghitApp/1.0)' },
             signal: AbortSignal.timeout(10000),
         });
         if (!response.ok)
@@ -710,14 +710,14 @@ function generateIdentifierSafeName(name) {
         })
             .join('')
             .slice(0, 50);
-        return fallback || 'pake-app';
+        return fallback || 'bghitapp-app';
     }
     return cleaned;
 }
 
 /**
  * Pure transform from CLI options to the window-config slice that gets
- * merged into pake.json. Exposed for snapshot testing so option drift
+ * merged into bghitapp.json. Exposed for snapshot testing so option drift
  * (e.g. a new flag added in cli-program.ts but forgotten here) is caught.
  *
  * Keep this function side-effect free.
@@ -753,7 +753,7 @@ function buildWindowConfigOverrides(options, platform = asSupportedPlatform(proc
 }
 function asSupportedPlatform(platform) {
     if (platform !== 'win32' && platform !== 'darwin' && platform !== 'linux') {
-        throw new Error(`Pake only supports win32, darwin, and linux; detected '${platform}'.`);
+        throw new Error(`BghitApp only supports win32, darwin, and linux; detected '${platform}'.`);
     }
     return platform;
 }
@@ -765,7 +765,7 @@ async function copyTemplateConfigs() {
         'tauri.macos.conf.json',
         'tauri.windows.conf.json',
         'tauri.linux.conf.json',
-        'pake.json',
+        'bghitapp.json',
     ];
     await Promise.all(sourceFiles.map(async (file) => {
         const sourcePath = path.join(srcTauriDir, file);
@@ -794,11 +794,11 @@ async function handleLocalFile(url, useLocalFile, tauriConf) {
             const filesToCopyBack = ['cli.js'];
             await Promise.all(filesToCopyBack.map((file) => fsExtra.copy(path.join(distBakDir, file), path.join(distDir, file))));
         }
-        tauriConf.pake.windows[0].url = fileName;
-        tauriConf.pake.windows[0].url_type = 'local';
+        tauriConf.bghitapp.windows[0].url = fileName;
+        tauriConf.bghitapp.windows[0].url_type = 'local';
     }
     else {
-        tauriConf.pake.windows[0].url_type = 'web';
+        tauriConf.bghitapp.windows[0].url_type = 'web';
     }
 }
 async function mergeLinuxConfig(options, name, tauriConf, linuxBinaryName) {
@@ -808,7 +808,7 @@ async function mergeLinuxConfig(options, name, tauriConf, linuxBinaryName) {
     }
     delete linuxBundle.deb.files;
     const linuxName = generateLinuxPackageName(name);
-    const desktopFileName = `com.pake.${linuxName}.desktop`;
+    const desktopFileName = `com.bghitapp.${linuxName}.desktop`;
     const iconName = `${linuxName}_512`;
     const { title } = options;
     const chineseName = title && /[\u4e00-\u9fa5]/.test(title) ? title : null;
@@ -937,7 +937,7 @@ async function mergeIcons(options, name, tauriConf, platform, safeAppName) {
             logger.warn(`✼ Default system tray icon will remain unchanged.`);
         }
     }
-    tauriConf.pake.system_tray_path = trayIconPath;
+    tauriConf.bghitapp.system_tray_path = trayIconPath;
     delete tauriConf.app.trayIcon;
 }
 async function injectCustomCode(options, tauriConf) {
@@ -950,16 +950,16 @@ async function injectCustomCode(options, tauriConf) {
             return;
         }
         const files = injectArray.map((filepath) => path.isAbsolute(filepath) ? filepath : path.join(process.cwd(), filepath));
-        tauriConf.pake.inject = files;
+        tauriConf.bghitapp.inject = files;
         await combineFiles(files, injectFilePath);
     }
     else {
-        tauriConf.pake.inject = [];
+        tauriConf.bghitapp.inject = [];
         await fsExtra.writeFile(injectFilePath, '');
     }
-    tauriConf.pake.proxy_url = proxyUrl || '';
-    tauriConf.pake.multi_instance = multiInstance;
-    tauriConf.pake.multi_window = multiWindow;
+    tauriConf.bghitapp.proxy_url = proxyUrl || '';
+    tauriConf.bghitapp.multi_instance = multiInstance;
+    tauriConf.bghitapp.multi_window = multiWindow;
     if (wasm) {
         tauriConf.app.security = {
             headers: {
@@ -997,27 +997,27 @@ async function writeAllConfigs(tauriConf, platform) {
     const configPath = path.join(tauriConfigDirectory, platformConfigPaths[platform]);
     const bundleConf = { bundle: tauriConf.bundle };
     await fsExtra.outputJSON(configPath, bundleConf, { spaces: 4 });
-    const pakeConfigPath = path.join(tauriConfigDirectory, 'pake.json');
-    await fsExtra.outputJSON(pakeConfigPath, tauriConf.pake, { spaces: 4 });
+    const pakeConfigPath = path.join(tauriConfigDirectory, 'bghitapp.json');
+    await fsExtra.outputJSON(pakeConfigPath, tauriConf.bghitapp, { spaces: 4 });
     const tauriConf2 = JSON.parse(JSON.stringify(tauriConf));
-    delete tauriConf2.pake;
+    delete tauriConf2.bghitapp;
     const configJsonPath = path.join(tauriConfigDirectory, 'tauri.conf.json');
     await fsExtra.outputJSON(configJsonPath, tauriConf2, { spaces: 4 });
 }
 async function mergeConfig(url, options, tauriConf) {
     await copyTemplateConfigs();
-    const { appVersion, userAgent, showSystemTray, useLocalFile, identifier, name = 'pake-app', installerLanguage, wasm, camera, microphone, splash, autoSplash, offline, } = options;
+    const { appVersion, userAgent, showSystemTray, useLocalFile, identifier, name = 'bghitapp-app', installerLanguage, wasm, camera, microphone, splash, autoSplash, offline, } = options;
     const platform = asSupportedPlatform(process.platform);
     const tauriConfWindowOptions = buildWindowConfigOverrides(options, platform);
-    Object.assign(tauriConf.pake.windows[0], { url, ...tauriConfWindowOptions });
+    Object.assign(tauriConf.bghitapp.windows[0], { url, ...tauriConfWindowOptions });
     tauriConf.productName = name;
     tauriConf.identifier = identifier;
     tauriConf.version = appVersion;
-    const linuxBinaryName = `pake-${generateLinuxPackageName(name)}`;
+    const linuxBinaryName = `bghitapp-${generateLinuxPackageName(name)}`;
     tauriConf.mainBinaryName =
         platform === 'linux'
             ? linuxBinaryName
-            : `pake-${generateIdentifierSafeName(name)}`;
+            : `bghitapp-${generateIdentifierSafeName(name)}`;
     if (platform === 'win32') {
         const windowsBundle = tauriConf.bundle.windows;
         if (!windowsBundle) {
@@ -1033,9 +1033,9 @@ async function mergeConfig(url, options, tauriConf) {
     };
     const currentPlatform = platformMap[platform];
     if (userAgent.length > 0) {
-        tauriConf.pake.user_agent[currentPlatform] = userAgent;
+        tauriConf.bghitapp.user_agent[currentPlatform] = userAgent;
     }
-    tauriConf.pake.system_tray[currentPlatform] = showSystemTray;
+    tauriConf.bghitapp.system_tray[currentPlatform] = showSystemTray;
     if (platform === 'linux') {
         await mergeLinuxConfig(options, name, tauriConf, linuxBinaryName);
     }
@@ -1057,7 +1057,7 @@ async function mergeConfig(url, options, tauriConf) {
         const isIconFallback = assetFilename === 'icon.png';
         const splashHtml = generateSplashHtml(assetPath, resolvedIcon, isIconFallback);
         await fsExtra.writeFile(path.join(distDir, 'splash.html'), splashHtml);
-        tauriConf.pake.windows[0].splash = assetFilename;
+        tauriConf.bghitapp.windows[0].splash = assetFilename;
         logger.info('✼ Splash screen configured.');
     }
     // Process offline page
@@ -1066,7 +1066,7 @@ async function mergeConfig(url, options, tauriConf) {
         await fsExtra.ensureDir(distDir);
         const offlineHtml = generateOfflineHtml();
         await fsExtra.writeFile(path.join(distDir, 'offline.html'), offlineHtml);
-        tauriConf.pake.windows[0].offline = true;
+        tauriConf.bghitapp.windows[0].offline = true;
         logger.info('✼ Offline page configured.');
     }
     if (platform === 'darwin') {
@@ -1141,7 +1141,7 @@ async function detectPackageManager() {
             pinnedPnpmMajor !== null &&
             pnpmMajor !== pinnedPnpmMajor &&
             (await detectNpm(execa))) {
-            logger.warn(`✼ Detected pnpm v${stdout.trim()}, but Pake is pinned to ${packageJson.packageManager}; using npm for package installation instead.`);
+            logger.warn(`✼ Detected pnpm v${stdout.trim()}, but BghitApp is pinned to ${packageJson.packageManager}; using npm for package installation instead.`);
             packageManagerCache = 'npm';
             return 'npm';
         }
@@ -1185,7 +1185,7 @@ function isGeneratedCnMirrorConfig(projectConfig, cnMirrorConfig) {
 }
 /**
  * Toggles `.cargo/config.toml` to point at rsproxy.cn when the user opts in
- * via `PAKE_USE_CN_MIRROR=1`, and removes the auto-generated mirror config
+ * via `BGHITAPP_USE_CN_MIRROR=1`, and removes the auto-generated mirror config
  * (or warns about a manual one) when they opt out.
  */
 async function configureCargoRegistry(tauriSrcPath, useCnMirror) {
@@ -1293,10 +1293,10 @@ class BaseBuilder {
         await this.buildAndCopy(url, this.options.targets);
     }
     async start(url) {
-        logger.info('Pake dev server starting...');
+        logger.info('BghitApp dev server starting...');
         await mergeConfig(url, this.options, tauriConfig);
         const packageManager = await detectPackageManager();
-        const configPath = path.join(npmDirectory, 'src-tauri', '.pake', 'tauri.conf.json');
+        const configPath = path.join(npmDirectory, 'src-tauri', '.bghitapp', 'tauri.conf.json');
         const features = this.getBuildFeatures();
         const featureArgs = features.length > 0 ? `--features ${features.join(',')}` : '';
         const argSeparator = packageManager === 'npm' ? ' --' : '';
@@ -1304,7 +1304,7 @@ class BaseBuilder {
         await shellExec(command);
     }
     async buildAndCopy(url, target) {
-        const { name = 'pake-app' } = this.options;
+        const { name = 'bghitapp-app' } = this.options;
         await mergeConfig(url, this.options, tauriConfig);
         const packageManager = await detectPackageManager();
         // Build app
@@ -1326,7 +1326,7 @@ class BaseBuilder {
         if (process.platform === 'linux' && target === 'appimage') {
             if (!buildEnv.NO_STRIP) {
                 logger.warn('⚠ Building AppImage on Linux may fail due to strip incompatibility with glibc 2.38+');
-                logger.warn('⚠ If build fails, retry with: NO_STRIP=1 pake <url> --targets appimage');
+                logger.warn('⚠ If build fails, retry with: NO_STRIP=1 bghitapp <url> --targets appimage');
             }
         }
         const buildCommand = `cd "${npmDirectory}" && ${this.getBuildCommand(packageManager)}`;
@@ -1442,7 +1442,7 @@ class BaseBuilder {
     }
     getBuildCommand(packageManager = 'pnpm') {
         // Use temporary config directory to avoid modifying source files
-        const configPath = path.join(npmDirectory, 'src-tauri', '.pake', 'tauri.conf.json');
+        const configPath = path.join(npmDirectory, 'src-tauri', '.bghitapp', 'tauri.conf.json');
         let fullCommand = this.buildBaseCommand(packageManager, configPath);
         // For macOS, use app bundles by default unless DMG is explicitly requested
         if (IS_MAC && this.options.targets === 'app') {
@@ -1516,7 +1516,7 @@ class BaseBuilder {
         const nameToUse = process.platform === 'linux'
             ? generateLinuxPackageName(appName)
             : generateIdentifierSafeName(appName);
-        return `pake-${nameToUse}${extension}`;
+        return `bghitapp-${nameToUse}${extension}`;
     }
     /**
      * Check if this build has architecture-specific target
@@ -1561,7 +1561,7 @@ class MacBuilder extends BaseBuilder {
             : 'auto';
         if (options.iterativeBuild ||
             options.install ||
-            process.env.PAKE_CREATE_APP === '1') {
+            process.env.BGHITAPP_CREATE_APP === '1') {
             this.buildFormat = 'app';
         }
         else {
@@ -1570,7 +1570,7 @@ class MacBuilder extends BaseBuilder {
         this.options.targets = this.buildFormat;
     }
     getFileName() {
-        const { name = 'pake-app' } = this.options;
+        const { name = 'bghitapp-app' } = this.options;
         if (this.buildFormat === 'app') {
             return name;
         }
@@ -1602,7 +1602,7 @@ class MacBuilder extends BaseBuilder {
         return this.resolveTargetArch(this.buildArch);
     }
     getBuildCommand(packageManager = 'pnpm') {
-        const configPath = path.join('src-tauri', '.pake', 'tauri.conf.json');
+        const configPath = path.join('src-tauri', '.bghitapp', 'tauri.conf.json');
         const actualArch = this.getActualArch();
         const buildTarget = this.getTauriTarget(actualArch, 'darwin');
         if (!buildTarget) {
@@ -1643,7 +1643,7 @@ class WinBuilder extends BaseBuilder {
         return `${name}_${tauriConfig.version}_${targetArch}_${language}`;
     }
     getBuildCommand(packageManager = 'pnpm') {
-        const configPath = path.join('src-tauri', '.pake', 'tauri.conf.json');
+        const configPath = path.join('src-tauri', '.bghitapp', 'tauri.conf.json');
         const buildTarget = this.getTauriTarget(this.buildArch, 'win32');
         if (!buildTarget) {
             throw new Error(`Unsupported architecture: ${this.buildArch} for Windows`);
@@ -1680,7 +1680,7 @@ class LinuxBuilder extends BaseBuilder {
         this.options.targets = this.buildFormat;
     }
     getFileName() {
-        const { name = 'pake-app', targets } = this.options;
+        const { name = 'bghitapp-app', targets } = this.options;
         const version = tauriConfig.version;
         const buildType = this.currentBuildType || targets.split(',').map((t) => t.trim())[0];
         let arch;
@@ -1723,7 +1723,7 @@ class LinuxBuilder extends BaseBuilder {
         await super.buildAndCopy(url, target);
     }
     getBuildCommand(packageManager = 'pnpm') {
-        const configPath = path.join('src-tauri', '.pake', 'tauri.conf.json');
+        const configPath = path.join('src-tauri', '.bghitapp', 'tauri.conf.json');
         const buildTarget = this.buildArch === 'arm64'
             ? (this.getTauriTarget(this.buildArch, 'linux') ?? undefined)
             : undefined;
@@ -1731,13 +1731,13 @@ class LinuxBuilder extends BaseBuilder {
         if (this.currentBuildType) {
             fullCommand += ` --bundles ${this.currentBuildType}`;
         }
-        // Enable verbose output for AppImage builds when debugging or PAKE_VERBOSE is set.
+        // Enable verbose output for AppImage builds when debugging or BGHITAPP_VERBOSE is set.
         // AppImage builds often fail with minimal error messages from linuxdeploy,
         // so verbose mode helps diagnose issues like strip failures and missing dependencies.
         if (this.currentBuildType === 'appimage' &&
             (this.options.targets.includes('appimage') ||
                 this.options.debug ||
-                process.env.PAKE_VERBOSE)) {
+                process.env.BGHITAPP_VERBOSE)) {
             fullCommand += ' --verbose';
         }
         return fullCommand;
@@ -2127,7 +2127,7 @@ function getIconBaseName(appName) {
     const baseName = IS_LINUX
         ? generateLinuxPackageName(appName)
         : getSafeAppName(appName);
-    return baseName || 'pake-app';
+    return baseName || 'bghitapp-app';
 }
 async function copyWindowsIconIfNeeded(convertedPath, appName) {
     if (!IS_WIN || !convertedPath.endsWith('.ico')) {
@@ -2334,7 +2334,7 @@ async function getDefaultIcon() {
             logger.warn('✼ Using png as fallback for Windows (may cause issues).');
             return defaultPngPath;
         }
-        logger.warn('✼ No default icon found, will use pake default.');
+        logger.warn('✼ No default icon found, will use bghitapp default.');
         return '';
     }
     // Linux and macOS defaults
@@ -2609,35 +2609,35 @@ function normalizeUrl(urlToNormalize) {
  * (invalid names, missing files, etc.) so users see a clean message instead
  * of a Node.js stack dump.
  */
-class PakeError extends Error {
+class BghitappError extends Error {
     constructor(message) {
         super(message);
         this.isUserError = true;
-        this.name = 'PakeError';
+        this.name = 'BghitappError';
     }
 }
-function isPakeError(error) {
-    return (error instanceof PakeError ||
+function isBghitappError(error) {
+    return (error instanceof BghitappError ||
         (typeof error === 'object' &&
             error !== null &&
             error.isUserError === true));
 }
 
 function resolveAppName(name, platform) {
-    const domain = getDomain(name) || 'pake';
+    const domain = getDomain(name) || 'bghitapp';
     return platform !== 'linux' ? capitalizeFirstLetter(domain) : domain;
 }
 function resolveLocalAppName(filePath, platform) {
-    const baseName = path.parse(filePath).name || 'pake-app';
+    const baseName = path.parse(filePath).name || 'bghitapp-app';
     if (platform === 'linux') {
-        return generateLinuxPackageName(baseName) || 'pake-app';
+        return generateLinuxPackageName(baseName) || 'bghitapp-app';
     }
     const normalized = baseName
         .replace(/[^a-zA-Z0-9\u4e00-\u9fff -]/g, '')
         .replace(/^[ -]+/, '')
         .replace(/\s+/g, ' ')
         .trim();
-    return normalized || 'pake-app';
+    return normalized || 'bghitapp-app';
 }
 function isValidName(name, platform) {
     const reg = platform === 'linux'
@@ -2671,10 +2671,10 @@ async function handleOptions(options, url) {
             logger.warn(`✼ Inside github actions, use the default name: ${name}`);
         }
         else {
-            throw new PakeError(errorMsg);
+            throw new BghitappError(errorMsg);
         }
     }
-    const resolvedName = name || 'pake-app';
+    const resolvedName = name || 'bghitapp-app';
     const appOptions = {
         ...options,
         name: resolvedName,
@@ -2685,7 +2685,7 @@ async function handleOptions(options, url) {
     return appOptions;
 }
 
-const DEFAULT_PAKE_OPTIONS = {
+const DEFAULT_BGHITAPP_OPTIONS = {
     icon: '',
     height: 780,
     width: 1200,
@@ -2771,7 +2771,7 @@ function getCliProgram() {
     const logo = `${chalk.green(' ____       _')}
 ${green('|  _ \\ __ _| | _____')}
 ${green('| |_) / _` | |/ / _ \\')}
-${green('|  __/ (_| |   <  __/')}  ${yellow('https://github.com/tw93/pake')}
+${green('|  __/ (_| |   <  __/')}  ${yellow('https://github.com/BghitCode/Pake')}
 ${green('|_|   \\__,_|_|\\_\\___|  can turn any webpage into a desktop app with Rust.')}
 `;
     return program$1
@@ -2781,16 +2781,16 @@ ${green('|_|   \\__,_|_|\\_\\___|  can turn any webpage into a desktop app with 
         .argument('[url]', 'The web URL you want to package', validateUrlInput)
         .option('--name <string>', 'Application name')
         .addOption(new Option('--identifier <string>', 'Application identifier / bundle ID').hideHelp())
-        .option('--icon <string>', 'Application icon', DEFAULT_PAKE_OPTIONS.icon)
-        .option('--width <number>', 'Window width', validateNumberInput, DEFAULT_PAKE_OPTIONS.width)
-        .option('--height <number>', 'Window height', validateNumberInput, DEFAULT_PAKE_OPTIONS.height)
-        .option('--use-local-file', 'Use local file packaging', DEFAULT_PAKE_OPTIONS.useLocalFile)
-        .option('--fullscreen', 'Start in full screen', DEFAULT_PAKE_OPTIONS.fullscreen)
-        .option('--hide-title-bar', 'For Mac, hide title bar', DEFAULT_PAKE_OPTIONS.hideTitleBar)
-        .option('--multi-arch', 'For Mac, both Intel and M1', DEFAULT_PAKE_OPTIONS.multiArch)
+        .option('--icon <string>', 'Application icon', DEFAULT_BGHITAPP_OPTIONS.icon)
+        .option('--width <number>', 'Window width', validateNumberInput, DEFAULT_BGHITAPP_OPTIONS.width)
+        .option('--height <number>', 'Window height', validateNumberInput, DEFAULT_BGHITAPP_OPTIONS.height)
+        .option('--use-local-file', 'Use local file packaging', DEFAULT_BGHITAPP_OPTIONS.useLocalFile)
+        .option('--fullscreen', 'Start in full screen', DEFAULT_BGHITAPP_OPTIONS.fullscreen)
+        .option('--hide-title-bar', 'For Mac, hide title bar', DEFAULT_BGHITAPP_OPTIONS.hideTitleBar)
+        .option('--multi-arch', 'For Mac, both Intel and M1', DEFAULT_BGHITAPP_OPTIONS.multiArch)
         .option('--inject <files>', 'Inject local CSS/JS files into the page', (val, previous) => {
         if (!val)
-            return DEFAULT_PAKE_OPTIONS.inject;
+            return DEFAULT_BGHITAPP_OPTIONS.inject;
         // Split by comma and trim whitespace, filter out empty strings
         const files = val
             .split(',')
@@ -2798,41 +2798,41 @@ ${green('|_|   \\__,_|_|\\_\\___|  can turn any webpage into a desktop app with 
             .filter((item) => item.length > 0);
         // If previous values exist (from multiple --inject options), merge them
         return previous ? [...previous, ...files] : files;
-    }, DEFAULT_PAKE_OPTIONS.inject)
-        .option('--debug', 'Debug build and more output', DEFAULT_PAKE_OPTIONS.debug)
+    }, DEFAULT_BGHITAPP_OPTIONS.inject)
+        .option('--debug', 'Debug build and more output', DEFAULT_BGHITAPP_OPTIONS.debug)
         .addOption(new Option('--proxy-url <url>', 'Proxy URL for all network requests (http://, https://, socks5://)')
-        .default(DEFAULT_PAKE_OPTIONS.proxyUrl)
+        .default(DEFAULT_BGHITAPP_OPTIONS.proxyUrl)
         .hideHelp())
         .addOption(new Option('--user-agent <string>', 'Custom user agent')
-        .default(DEFAULT_PAKE_OPTIONS.userAgent)
+        .default(DEFAULT_BGHITAPP_OPTIONS.userAgent)
         .hideHelp())
-        .addOption(new Option('--targets <string>', 'Build target format for your system').default(DEFAULT_PAKE_OPTIONS.targets))
+        .addOption(new Option('--targets <string>', 'Build target format for your system').default(DEFAULT_BGHITAPP_OPTIONS.targets))
         .addOption(new Option('--app-version <string>', 'App version, the same as package.json version')
-        .default(DEFAULT_PAKE_OPTIONS.appVersion)
+        .default(DEFAULT_BGHITAPP_OPTIONS.appVersion)
         .hideHelp())
         .addOption(new Option('--always-on-top', 'Always on the top level')
-        .default(DEFAULT_PAKE_OPTIONS.alwaysOnTop)
+        .default(DEFAULT_BGHITAPP_OPTIONS.alwaysOnTop)
         .hideHelp())
         .addOption(new Option('--maximize', 'Start window maximized')
-        .default(DEFAULT_PAKE_OPTIONS.maximize)
+        .default(DEFAULT_BGHITAPP_OPTIONS.maximize)
         .hideHelp())
         .addOption(new Option('--dark-mode', 'Force Mac app to use dark mode')
-        .default(DEFAULT_PAKE_OPTIONS.darkMode)
+        .default(DEFAULT_BGHITAPP_OPTIONS.darkMode)
         .hideHelp())
         .addOption(new Option('--disabled-web-shortcuts', 'Disabled webPage shortcuts')
-        .default(DEFAULT_PAKE_OPTIONS.disabledWebShortcuts)
+        .default(DEFAULT_BGHITAPP_OPTIONS.disabledWebShortcuts)
         .hideHelp())
         .addOption(new Option('--activation-shortcut <string>', 'Shortcut key to active App')
-        .default(DEFAULT_PAKE_OPTIONS.activationShortcut)
+        .default(DEFAULT_BGHITAPP_OPTIONS.activationShortcut)
         .hideHelp())
         .addOption(new Option('--show-system-tray', 'Show system tray in app')
-        .default(DEFAULT_PAKE_OPTIONS.showSystemTray)
+        .default(DEFAULT_BGHITAPP_OPTIONS.showSystemTray)
         .hideHelp())
         .addOption(new Option('--system-tray-icon <string>', 'Custom system tray icon')
-        .default(DEFAULT_PAKE_OPTIONS.systemTrayIcon)
+        .default(DEFAULT_BGHITAPP_OPTIONS.systemTrayIcon)
         .hideHelp())
         .addOption(new Option('--hide-on-close [boolean]', 'Hide window on close instead of exiting (default: true for macOS, false for others)')
-        .default(DEFAULT_PAKE_OPTIONS.hideOnClose)
+        .default(DEFAULT_BGHITAPP_OPTIONS.hideOnClose)
         .argParser((value) => {
         if (value === undefined)
             return true; // --hide-on-close without value
@@ -2845,40 +2845,40 @@ ${green('|_|   \\__,_|_|\\_\\___|  can turn any webpage into a desktop app with 
         .hideHelp())
         .addOption(new Option('--title <string>', 'Window title').hideHelp())
         .addOption(new Option('--incognito', 'Launch app in incognito/private mode')
-        .default(DEFAULT_PAKE_OPTIONS.incognito)
+        .default(DEFAULT_BGHITAPP_OPTIONS.incognito)
         .hideHelp())
         .addOption(new Option('--wasm', 'Enable WebAssembly support (Flutter Web, etc.)')
-        .default(DEFAULT_PAKE_OPTIONS.wasm)
+        .default(DEFAULT_BGHITAPP_OPTIONS.wasm)
         .hideHelp())
         .addOption(new Option('--enable-drag-drop', 'Enable drag and drop functionality')
-        .default(DEFAULT_PAKE_OPTIONS.enableDragDrop)
+        .default(DEFAULT_BGHITAPP_OPTIONS.enableDragDrop)
         .hideHelp())
         .addOption(new Option('--keep-binary', 'Keep raw binary file alongside installer')
-        .default(DEFAULT_PAKE_OPTIONS.keepBinary)
+        .default(DEFAULT_BGHITAPP_OPTIONS.keepBinary)
         .hideHelp())
         .addOption(new Option('--multi-instance', 'Allow multiple app instances')
-        .default(DEFAULT_PAKE_OPTIONS.multiInstance)
+        .default(DEFAULT_BGHITAPP_OPTIONS.multiInstance)
         .hideHelp())
         .addOption(new Option('--multi-window', 'Allow opening multiple windows within one app instance')
-        .default(DEFAULT_PAKE_OPTIONS.multiWindow)
+        .default(DEFAULT_BGHITAPP_OPTIONS.multiWindow)
         .hideHelp())
         .addOption(new Option('--start-to-tray', 'Start app minimized to tray')
-        .default(DEFAULT_PAKE_OPTIONS.startToTray)
+        .default(DEFAULT_BGHITAPP_OPTIONS.startToTray)
         .hideHelp())
-        .addOption(new Option('--force-internal-navigation', 'Keep every link inside the Pake window instead of opening external handlers')
-        .default(DEFAULT_PAKE_OPTIONS.forceInternalNavigation)
+        .addOption(new Option('--force-internal-navigation', 'Keep every link inside the BghitApp window instead of opening external handlers')
+        .default(DEFAULT_BGHITAPP_OPTIONS.forceInternalNavigation)
         .hideHelp())
         .addOption(new Option('--internal-url-regex <string>', 'Regex pattern to match URLs that should be considered internal')
-        .default(DEFAULT_PAKE_OPTIONS.internalUrlRegex)
+        .default(DEFAULT_BGHITAPP_OPTIONS.internalUrlRegex)
         .hideHelp())
         .addOption(new Option('--enable-find', 'Enable in-page Find UI with Cmd/Ctrl+F/G shortcuts')
-        .default(DEFAULT_PAKE_OPTIONS.enableFind)
+        .default(DEFAULT_BGHITAPP_OPTIONS.enableFind)
         .hideHelp())
         .addOption(new Option('--installer-language <string>', 'Installer language')
-        .default(DEFAULT_PAKE_OPTIONS.installerLanguage)
+        .default(DEFAULT_BGHITAPP_OPTIONS.installerLanguage)
         .hideHelp())
         .addOption(new Option('--zoom <number>', 'Initial page zoom level (50-200)')
-        .default(DEFAULT_PAKE_OPTIONS.zoom)
+        .default(DEFAULT_BGHITAPP_OPTIONS.zoom)
         .argParser((value) => {
         const zoom = parseInt(value);
         if (isNaN(zoom) || zoom < 50 || zoom > 200) {
@@ -2888,39 +2888,39 @@ ${green('|_|   \\__,_|_|\\_\\___|  can turn any webpage into a desktop app with 
     })
         .hideHelp())
         .addOption(new Option('--min-width <number>', 'Minimum window width')
-        .default(DEFAULT_PAKE_OPTIONS.minWidth)
+        .default(DEFAULT_BGHITAPP_OPTIONS.minWidth)
         .argParser(validateNumberInput)
         .hideHelp())
         .addOption(new Option('--min-height <number>', 'Minimum window height')
-        .default(DEFAULT_PAKE_OPTIONS.minHeight)
+        .default(DEFAULT_BGHITAPP_OPTIONS.minHeight)
         .argParser(validateNumberInput)
         .hideHelp())
         .addOption(new Option('--ignore-certificate-errors', 'Ignore certificate errors (for self-signed certificates)')
-        .default(DEFAULT_PAKE_OPTIONS.ignoreCertificateErrors)
+        .default(DEFAULT_BGHITAPP_OPTIONS.ignoreCertificateErrors)
         .hideHelp())
         .addOption(new Option('--iterative-build', 'Turn on rapid build mode (app only, no dmg/deb/msi), good for debugging')
-        .default(DEFAULT_PAKE_OPTIONS.iterativeBuild)
+        .default(DEFAULT_BGHITAPP_OPTIONS.iterativeBuild)
         .hideHelp())
         .addOption(new Option('--new-window', 'Allow sites to open new windows (for auth flows, tabs, branches)')
-        .default(DEFAULT_PAKE_OPTIONS.newWindow)
+        .default(DEFAULT_BGHITAPP_OPTIONS.newWindow)
         .hideHelp())
         .addOption(new Option('--install', 'Auto-install app to /Applications (macOS) after build and remove local bundle')
-        .default(DEFAULT_PAKE_OPTIONS.install)
+        .default(DEFAULT_BGHITAPP_OPTIONS.install)
         .hideHelp())
         .addOption(new Option('--camera', 'Request camera permission on macOS')
-        .default(DEFAULT_PAKE_OPTIONS.camera)
+        .default(DEFAULT_BGHITAPP_OPTIONS.camera)
         .hideHelp())
         .addOption(new Option('--microphone', 'Request microphone permission on macOS')
-        .default(DEFAULT_PAKE_OPTIONS.microphone)
+        .default(DEFAULT_BGHITAPP_OPTIONS.microphone)
         .hideHelp())
         .addOption(new Option('--splash <path_or_url>', 'Splash screen image (local path or URL)')
-        .default(DEFAULT_PAKE_OPTIONS.splash)
+        .default(DEFAULT_BGHITAPP_OPTIONS.splash)
         .hideHelp())
         .addOption(new Option('--auto-splash', 'Auto-fetch og:image from target URL for splash')
-        .default(DEFAULT_PAKE_OPTIONS.autoSplash)
+        .default(DEFAULT_BGHITAPP_OPTIONS.autoSplash)
         .hideHelp())
         .addOption(new Option('--offline', 'Enable offline fallback page')
-        .default(DEFAULT_PAKE_OPTIONS.offline)
+        .default(DEFAULT_BGHITAPP_OPTIONS.offline)
         .hideHelp())
         .version(packageJson.version, '-v, --version')
         .configureHelp({
@@ -2964,7 +2964,7 @@ program.action(async (url, options) => {
         await builder.build(url);
     }
     catch (error) {
-        if (isPakeError(error)) {
+        if (isBghitappError(error)) {
             console.error(chalk.red(error.message));
         }
         else if (error instanceof Error) {

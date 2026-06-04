@@ -37,7 +37,7 @@ export function generateIdentifierSafeName(name: string): string {
       .join('')
       .slice(0, 50);
 
-    return fallback || 'pake-app';
+    return fallback || 'bghitapp-app';
   }
 
   return cleaned;

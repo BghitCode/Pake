@@ -56,7 +56,7 @@ function fakePng(tag: number, length: number): Buffer {
 const tempDirs: string[] = [];
 
 function makeTempDir(): string {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pake-ico-test-'));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'bghitapp-ico-test-'));
   tempDirs.push(dir);
   return dir;
 }

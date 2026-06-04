@@ -52,16 +52,16 @@ Tag format: uppercase `V` prefix (e.g. `V3.11.0`), not `v3.11.0`.
 3. [ ] Verify GitHub Release was created: `gh release view VX.X.X`
 4. [ ] Confirm npm workflow exists and is active: `gh workflow list --all | grep "Publish npm Package"`
 5. [ ] Confirm npm Trusted Publishing triggered: `gh run list --workflow=npm-publish.yml`
-6. [ ] Verify npm published the package: `npm view pake-cli version` and `npm view pake-cli@X.Y.Z dist.tarball`
+6. [ ] Verify npm published the package: `npm view @bghitcode/bghitapp version` and `npm view @bghitcode/bghitapp@X.Y.Z dist.tarball`
 
-npm publishes through Trusted Publishing from `.github/workflows/npm-publish.yml`. Configure npm package settings with GitHub Actions, `tw93/Pake`, workflow file `npm-publish.yml`, and no environment. Local `npm publish` is only a fallback if CI or registry state blocks the trusted path.
+npm publishes through Trusted Publishing from `.github/workflows/npm-publish.yml`. Configure npm package settings with GitHub Actions, `BghitCode/Pake`, workflow file `npm-publish.yml`, and no environment. Local `npm publish` is only a fallback if CI or registry state blocks the trusted path.
 
 ## Trusted Publishing Notes
 
 - The first real Trusted Publishing test must use a new version and a new `V*` tag; do not retry an already-published version.
 - npm package settings should use the strict publishing option: require two-factor authentication and disallow tokens. Trusted Publishing still works with this setting.
 - If local fallback is unavoidable, prefer `npm exec --yes --package=pnpm@10.26.2 -- npm publish --registry=https://registry.npmjs.org` so `prepublishOnly` can find the pinned pnpm version.
-- Do not reply to GitHub issues or close them as released until `npm view pake-cli@X.Y.Z version` returns the expected version.
+- Do not reply to GitHub issues or close them as released until `npm view @bghitcode/bghitapp@X.Y.Z version` returns the expected version.
 
 ## Build Commands (local only)
 

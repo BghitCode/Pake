@@ -2,18 +2,18 @@
 
 <h4 align="right"><strong><a href="github-actions-usage.md">English</a></strong> | 简体中文</h4>
 
-无需本地安装开发工具，在线构建 Pake 应用。
+无需本地安装开发工具，在线构建 BghitApp 应用。
 
 ## 快速步骤
 
 ### 1. Fork 仓库
 
-[Fork 此项目](https://github.com/tw93/Pake/fork)
+[Fork 此项目](https://github.com/BghitCode/bghitapp/fork)
 
 ### 2. 运行工作流
 
 1. 前往你 Fork 的仓库的 Actions 页面
-2. 选择 `Build App With Pake CLI`
+2. 选择 `Build App With BghitApp CLI`
 3. 填写表单（参数与 [CLI 选项](cli-usage_CN.md) 相同）
 4. 点击 `Run Workflow`
 

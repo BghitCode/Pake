@@ -58,7 +58,7 @@ fn apply_badge_label(app: &AppHandle, label: Option<&str>) -> Result<(), String>
 #[cfg(not(target_os = "macos"))]
 fn apply_badge_label(app: &AppHandle, label: Option<&str>) -> Result<(), String> {
     let window = app
-        .get_webview_window("pake")
+        .get_webview_window("bghitapp")
         .ok_or("Main window not found")?;
     let count = label.and_then(|s| s.parse::<i64>().ok());
     window
@@ -82,7 +82,7 @@ pub struct NotificationParams {
 
 #[command]
 pub async fn download_file(app: AppHandle, params: DownloadFileParams) -> Result<(), String> {
-    let window: WebviewWindow = app.get_webview_window("pake").ok_or("Window not found")?;
+    let window: WebviewWindow = app.get_webview_window("bghitapp").ok_or("Window not found")?;
 
     show_toast(
         &window,
@@ -185,7 +185,7 @@ pub fn set_dock_badge_label(app: AppHandle, label: Option<String>) -> Result<(),
 pub async fn update_theme_mode(app: AppHandle, mode: String) {
     #[cfg(target_os = "macos")]
     {
-        if let Some(window) = app.get_webview_window("pake") {
+        if let Some(window) = app.get_webview_window("bghitapp") {
             let theme = if mode == "dark" {
                 Theme::Dark
             } else {
@@ -204,7 +204,7 @@ pub async fn update_theme_mode(app: AppHandle, mode: String) {
 #[command]
 #[allow(unreachable_code)]
 pub fn clear_cache_and_restart(app: AppHandle) -> Result<(), String> {
-    if let Some(window) = app.get_webview_window("pake") {
+    if let Some(window) = app.get_webview_window("bghitapp") {
         match window.clear_all_browsing_data() {
             Ok(_) => {
                 // Clear all browsing data successfully
@@ -227,15 +227,15 @@ pub async fn close_splashscreen(app: AppHandle) -> Result<(), String> {
         let _ = splash.eval("document.body.classList.add('fade-out')");
         tokio::time::sleep(tokio::time::Duration::from_millis(300)).await;
         if let Err(e) = splash.destroy() {
-            eprintln!("[Pake] Failed to destroy splash window: {}", e);
+            eprintln!("[BghitApp] Failed to destroy splash window: {}", e);
         }
     }
-    if let Some(main) = app.get_webview_window("pake") {
+    if let Some(main) = app.get_webview_window("bghitapp") {
         if let Err(e) = main.show() {
-            eprintln!("[Pake] Failed to show main window: {}", e);
+            eprintln!("[BghitApp] Failed to show main window: {}", e);
         }
         if let Err(e) = main.set_focus() {
-            eprintln!("[Pake] Failed to focus main window: {}", e);
+            eprintln!("[BghitApp] Failed to focus main window: {}", e);
         }
     }
     Ok(())

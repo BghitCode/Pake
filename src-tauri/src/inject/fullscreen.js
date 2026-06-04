@@ -6,8 +6,8 @@
 // Split out from component.js so a future CLI flag (or custom.js override)
 // can short-circuit the polyfill for apps that don't need video fullscreen.
 (function () {
-  if (window.__PAKE_FULLSCREEN_POLYFILL__) return;
-  window.__PAKE_FULLSCREEN_POLYFILL__ = true;
+  if (window.__BGHITAPP_FULLSCREEN_POLYFILL__) return;
+  window.__BGHITAPP_FULLSCREEN_POLYFILL__ = true;
 
   function initFullscreenPolyfill() {
     if (!window.__TAURI__ || !document.head) {
@@ -24,14 +24,14 @@
     let wasInBody = false;
     let monitorId = null;
 
-    if (!document.getElementById("pake-fullscreen-style")) {
+    if (!document.getElementById("bghitapp-fullscreen-style")) {
       const styleEl = document.createElement("style");
-      styleEl.id = "pake-fullscreen-style";
+      styleEl.id = "bghitapp-fullscreen-style";
       styleEl.textContent = `
-      body.pake-fullscreen-active {
+      body.bghitapp-fullscreen-active {
         overflow: hidden !important;
       }
-      .pake-fullscreen-element {
+      .bghitapp-fullscreen-element {
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
@@ -45,7 +45,7 @@
         background: #000 !important;
         object-fit: contain !important;
       }
-      .pake-fullscreen-element video {
+      .bghitapp-fullscreen-element video {
         width: 100% !important;
         height: 100% !important;
         object-fit: contain !important;
@@ -129,8 +129,8 @@
         originalNextSibling = targetElement.nextSibling;
       }
 
-      targetElement.classList.add("pake-fullscreen-element");
-      document.body.classList.add("pake-fullscreen-active");
+      targetElement.classList.add("bghitapp-fullscreen-element");
+      document.body.classList.add("bghitapp-fullscreen-active");
 
       if (!wasInBody) {
         document.body.appendChild(targetElement);
@@ -162,8 +162,8 @@
       const exitingElement = fullscreenElement;
       const targetElement = actualFullscreenElement;
 
-      targetElement.classList.remove("pake-fullscreen-element");
-      document.body.classList.remove("pake-fullscreen-active");
+      targetElement.classList.remove("bghitapp-fullscreen-element");
+      document.body.classList.remove("bghitapp-fullscreen-active");
 
       if (originalStyles) {
         Object.keys(originalStyles).forEach((key) => {

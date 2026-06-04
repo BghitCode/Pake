@@ -1,6 +1,6 @@
-import { PakeCliOptions } from './types.js';
+import { BghitappCliOptions } from './types.js';
 
-export const DEFAULT_PAKE_OPTIONS: PakeCliOptions = {
+export const DEFAULT_BGHITAPP_OPTIONS: BghitappCliOptions = {
   icon: '',
   height: 780,
   width: 1200,
@@ -60,9 +60,9 @@ export const DEFAULT_PAKE_OPTIONS: PakeCliOptions = {
 };
 
 // Just for cli development
-export const DEFAULT_DEV_PAKE_OPTIONS: PakeCliOptions & { url: string } = {
-  ...DEFAULT_PAKE_OPTIONS,
-  url: 'https://weekly.tw93.fun/en',
+export const DEFAULT_DEV_BGHITAPP_OPTIONS: BghitappCliOptions & { url: string } = {
+  ...DEFAULT_BGHITAPP_OPTIONS,
+  url: 'https://example.com',
   name: 'Weekly',
   hideTitleBar: true,
 };

@@ -65,21 +65,21 @@ function loadEventHelpers({ withTauri = false } = {}) {
 
 describe("event link guard", () => {
   it("bypasses javascript pseudo-links", () => {
-    const { shouldBypassPakeLinkHandling } = loadEventHelpers();
+    const { shouldBypassBghitappLinkHandling } = loadEventHelpers();
 
-    expect(shouldBypassPakeLinkHandling("javascript:void(0)")).toBe(true);
+    expect(shouldBypassBghitappLinkHandling("javascript:void(0)")).toBe(true);
   });
 
   it("bypasses hash-only anchors", () => {
-    const { shouldBypassPakeLinkHandling } = loadEventHelpers();
+    const { shouldBypassBghitappLinkHandling } = loadEventHelpers();
 
-    expect(shouldBypassPakeLinkHandling("#captcha-confirm")).toBe(true);
+    expect(shouldBypassBghitappLinkHandling("#captcha-confirm")).toBe(true);
   });
 
-  it("keeps normal navigations under Pake handling", () => {
-    const { shouldBypassPakeLinkHandling } = loadEventHelpers();
+  it("keeps normal navigations under BghitApp handling", () => {
+    const { shouldBypassBghitappLinkHandling } = loadEventHelpers();
 
-    expect(shouldBypassPakeLinkHandling("https://example.com/account")).toBe(
+    expect(shouldBypassBghitappLinkHandling("https://example.com/account")).toBe(
       false,
     );
   });

@@ -18,7 +18,7 @@ pub fn set_system_tray(
     allow_multi_window: bool,
 ) -> tauri::Result<()> {
     if !show_system_tray {
-        app.remove_tray_by_id("pake-tray");
+        app.remove_tray_by_id("bghitapp-tray");
         return Ok(());
     }
 
@@ -37,7 +37,7 @@ pub fn set_system_tray(
             .build()?
     };
 
-    app.app_handle().remove_tray_by_id("pake-tray");
+    app.app_handle().remove_tray_by_id("bghitapp-tray");
 
     let mut tray_builder = TrayIconBuilder::new()
         .menu(&menu)
@@ -46,12 +46,12 @@ pub fn set_system_tray(
                 open_additional_window_safe(app);
             }
             "hide_app" => {
-                if let Some(window) = app.get_webview_window("pake") {
+                if let Some(window) = app.get_webview_window("bghitapp") {
                     let _ = window.minimize();
                 }
             }
             "show_app" => {
-                if let Some(window) = app.get_webview_window("pake") {
+                if let Some(window) = app.get_webview_window("bghitapp") {
                     let _ = window.show();
                     #[cfg(target_os = "linux")]
                     if _init_fullscreen && !window.is_fullscreen().unwrap_or(false) {
@@ -69,7 +69,7 @@ pub fn set_system_tray(
         .on_tray_icon_event(move |tray, event| match event {
             TrayIconEvent::Click { button, .. } => {
                 if button == tauri::tray::MouseButton::Left {
-                    if let Some(window) = tray.app_handle().get_webview_window("pake") {
+                    if let Some(window) = tray.app_handle().get_webview_window("bghitapp") {
                         let is_visible = window.is_visible().unwrap_or(false);
                         if is_visible {
                             let _ = window.hide();
@@ -98,7 +98,7 @@ pub fn set_system_tray(
     if let Some(icon) = resolved_icon {
         tray_builder = tray_builder.icon(icon);
     } else {
-        eprintln!("[Pake] No tray icon available; tray will build without an icon.");
+                eprintln!("[BghitApp] No tray icon available; tray will build without an icon.");
     }
 
     let tray = tray_builder.build(app)?;
@@ -120,7 +120,7 @@ pub fn set_global_shortcut(
     let shortcut_hotkey = match Shortcut::from_str(&shortcut) {
         Ok(s) => s,
         Err(error) => {
-            eprintln!("[Pake] Invalid activation shortcut '{shortcut}': {error}");
+                eprintln!("[BghitApp] Invalid activation shortcut '{shortcut}': {error}");
             return Ok(());
         }
     };
@@ -140,7 +140,7 @@ pub fn set_global_shortcut(
                     *last_triggered = Instant::now();
 
                     if shortcut_hotkey.eq(event) {
-                        if let Some(window) = app.get_webview_window("pake") {
+                        if let Some(window) = app.get_webview_window("bghitapp") {
                             let is_visible = window.is_visible().unwrap_or(false);
                             if is_visible {
                                 let _ = window.hide();
@@ -159,13 +159,13 @@ pub fn set_global_shortcut(
             .build(),
     ) {
         eprintln!(
-            "[Pake] Failed to register global shortcut plugin '{shortcut}': {error}; continuing without it."
+            "[BghitApp] Failed to register global shortcut plugin '{shortcut}': {error}; continuing without it."
         );
         return Ok(());
     }
 
     if let Err(error) = app.global_shortcut().register(shortcut_hotkey) {
-        eprintln!("[Pake] Failed to bind global shortcut '{shortcut}': {error}");
+        eprintln!("[BghitApp] Failed to bind global shortcut '{shortcut}': {error}");
     }
 
     Ok(())

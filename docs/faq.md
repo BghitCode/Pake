@@ -2,7 +2,7 @@
 
 <h4 align="right"><strong>English</strong> | <a href="faq_CN.md">简体中文</a></h4>
 
-Common issues and solutions when using Pake.
+Common issues and solutions when using BghitApp.
 
 ## Table of Contents
 
@@ -29,7 +29,7 @@ Common issues and solutions when using Pake.
 ### Rust Version Error: "feature 'edition2024' is required"
 
 **Problem:**
-When building Pake or using the CLI, you encounter an error like:
+When building BghitApp or using the CLI, you encounter an error like:
 
 ```txt
 error: failed to parse manifest
@@ -41,7 +41,7 @@ Caused by:
 
 **Why This Happens:**
 
-Pake's dependencies require Rust edition2024 support, which is only available in Rust 1.85.0 or later. Specifically:
+BghitApp's dependencies require Rust edition2024 support, which is only available in Rust 1.85.0 or later. Specifically:
 
 - The dependency chain includes: `tauri` → `image` → `moxcms` → `pxfm v0.1.25` (requires edition2024)
 - Rust edition2024 became stable in Rust 1.85.0 (released February 2025)
@@ -112,10 +112,10 @@ Error: strip: Unable to recognise the format of the input file
 
 **Solution 1: Automatic NO_STRIP Retry (Recommended)**
 
-Pake CLI now automatically retries AppImage builds with `NO_STRIP=1` when linuxdeploy fails to strip the binary. To skip the strip step from the very first attempt (or when scripting your own builds), set the variable manually:
+BghitApp CLI now automatically retries AppImage builds with `NO_STRIP=1` when linuxdeploy fails to strip the binary. To skip the strip step from the very first attempt (or when scripting your own builds), set the variable manually:
 
 ```bash
-NO_STRIP=1 pake https://example.com --name MyApp --targets appimage
+NO_STRIP=1 bghitapp https://example.com --name MyApp --targets appimage
 ```
 
 This bypasses the library stripping process that often causes issues on certain Linux distributions.
@@ -151,7 +151,7 @@ Then try building again (you can still pre-set `NO_STRIP=1` if you prefer).
 DEB packages are more stable on Debian-based systems:
 
 ```bash
-pake https://example.com --name MyApp --targets deb
+bghitapp https://example.com --name MyApp --targets deb
 ```
 
 **Solution 4: Use Docker (with FUSE access)**
@@ -163,7 +163,7 @@ docker run --rm --privileged \
   --device /dev/fuse \
   --security-opt apparmor=unconfined \
   -v $(pwd)/output:/output \
-  ghcr.io/tw93/pake:latest \
+  ghcr.io/bghitcode/bghitapp:latest \
   https://example.com --name MyApp --targets appimage
 ```
 
@@ -184,11 +184,11 @@ The `NO_STRIP=1` environment variable is the official workaround recommended by 
 ### Linux: "cargo: command not found" After Installing Rust
 
 **Problem:**
-You installed Rust but Pake still reports "cargo: command not found".
+You installed Rust but BghitApp still reports "cargo: command not found".
 
 **Solution:**
 
-Pake CLI automatically reloads the Rust environment, but if issues persist:
+BghitApp CLI automatically reloads the Rust environment, but if issues persist:
 
 ```bash
 # Reload environment in current terminal
@@ -221,16 +221,16 @@ First-time installation on Windows can be slow due to:
 
 **Solution 1: Enable CN Mirror Explicitly**
 
-Pake CLI uses the official npm and Rust sources by default. If downloads are slow in China, opt in to CN mirrors:
+BghitApp CLI uses the official npm and Rust sources by default. If downloads are slow in China, opt in to CN mirrors:
 
 ```bash
 # macOS/Linux
-PAKE_USE_CN_MIRROR=1 pake https://github.com --name GitHub
+BGHITAPP_USE_CN_MIRROR=1 bghitapp https://github.com --name GitHub
 ```
 
 ```powershell
 # Windows PowerShell
-$env:PAKE_USE_CN_MIRROR="1"; pake https://github.com --name GitHub
+$env:BGHITAPP_USE_CN_MIRROR="1"; bghitapp https://github.com --name GitHub
 ```
 
 **Solution 2: Manual Installation**
@@ -238,14 +238,14 @@ $env:PAKE_USE_CN_MIRROR="1"; pake https://github.com --name GitHub
 If dependency installation still fails, manually install dependencies:
 
 ```bash
-# Navigate to pake-cli installation directory
-cd %LOCALAPPDATA%\pnpm\global\5\.pnpm\pake-cli@VERSION\node_modules\pake-cli
+# Navigate to @bghitcode/bghitapp installation directory
+cd %LOCALAPPDATA%\pnpm\global\5\.pnpm\@bghitcode/bghitapp@VERSION\node_modules\@bghitcode/bghitapp
 
 # Install with CN mirror
 pnpm install --registry=https://registry.npmmirror.com
 
 # Then retry your build
-pake https://github.com --name GitHub
+bghitapp https://github.com --name GitHub
 ```
 
 **Solution 3: Improve Network Speed**
@@ -306,7 +306,7 @@ This file is already in `.gitignore` and won't be committed.
 Specify custom dimensions when building:
 
 ```bash
-pake https://example.com --width 1200 --height 800
+bghitapp https://example.com --width 1200 --height 800
 ```
 
 See [CLI Usage Guide](cli-usage.md#window-options) for all window options.
@@ -328,23 +328,23 @@ Ensure you're using the correct icon format for your platform:
 
 ```bash
 # macOS
-pake https://example.com --icon ./icon.icns
+bghitapp https://example.com --icon ./icon.icns
 
 # Windows
-pake https://example.com --icon ./icon.ico
+bghitapp https://example.com --icon ./icon.ico
 
 # Linux
-pake https://example.com --icon ./icon.png
+bghitapp https://example.com --icon ./icon.png
 ```
 
-Pake can automatically convert icons, but providing the correct format is more reliable.
+BghitApp can automatically convert icons, but providing the correct format is more reliable.
 
 ---
 
 ### Website Features Not Working (Login, Upload, etc.)
 
 **Problem:**
-Some website features don't work in the Pake app.
+Some website features don't work in the BghitApp app.
 
 **Solution:**
 
@@ -353,16 +353,16 @@ This is usually due to web compatibility issues. Try:
 1. **Set custom User Agent:**
 
    ```bash
-   pake https://example.com --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+   bghitapp https://example.com --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
    ```
 
 2. **Inject custom JavaScript:**
 
    ```bash
-   pake https://example.com --inject ./fix.js
+   bghitapp https://example.com --inject ./fix.js
    ```
 
-   For pages that need periodic reloads, you can keep this behavior in a small injected script instead of adding a dedicated Pake option:
+   For pages that need periodic reloads, you can keep this behavior in a small injected script instead of adding a dedicated BghitApp option:
 
    ```javascript
    function isEditing(element) {
@@ -386,21 +386,21 @@ This is usually due to web compatibility issues. Try:
    Save it as `refresh.js` and package with:
 
    ```bash
-   pake https://news.ycombinator.com --name HackerNews --inject ./refresh.js
+   bghitapp https://news.ycombinator.com --name HackerNews --inject ./refresh.js
    ```
 
 3. **Check if the site requires specific permissions** that may not be available in WebView
 
 4. **Be aware of embedded-webview sign-in limits**
 
-   Some authentication providers, especially Google, may block sign-in inside embedded webviews. Because Pake packages sites into a desktop webview, Google properties or sites that rely on Google OAuth may still fail to sign in even when `--new-window` or `--multi-window` is enabled. This is provider policy, not a packaging bug. In those cases, use the normal browser, a browser-installed app, or a native desktop client.
+   Some authentication providers, especially Google, may block sign-in inside embedded webviews. Because BghitApp packages sites into a desktop webview, Google properties or sites that rely on Google OAuth may still fail to sign in even when `--new-window` or `--multi-window` is enabled. This is provider policy, not a packaging bug. In those cases, use the normal browser, a browser-installed app, or a native desktop client.
 
 5. **WeChat Web login environment error**
 
    WeChat detects the WebView and writes a flag cookie that blocks subsequent logins. Add `--incognito` when packaging to bypass it, at the cost of requiring a QR scan on every launch:
 
    ```bash
-   pake https://wx.qq.com --name WeChat --incognito
+   bghitapp https://wx.qq.com --name WeChat --incognito
    ```
 
 ---
@@ -410,7 +410,7 @@ This is usually due to web compatibility issues. Try:
 ### Permission Denied When Installing Globally
 
 **Problem:**
-`npm install -g pake-cli` fails with permission errors.
+`npm install -g @bghitcode/bghitapp` fails with permission errors.
 
 **Solution:**
 
@@ -418,16 +418,16 @@ Use one of these approaches:
 
 ```bash
 # Option 1: Use npx (no installation needed)
-npx pake-cli https://example.com
+npx @bghitcode/bghitapp https://example.com
 
 # Option 2: Fix npm permissions
 npm config set prefix ~/.npm-global
 echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
 source ~/.bashrc
-npm install -g pake-cli
+npm install -g @bghitcode/bghitapp
 
 # Option 3: Use pnpm (recommended)
-pnpm install -g pake-cli
+pnpm install -g @bghitcode/bghitapp
 ```
 
 ---
@@ -438,8 +438,8 @@ If your issue isn't covered here:
 
 1. Check the [CLI Usage Guide](cli-usage.md) for detailed parameter documentation
 2. See [Advanced Usage](advanced-usage.md) for prerequisites and system setup
-3. Search [existing GitHub issues](https://github.com/tw93/Pake/issues)
-4. [Open a new issue](https://github.com/tw93/Pake/issues/new) with:
+3. Search [existing GitHub issues](https://github.com/BghitCode/bghitapp/issues)
+4. [Open a new issue](https://github.com/BghitCode/bghitapp/issues/new) with:
    - Your OS and version
    - Node.js and Rust versions (`node --version`, `rustc --version`)
    - Complete error message

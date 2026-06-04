@@ -1,15 +1,15 @@
 (function () {
-  if (window.__PAKE_FIND_SCRIPT__) {
+  if (window.__BGHITAPP_FIND_SCRIPT__) {
     return;
   }
-  window.__PAKE_FIND_SCRIPT__ = true;
+  window.__BGHITAPP_FIND_SCRIPT__ = true;
 
-  const PANEL_ID = "pake-find-panel";
-  const STYLE_ID = "pake-find-style";
-  const MARK_ATTR = "data-pake-find";
-  const ACTIVE_ATTR = "data-pake-find-active";
-  const MATCH_HIGHLIGHT = "pake-find-match";
-  const ACTIVE_HIGHLIGHT = "pake-find-active";
+  const PANEL_ID = "bghitapp-find-panel";
+  const STYLE_ID = "bghitapp-find-style";
+  const MARK_ATTR = "data-bghitapp-find";
+  const ACTIVE_ATTR = "data-bghitapp-find-active";
+  const MATCH_HIGHLIGHT = "bghitapp-find-match";
+  const ACTIVE_HIGHLIGHT = "bghitapp-find-active";
   const MAX_MATCHES = 1000;
   const SEARCH_DEBOUNCE_MS = 120;
   const SKIPPED_TAGS = new Set([
@@ -23,7 +23,7 @@
   ]);
 
   const state = {
-    enabled: window.pakeConfig?.enable_find === true,
+    enabled: window.bghitappConfig?.enable_find === true,
     panel: null,
     input: null,
     counter: null,
@@ -54,7 +54,7 @@
   }
 
   if (!state.enabled) {
-    window.pakeFind = {
+    window.bghitappFind = {
       open: noop,
       close: noop,
       next: noop,
@@ -242,7 +242,7 @@
         border-color: #3b82f6;
         box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.16);
       }
-      #${PANEL_ID} [data-pake-find-counter] {
+      #${PANEL_ID} [data-bghitapp-find-counter] {
         flex: 0 0 auto;
         min-width: 42px;
         color: #5f6b7a;
@@ -264,7 +264,7 @@
       #${PANEL_ID} button:hover {
         background: rgba(0, 0, 0, 0.08);
       }
-      #${PANEL_ID} [data-pake-find-status] {
+      #${PANEL_ID} [data-bghitapp-find-status] {
         position: absolute;
         left: 10px;
         top: calc(100% + 4px);
@@ -284,7 +284,7 @@
           background: rgba(255, 255, 255, 0.08);
           color: #f0f3f6;
         }
-        #${PANEL_ID} [data-pake-find-counter] {
+        #${PANEL_ID} [data-bghitapp-find-counter] {
           color: #b7c0cc;
         }
         #${PANEL_ID} button {
@@ -347,7 +347,7 @@
     input.setAttribute("aria-label", "Find in page");
 
     const counter = document.createElement("span");
-    counter.setAttribute("data-pake-find-counter", "");
+    counter.setAttribute("data-bghitapp-find-counter", "");
     counter.textContent = "0/0";
 
     const previousButton = createButton("<", "Find Previous", () => previous());
@@ -355,7 +355,7 @@
     const closeButton = createButton("x", "Close Find", () => close());
 
     const status = document.createElement("span");
-    status.setAttribute("data-pake-find-status", "");
+    status.setAttribute("data-bghitapp-find-status", "");
 
     input.addEventListener("input", () => {
       debounceSearch(input.value);
@@ -689,10 +689,10 @@
 
     event.preventDefault();
     event.stopPropagation();
-    window.pakeFind[action]();
+    window.bghitappFind[action]();
   }
 
-  window.pakeFind = {
+  window.bghitappFind = {
     open,
     close,
     next,

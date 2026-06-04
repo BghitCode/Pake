@@ -15,8 +15,8 @@ import {
   generateLinuxPackageName,
 } from '@/utils/name';
 import {
-  PakeAppOptions,
-  PakeTauriConfig,
+  BghitappAppOptions,
+  BghitappTauriConfig,
   SupportedPlatform,
   TauriPlatform,
   WindowConfig,
@@ -25,13 +25,13 @@ import { tauriConfigDirectory, npmDirectory } from '@/utils/dir';
 
 /**
  * Pure transform from CLI options to the window-config slice that gets
- * merged into pake.json. Exposed for snapshot testing so option drift
+ * merged into bghitapp.json. Exposed for snapshot testing so option drift
  * (e.g. a new flag added in cli-program.ts but forgotten here) is caught.
  *
  * Keep this function side-effect free.
  */
 export function buildWindowConfigOverrides(
-  options: PakeAppOptions,
+  options: BghitappAppOptions,
   platform: SupportedPlatform = asSupportedPlatform(process.platform),
 ): Partial<WindowConfig> {
   const platformHideOnClose = options.hideOnClose ?? platform === 'darwin';
@@ -73,7 +73,7 @@ type PlatformIconInfo = {
 function asSupportedPlatform(platform: NodeJS.Platform): SupportedPlatform {
   if (platform !== 'win32' && platform !== 'darwin' && platform !== 'linux') {
     throw new Error(
-      `Pake only supports win32, darwin, and linux; detected '${platform}'.`,
+      `BghitApp only supports win32, darwin, and linux; detected '${platform}'.`,
     );
   }
   return platform;
@@ -88,7 +88,7 @@ async function copyTemplateConfigs(): Promise<void> {
     'tauri.macos.conf.json',
     'tauri.windows.conf.json',
     'tauri.linux.conf.json',
-    'pake.json',
+    'bghitapp.json',
   ];
 
   await Promise.all(
@@ -108,7 +108,7 @@ async function copyTemplateConfigs(): Promise<void> {
 async function handleLocalFile(
   url: string,
   useLocalFile: boolean,
-  tauriConf: PakeTauriConfig,
+  tauriConf: BghitappTauriConfig,
 ): Promise<void> {
   const pathExists = await fsExtra.pathExists(url);
   if (pathExists) {
@@ -134,17 +134,17 @@ async function handleLocalFile(
       );
     }
 
-    tauriConf.pake.windows[0].url = fileName;
-    tauriConf.pake.windows[0].url_type = 'local';
+    tauriConf.bghitapp.windows[0].url = fileName;
+    tauriConf.bghitapp.windows[0].url_type = 'local';
   } else {
-    tauriConf.pake.windows[0].url_type = 'web';
+    tauriConf.bghitapp.windows[0].url_type = 'web';
   }
 }
 
 async function mergeLinuxConfig(
-  options: PakeAppOptions,
+  options: BghitappAppOptions,
   name: string,
-  tauriConf: PakeTauriConfig,
+  tauriConf: BghitappTauriConfig,
   linuxBinaryName: string,
 ): Promise<void> {
   const linuxBundle = tauriConf.bundle.linux;
@@ -156,7 +156,7 @@ async function mergeLinuxConfig(
   delete linuxBundle.deb.files;
 
   const linuxName = generateLinuxPackageName(name);
-  const desktopFileName = `com.pake.${linuxName}.desktop`;
+  const desktopFileName = `com.bghitapp.${linuxName}.desktop`;
   const iconName = `${linuxName}_512`;
   const { title } = options;
 
@@ -214,9 +214,9 @@ Terminal=false
 }
 
 async function mergeIcons(
-  options: PakeAppOptions,
+  options: BghitappAppOptions,
   name: string,
-  tauriConf: PakeTauriConfig,
+  tauriConf: BghitappTauriConfig,
   platform: SupportedPlatform,
   safeAppName: string,
 ): Promise<void> {
@@ -317,13 +317,13 @@ async function mergeIcons(
     }
   }
 
-  tauriConf.pake.system_tray_path = trayIconPath;
+  tauriConf.bghitapp.system_tray_path = trayIconPath;
   delete tauriConf.app.trayIcon;
 }
 
 async function injectCustomCode(
-  options: PakeAppOptions,
-  tauriConf: PakeTauriConfig,
+  options: BghitappAppOptions,
+  tauriConf: BghitappTauriConfig,
 ): Promise<void> {
   const { inject, proxyUrl, multiInstance, multiWindow, wasm } = options;
   const injectFilePath = path.join(
@@ -344,16 +344,16 @@ async function injectCustomCode(
     const files = injectArray.map((filepath) =>
       path.isAbsolute(filepath) ? filepath : path.join(process.cwd(), filepath),
     );
-    tauriConf.pake.inject = files;
+    tauriConf.bghitapp.inject = files;
     await combineFiles(files, injectFilePath);
   } else {
-    tauriConf.pake.inject = [];
+    tauriConf.bghitapp.inject = [];
     await fsExtra.writeFile(injectFilePath, '');
   }
 
-  tauriConf.pake.proxy_url = proxyUrl || '';
-  tauriConf.pake.multi_instance = multiInstance;
-  tauriConf.pake.multi_window = multiWindow;
+  tauriConf.bghitapp.proxy_url = proxyUrl || '';
+  tauriConf.bghitapp.multi_instance = multiInstance;
+  tauriConf.bghitapp.multi_window = multiWindow;
 
   if (wasm) {
     tauriConf.app.security = {
@@ -397,7 +397,7 @@ ${entitlementEntries.join('\n')}
 }
 
 async function writeAllConfigs(
-  tauriConf: PakeTauriConfig,
+  tauriConf: BghitappTauriConfig,
   platform: SupportedPlatform,
 ): Promise<void> {
   const platformConfigPaths: Record<SupportedPlatform, string> = {
@@ -413,11 +413,11 @@ async function writeAllConfigs(
   const bundleConf = { bundle: tauriConf.bundle };
   await fsExtra.outputJSON(configPath, bundleConf, { spaces: 4 });
 
-  const pakeConfigPath = path.join(tauriConfigDirectory, 'pake.json');
-  await fsExtra.outputJSON(pakeConfigPath, tauriConf.pake, { spaces: 4 });
+  const pakeConfigPath = path.join(tauriConfigDirectory, 'bghitapp.json');
+  await fsExtra.outputJSON(pakeConfigPath, tauriConf.bghitapp, { spaces: 4 });
 
   const tauriConf2 = JSON.parse(JSON.stringify(tauriConf));
-  delete tauriConf2.pake;
+  delete tauriConf2.bghitapp;
   if (process.env.NODE_ENV === 'development') {
     tauriConf2.bundle = bundleConf.bundle;
   }
@@ -427,8 +427,8 @@ async function writeAllConfigs(
 
 export async function mergeConfig(
   url: string,
-  options: PakeAppOptions,
-  tauriConf: PakeTauriConfig,
+  options: BghitappAppOptions,
+  tauriConf: BghitappTauriConfig,
 ) {
   await copyTemplateConfigs();
 
@@ -438,7 +438,7 @@ export async function mergeConfig(
     showSystemTray,
     useLocalFile,
     identifier,
-    name = 'pake-app',
+    name = 'bghitapp-app',
     installerLanguage,
     wasm,
     camera,
@@ -450,17 +450,17 @@ export async function mergeConfig(
 
   const platform = asSupportedPlatform(process.platform);
   const tauriConfWindowOptions = buildWindowConfigOverrides(options, platform);
-  Object.assign(tauriConf.pake.windows[0], { url, ...tauriConfWindowOptions });
+  Object.assign(tauriConf.bghitapp.windows[0], { url, ...tauriConfWindowOptions });
 
   tauriConf.productName = name;
   tauriConf.identifier = identifier;
   tauriConf.version = appVersion;
 
-  const linuxBinaryName = `pake-${generateLinuxPackageName(name)}`;
+  const linuxBinaryName = `bghitapp-${generateLinuxPackageName(name)}`;
   tauriConf.mainBinaryName =
     platform === 'linux'
       ? linuxBinaryName
-      : `pake-${generateIdentifierSafeName(name)}`;
+      : `bghitapp-${generateIdentifierSafeName(name)}`;
 
   if (platform === 'win32') {
     const windowsBundle = tauriConf.bundle.windows;
@@ -482,9 +482,9 @@ export async function mergeConfig(
   const currentPlatform = platformMap[platform];
 
   if (userAgent.length > 0) {
-    tauriConf.pake.user_agent[currentPlatform] = userAgent;
+    tauriConf.bghitapp.user_agent[currentPlatform] = userAgent;
   }
-  tauriConf.pake.system_tray[currentPlatform] = showSystemTray;
+  tauriConf.bghitapp.system_tray[currentPlatform] = showSystemTray;
 
   if (platform === 'linux') {
     await mergeLinuxConfig(options, name, tauriConf, linuxBinaryName);
@@ -516,7 +516,7 @@ export async function mergeConfig(
     const isIconFallback = assetFilename === 'icon.png';
     const splashHtml = generateSplashHtml(assetPath, resolvedIcon, isIconFallback);
     await fsExtra.writeFile(path.join(distDir, 'splash.html'), splashHtml);
-    tauriConf.pake.windows[0].splash = assetFilename;
+    tauriConf.bghitapp.windows[0].splash = assetFilename;
     logger.info('✼ Splash screen configured.');
   }
 
@@ -526,7 +526,7 @@ export async function mergeConfig(
     await fsExtra.ensureDir(distDir);
     const offlineHtml = generateOfflineHtml();
     await fsExtra.writeFile(path.join(distDir, 'offline.html'), offlineHtml);
-    tauriConf.pake.windows[0].offline = true;
+    tauriConf.bghitapp.windows[0].offline = true;
     logger.info('✼ Offline page configured.');
   }
 

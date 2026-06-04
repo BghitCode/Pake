@@ -1,6 +1,6 @@
-## How to contribute to Pake
+## How to contribute to BghitApp
 
-**Welcome to create [pull requests](https://github.com/tw93/Pake/compare/) for bugfix, new component, doc, example, suggestion and anything.**
+**Welcome to create [pull requests](https://github.com/BghitCode/bghitapp/compare/) for bugfix, new component, doc, example, suggestion and anything.**
 
 ## Branch Management
 
@@ -21,7 +21,7 @@ All development happens directly on `main`. Submit pull requests to `main`.
 
 ```bash
 # Clone the repository
-git clone https://github.com/tw93/Pake.git
+git clone https://github.com/BghitCode/bghitapp.git
 cd Pake
 
 # Install dependencies

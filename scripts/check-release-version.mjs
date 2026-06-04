@@ -30,7 +30,7 @@ function extractCargoVersion() {
 function extractCargoLockVersion() {
   const cargoLock = readText("src-tauri/Cargo.lock");
   const match = cargoLock.match(
-    /\[\[package\]\]\s+name = "pake"\s+version = "([^"]+)"/,
+    /\[\[package\]\]\s+name = "bghitapp"\s+version = "([^"]+)"/,
   );
   return match?.[1];
 }
@@ -78,7 +78,7 @@ expectEqual(
 expectEqual(
   "package.json repository.url",
   packageJson.repository?.url,
-  "git+https://github.com/tw93/Pake.git",
+  "git+https://github.com/BghitCode/bghitapp.git",
 );
 
 if (errors.length > 0) {

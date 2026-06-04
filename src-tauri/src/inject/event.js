@@ -261,7 +261,7 @@ function normalizeAnchorHref(rawHref) {
   return typeof rawHref === "string" ? rawHref.trim() : "";
 }
 
-function shouldBypassPakeLinkHandling(rawHref) {
+function shouldBypassBghitappLinkHandling(rawHref) {
   const normalizedHref = normalizeAnchorHref(rawHref).toLowerCase();
   if (!normalizedHref) {
     return false;
@@ -276,25 +276,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const tauri = window.__TAURI__;
   const appWindow = tauri.window.getCurrentWindow();
   const invoke = tauri.core.invoke;
-  const pakeConfig = window["pakeConfig"] || {};
-  const forceInternalNavigation = pakeConfig.force_internal_navigation === true;
-  const internalUrlRegex = pakeConfig.internal_url_regex || "";
+  const bghitappConfig = window["bghitappConfig"] || {};
+  const forceInternalNavigation = bghitappConfig.force_internal_navigation === true;
+  const internalUrlRegex = bghitappConfig.internal_url_regex || "";
   let internalUrlPattern = null;
   if (internalUrlRegex) {
     try {
       internalUrlPattern = new RegExp(internalUrlRegex);
     } catch (e) {
-      console.error("[Pake] Invalid internal_url_regex pattern:", e);
+      console.error("[BghitApp] Invalid internal_url_regex pattern:", e);
     }
   }
 
-  if (!document.getElementById("pake-top-dom")) {
+  if (!document.getElementById("bghitapp-top-dom")) {
     const topDom = document.createElement("div");
-    topDom.id = "pake-top-dom";
+    topDom.id = "bghitapp-top-dom";
     document.body.appendChild(topDom);
   }
 
-  const domEl = document.getElementById("pake-top-dom");
+  const domEl = document.getElementById("bghitapp-top-dom");
 
   domEl.addEventListener("touchstart", () => {
     appWindow.startDragging();
@@ -313,7 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  if (window["pakeConfig"]?.disabled_web_shortcuts !== true) {
+  if (window["bghitappConfig"]?.disabled_web_shortcuts !== true) {
     document.addEventListener("keyup", (event) => {
       if (/windows|linux/i.test(navigator.userAgent) && event.ctrlKey) {
         handleShortcut(event);
@@ -405,7 +405,7 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         return internalUrlPattern.test(url);
       } catch (e) {
-        console.error("[Pake] Error testing internal_url_regex:", e);
+        console.error("[BghitApp] Error testing internal_url_regex:", e);
         // Fall back to domain check on error
         return isSameDomain(url);
       }
@@ -423,7 +423,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (anchorElement && anchorElement.href) {
       const rawHref = anchorElement.getAttribute("href") || "";
-      if (shouldBypassPakeLinkHandling(rawHref)) {
+      if (shouldBypassBghitappLinkHandling(rawHref)) {
         return;
       }
 
@@ -434,9 +434,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Keep OAuth/authentication flows inside the app when popup support is enabled.
       if (window.isAuthLink(absoluteUrl)) {
-        console.log("[Pake] Handling OAuth navigation in-app:", absoluteUrl);
+        console.log("[BghitApp] Handling OAuth navigation in-app:", absoluteUrl);
 
-        if (window.pakeConfig?.new_window) {
+        if (window.bghitappConfig?.new_window) {
           e.preventDefault();
           e.stopImmediatePropagation();
 
@@ -540,7 +540,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return window;
     }
 
-    if (shouldBypassPakeLinkHandling(url)) {
+    if (shouldBypassBghitappLinkHandling(url)) {
       return originalWindowOpen.call(window, url, name, specs);
     }
 
@@ -639,7 +639,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Menu configuration constants
   const MENU_CONFIG = {
-    id: "pake-context-menu",
+    id: "bghitapp-context-menu",
     minWidth: "120px", // Compact width for better UX
     borderRadius: "6px", // Slightly more rounded for modern look
     fontSize: "13px",
@@ -926,7 +926,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Bridge the Web Notification + Web Badging APIs to Pake's Rust commands so
+// Bridge the Web Notification + Web Badging APIs to BghitApp's Rust commands so
 // pages running inside the webview can drive the macOS dock badge (and
 // taskbar badge on Linux/Windows). Installs synchronously instead of waiting
 // for DOMContentLoaded so feature-detection on Notification/setAppBadge
@@ -1066,8 +1066,8 @@ function setDefaultZoom() {
   const htmlZoom = window.localStorage.getItem("htmlZoom");
   if (htmlZoom) {
     setZoom(htmlZoom);
-  } else if (window.pakeConfig?.zoom && window.pakeConfig.zoom !== 100) {
-    setZoom(`${window.pakeConfig.zoom}%`);
+  } else if (window.bghitappConfig?.zoom && window.bghitappConfig.zoom !== 100) {
+    setZoom(`${window.bghitappConfig.zoom}%`);
   }
 }
 
