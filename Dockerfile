@@ -22,6 +22,11 @@ ENV PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig:/usr/lib/x86_64-linu
 RUN rustc --version && echo "Rust version verified"
 
 COPY . /bghitapp
+WORKDIR /bghitapp
+
+# Create dummy dist for generate_context!() macro (checks ../dist exists)
+RUN mkdir -p dist && echo '<!DOCTYPE html><html><body></body></html>' > dist/index.html
+
 WORKDIR /bghitapp/src-tauri
 # Build cargo packages and store cache
 RUN --mount=type=cache,target=/usr/local/cargo/registry \
