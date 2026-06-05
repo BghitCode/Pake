@@ -4,6 +4,8 @@
 <h1 align="center">BghitApp</h1>
 <p align="center"><strong>Turn any webpage into a desktop app with one command — by BghitCode. Supports macOS, Windows, and Linux</strong></p>
 <div align="center">
+    <a href="https://bghitcode.com" target="_blank">
+    <img alt="Website" src="https://img.shields.io/badge/website-bghitcode.com-blue?style=flat-square"></a>
     <a href="https://github.com/BghitCode/bghitapp/releases" target="_blank">
     <img alt="GitHub downloads" src="https://img.shields.io/github/downloads/BghitCode/bghitapp/total.svg?style=flat-square"></a>
     <a href="https://github.com/BghitCode/bghitapp/commits" target="_blank">
@@ -142,6 +144,9 @@ bghitapp https://github.com --name GitHub
 
 # Advanced usage with custom options
 bghitapp https://example.com --name MyApp --width 1200 --height 800 --hide-title-bar
+
+# See all available options
+bghitapp --help
 ```
 
 First-time packaging requires environment setup and may be slower, subsequent builds are fast. For complete parameter documentation, see [CLI Usage Guide](docs/cli-usage.md). Don't want to use CLI? Try [GitHub Actions Online Building](docs/github-actions-usage.md).
@@ -162,14 +167,6 @@ pnpm run build
 ```
 
 For style customization, feature enhancement, container communication and other advanced features, see [Advanced Usage Documentation](docs/advanced-usage.md).
-
-## Developers
-
-BghitApp's development can not be without these Hackers. They contributed a lot of capabilities for BghitApp. Also, welcome to follow them! ❤️
-
-<a href="https://github.com/BghitCode/bghitapp/graphs/contributors">
-  <img src="./CONTRIBUTORS.svg?v=2" alt="Contributors" width="1000" />
-</a>
 
 ## Support
 
