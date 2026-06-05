@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -22,10 +21,15 @@ jobs:
 
       - name: Generate contributors list
         run: |
-          # Generate contributors from git log
-          git log --format='%aN' | sort -u | while read author; do
-            echo "- $author"
-          done > CONTRIBUTORS.md
+          {
+            echo "# Contributors"
+            echo ""
+            echo "Thanks to all the people who have contributed to bghitapp!"
+            echo ""
+            git log --format='%aN' | sort -u | grep -Ev '\[bot\]$|^Pake-Actions$|^actions-user$' | while read author; do
+              echo "- $author"
+            done
+          } > CONTRIBUTORS.md
           echo "Generated contributors list"
 
       - name: Commit & Push
@@ -36,4 +40,3 @@ jobs:
           commit_user_name: github-actions[bot]
           commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-          push_options: '--force'
