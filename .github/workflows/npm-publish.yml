@@ -44,7 +44,7 @@ jobs:
       - name: Auto-bump patch version (main push only)
         if: github.ref == 'refs/heads/main'
         run: |
-          CURRENT=$(node -p "require('./package.json').version")
+          CURRENT=$(node --input-type=commonjs -p "JSON.parse(require('fs').readFileSync('package.json','utf8')).version")
           IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
           NEW_PATCH=$((PATCH + 1))
           NEW_VERSION="${MAJOR}.${MINOR}.${NEW_PATCH}"
@@ -54,7 +54,7 @@ jobs:
             const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
             pkg.version = '$NEW_VERSION';
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
-          "
+          " --input-type=commonjs
 
       - name: Check formatting
         run: pnpm run format:check

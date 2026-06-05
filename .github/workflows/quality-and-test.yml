@@ -87,6 +87,9 @@ jobs:
       - name: Check Rust formatting
         run: cargo fmt --all -- --color=always --check
 
+      - name: Create dist/ for Tauri proc macro
+        run: mkdir -p ../dist
+
       - name: Run Clippy lints
         run: cargo hack --feature-powerset --exclude-features cli-build --no-dev-deps clippy # cspell:disable-line
 
