@@ -11,9 +11,10 @@ import { execSync, spawn } from "child_process";
 import fs from "fs";
 import path from "path";
 import ora from "ora";
+import { pathToFileURL } from "url";
 import config, { TIMEOUTS, TEST_URLS } from "./config.js";
 
-class BghitappTestRunner {
+export class BghitappTestRunner {
   constructor() {
     this.results = [];
     this.tempFiles = [];
@@ -1171,6 +1172,14 @@ class BghitappTestRunner {
               config.PROJECT_ROOT,
               "src-tauri/target/universal-apple-darwin/release/bundle",
             ),
+            path.join(
+              config.PROJECT_ROOT,
+              "src-tauri/target/universal-apple-darwin/release/bundle/macos",
+            ),
+            path.join(
+              config.PROJECT_ROOT,
+              "src-tauri/target/universal-apple-darwin/release/bundle/dmg",
+            ),
           ]
         : []),
     ];
@@ -1525,23 +1534,27 @@ class BghitappTestRunner {
 
 import ReleaseBuildTest from "./release.js";
 
-// Command line interface
-const args = process.argv.slice(2);
+const isDirectRun =
+  process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
 
-// Complete test suite by default - no more smart modes
-const options = {
-  unit: !args.includes("--no-unit"),
-  integration: !args.includes("--no-integration"),
-  builder: !args.includes("--no-builder"),
-  bghitappCliTests: args.includes("--bghitapp-cli"),
-  e2e: args.includes("--e2e"),
-  realBuild: !args.includes("--no-build"), // Always include real build test
-  quick: false,
-};
+if (isDirectRun) {
+  // Command line interface
+  const args = process.argv.slice(2);
 
-// Help message
-if (args.includes("--help") || args.includes("-h")) {
-  console.log(`
+  // Complete test suite by default - no more smart modes
+  const options = {
+    unit: !args.includes("--no-unit"),
+    integration: !args.includes("--no-integration"),
+    builder: !args.includes("--no-builder"),
+    bghitappCliTests: args.includes("--bghitapp-cli"),
+    e2e: args.includes("--e2e"),
+    realBuild: !args.includes("--no-build"), // Always include real build test
+    quick: false,
+  };
+
+  // Help message
+  if (args.includes("--help") || args.includes("-h")) {
+    console.log(`
 [Run] BghitApp CLI Test Suite
 
 Usage: npm test [-- options]
@@ -1576,37 +1589,38 @@ Environment:
   DEBUG=1           # Enable debug output
   BGHITAPP_CREATE_APP=1 # Allow app creation in tests
 `);
-  process.exit(0);
+    process.exit(0);
+  }
+
+  // Run tests
+  const runner = new BghitappTestRunner();
+  runner
+    .runAll(options)
+    .then(async (success) => {
+      // Run release workflow tests as part of the standard suite
+      // We skip this if builder tests are explicitly disabled (often used for quick checks)
+      if (success && options.realBuild) {
+        console.log("\n[Package] Running Release Workflow Test...");
+        console.log(
+          "   (This mimics the GitHub Actions release process for popular apps)",
+        );
+
+        // Pass skipCliBuild=true since "npm test" already builds the CLI
+        const releaseTester = new ReleaseBuildTest();
+        const releaseSuccess = await releaseTester.run({ skipCliBuild: true });
+
+        if (!releaseSuccess) {
+          console.error("\n[FAIL] Release workflow tests failed");
+          process.exit(1);
+        }
+      }
+
+      process.exit(success ? 0 : 1);
+    })
+    .catch((error) => {
+      console.error("Test runner failed:", error);
+      process.exit(1);
+    });
 }
 
-// Run tests
-const runner = new BghitappTestRunner();
-runner
-  .runAll(options)
-  .then(async (success) => {
-    // Run release workflow tests as part of the standard suite
-    // We skip this if builder tests are explicitly disabled (often used for quick checks)
-    if (success && options.realBuild) {
-      console.log("\n[Package] Running Release Workflow Test...");
-      console.log(
-        "   (This mimics the GitHub Actions release process for popular apps)",
-      );
-
-      // Pass skipCliBuild=true since "npm test" already builds the CLI
-      const releaseTester = new ReleaseBuildTest();
-      const releaseSuccess = await releaseTester.run({ skipCliBuild: true });
-
-      if (!releaseSuccess) {
-        console.error("\n[FAIL] Release workflow tests failed");
-        process.exit(1);
-      }
-    }
-
-    process.exit(success ? 0 : 1);
-  })
-  .catch((error) => {
-    console.error("Test runner failed:", error);
-    process.exit(1);
-  });
-
-export default runner;
+export default BghitappTestRunner;
