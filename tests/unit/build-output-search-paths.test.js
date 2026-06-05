@@ -70,18 +70,12 @@ describe("build output search paths", () => {
 
     try {
       const appName = "TestApp";
-      const bundleDir = path.join(
-        tempRoot,
-        "src-tauri/target/release/bundle",
-      );
+      const bundleDir = path.join(tempRoot, "src-tauri/target/release/bundle");
 
       const appDir = path.join(bundleDir, "macos", `${appName}.app`);
       fs.mkdirSync(appDir, { recursive: true });
 
-      const searchLocations = [
-        tempRoot,
-        path.join(bundleDir, "macos"),
-      ];
+      const searchLocations = [tempRoot, path.join(bundleDir, "macos")];
 
       const foundFiles = [];
       for (const location of searchLocations) {
