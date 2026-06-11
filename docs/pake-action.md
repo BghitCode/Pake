@@ -8,7 +8,7 @@ Transform any webpage into a lightweight desktop app with a single GitHub Action
 
 ```yaml
 - name: Build BghitApp App
-  uses: BghitCode/Pake@v3
+  uses: BghitCode/BghitApp@v3
   with:
     url: "https://example.com"
     name: "MyApp"
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: BghitCode/Pake@v3
+      - uses: BghitCode/BghitApp@v3
         with:
           url: "https://example.com"
           name: "WeeklyApp"
@@ -54,7 +54,7 @@ jobs:
 ### With Custom Icon
 
 ```yaml
-- uses: BghitCode/Pake@v3
+- uses: BghitCode/BghitApp@v3
   with:
     url: "https://example.com"
     name: "MyApp"
@@ -74,7 +74,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - uses: BghitCode/Pake@v3
+      - uses: BghitCode/BghitApp@v3
         with:
           url: "https://example.com"
           name: "CrossPlatformApp"

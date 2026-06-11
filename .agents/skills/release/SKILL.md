@@ -54,7 +54,7 @@ Tag format: uppercase `V` prefix (e.g. `V3.11.0`), not `v3.11.0`.
 5. [ ] Confirm npm Trusted Publishing triggered: `gh run list --workflow=npm-publish.yml`
 6. [ ] Verify npm published the package: `npm view @bghitcode/bghitapp version` and `npm view @bghitcode/bghitapp@X.Y.Z dist.tarball`
 
-npm publishes through Trusted Publishing from `.github/workflows/npm-publish.yml`. Configure npm package settings with GitHub Actions, `BghitCode/Pake`, workflow file `npm-publish.yml`, and no environment. Local `npm publish` is only a fallback if CI or registry state blocks the trusted path.
+npm publishes through Trusted Publishing from `.github/workflows/npm-publish.yml`. Configure npm package settings with GitHub Actions, `BghitCode/BghitApp`, workflow file `npm-publish.yml`, and no environment. Local `npm publish` is only a fallback if CI or registry state blocks the trusted path.
 
 ## Trusted Publishing Notes
 

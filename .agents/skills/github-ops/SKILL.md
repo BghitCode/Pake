@@ -50,7 +50,7 @@ gh pr checks 456
 gh pr diff 456
 
 # Read inline review comments on a PR
-gh api repos/BghitCode/Pake/pulls/456/comments
+gh api repos/BghitCode/BghitApp/pulls/456/comments
 
 # Merge a PR (only with explicit user request)
 gh pr merge 456 --squash

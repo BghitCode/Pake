@@ -10,10 +10,10 @@ body:
     attributes:
       label: Search before asking
       description: >
-        Please search [issues](https://github.com/BghitCode/Pake/issues?q=) to check if your issue has already been reported.
+        Please search [issues](https://github.com/BghitCode/BghitApp/issues?q=) to check if your issue has already been reported.
       options:
         - label: >
-            I searched in the [issues](https://github.com/BghitCode/Pake/issues?q=) and found nothing similar.
+            I searched in the [issues](https://github.com/BghitCode/BghitApp/issues?q=) and found nothing similar.
           required: true
   - type: textarea
     attributes:

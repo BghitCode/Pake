@@ -8,15 +8,15 @@ body:
       value: |
         Thank you very much for your feedback!
 
-        For suggestions or help, please consider using [Github Discussion](https://github.com/BghitCode/Pake/discussions) instead.
+        For suggestions or help, please consider using [Github Discussion](https://github.com/BghitCode/BghitApp/discussions) instead.
   - type: checkboxes
     attributes:
       label: Search before asking
       description: >
-        🙊 Check out [Issues](https://github.com/BghitCode/Pake/issues?q=) before reporting. Please provide your system version, screencasts, screenshots, way to reproduce, and the expected result – helpful for me to understand and fix up this issue! Besides, for suggestions or something else, head to [BghitApp's Discussions Platform](https://github.com/BghitCode/Pake/discussions).
+        🙊 Check out [Issues](https://github.com/BghitCode/BghitApp/issues?q=) before reporting. Please provide your system version, screencasts, screenshots, way to reproduce, and the expected result – helpful for me to understand and fix up this issue! Besides, for suggestions or something else, head to [BghitApp's Discussions Platform](https://github.com/BghitCode/BghitApp/discussions).
       options:
         - label: >
-            I searched in the [issues](https://github.com/BghitCode/Pake/issues?q=) and found nothing similar.
+            I searched in the [issues](https://github.com/BghitCode/BghitApp/issues?q=) and found nothing similar.
           required: true
   - type: textarea
     attributes:

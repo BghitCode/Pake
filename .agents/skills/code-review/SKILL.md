@@ -19,7 +19,7 @@ Use Waza `/check` for the generic review method. This adapter adds Pake-specific
 - [ ] Changes under `bin/` rebuild and commit `dist/cli.js` with `pnpm run cli:build`.
 - [ ] Changes to package metadata embedded by Rollup (`package.json` name/version/repository/bin/scripts/exports) rebuild and commit `dist/cli.js`.
 - [ ] Release version bumps keep `package.json`, `src-tauri/Cargo.toml`, `src-tauri/Cargo.lock`, and `src-tauri/tauri.conf.json` in sync.
-- [ ] npm release workflow changes preserve Trusted Publishing: `.github/workflows/npm-publish.yml`, `id-token: write`, canonical `git+https://github.com/BghitCode/Pake.git`, and `scripts/check-release-version.mjs`.
+- [ ] npm release workflow changes preserve Trusted Publishing: `.github/workflows/npm-publish.yml`, `id-token: write`, canonical `git+https://github.com/BghitCode/BghitApp.git`, and `scripts/check-release-version.mjs`.
 - [ ] No new `tauriConf: any` or other untyped config objects; use `PakeTauriConfig`.
 - [ ] No user-reachable `panic!` or `.unwrap()` on config, CLI, or event paths.
 - [ ] Silent `catch {}` blocks surface the real error through `logger.warn`.
