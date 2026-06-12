@@ -31,6 +31,11 @@ pub fn run_app() {
         if std::env::var("WEBKIT_DISABLE_COMPOSITING_MODE").is_err() {
             std::env::set_var("WEBKIT_DISABLE_COMPOSITING_MODE", "1");
         }
+        // Force X11 on Wayland sessions to prevent WebKitGTK segfaults.
+        // Only applies when the user hasn't explicitly set GDK_BACKEND.
+        if std::env::var("GDK_BACKEND").is_err() && std::env::var("WAYLAND_DISPLAY").is_ok() {
+            std::env::set_var("GDK_BACKEND", "x11");
+        }
     }
 
     let (bghitapp_config, tauri_config) = get_bghitapp_config();
